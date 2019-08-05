@@ -9,7 +9,7 @@ workflows:
           name: "package and push kong-app chart"
           app_catalog: "giantswarm-incubator-catalog"
           app_catalog_test: "giantswarm-incubator-test-catalog"
-          chart: "kong"
+          chart: "kong-app"
           # Trigger job on git tag.
           filters:
             tags:
