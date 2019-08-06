@@ -4,11 +4,6 @@ description: The Cloud-Native Ingress and
 engine: gotpl
 home: https://KongHQ.com/
 icon: https://s3.amazonaws.com/downloads.kong/universe/assets/icon-kong-inc-large.png
-maintainers:
-- name: shashiranjan84
-  email: shashi@konghq.com
-- name: hbagdi
-  email: harry@konghq.com
 name: kong-app
 sources:
 - https://github.com/Kong/kong
