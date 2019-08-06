@@ -6,10 +6,10 @@ workflows:
   package-and-push-chart-on-tag:
     jobs:
       - architect/push-to-app-catalog:
-          name: "package and push kong-app chart"
+          name: "package and push kong chart"
           app_catalog: "giantswarm-incubator-catalog"
           app_catalog_test: "giantswarm-incubator-test-catalog"
-          chart: "kong-app"
+          chart: "kong"
           # Trigger job on git tag.
           filters:
             tags:
