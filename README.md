@@ -8,3 +8,4 @@ Here we define the Kong chart with its templates and default configuration.
 ## Credit
 
 * https://github.com/helm/charts/tree/master/stable/kong
+
