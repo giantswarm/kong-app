@@ -9,7 +9,7 @@ maintainers:
   email: shashi@konghq.com
 - name: hbagdi
   email: harry@konghq.com
-name: kong
+name: kong-app
 sources:
 - https://github.com/Kong/kong
 version: 0.1.0
