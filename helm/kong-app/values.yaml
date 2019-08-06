@@ -68,7 +68,8 @@ proxy:
     # Set a nodePort which is available if service type is NodePort
     # nodePort: 32443
 
-  # Use Load Balancer for proxy by default.
+  # Use Load Balancer for proxy by default. So the proxy can be accessed
+  # externally via an ELB
   type: LoadBalancer
 
   # Kong proxy ingress settings.
@@ -255,7 +256,8 @@ runMigrations: true
 # Specify Kong configurations
 # Kong configurations guide https://getkong.org/docs/latest/configuration/
 env:
-  # Disable database by default.
+  # Disable database by default to avoid needing to manage Postgres. State is
+  # stored in Ingress resources.
   database: off
   proxy_access_log: /dev/stdout
   admin_access_log: /dev/stdout
@@ -336,7 +338,8 @@ cassandra:
 
 # PostgreSQL chart configs
 postgresql:
-  # Disable postgres by default.
+  # Disable postgres by default to avoid needing to manage Postgres. State is
+  # stored in Ingress resources.
   enabled: false
   postgresqlUsername: kong
   postgresqlDatabase: kong
