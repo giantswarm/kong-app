@@ -9,7 +9,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Added
 
-- Add first version of the kong-app chart based on the community kong chart.
+- Add first version of the kong-app chart based on the community Kong chart.
 
 ### Updated
 
