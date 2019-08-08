@@ -9,6 +9,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Added
 
-- First version of the kong-app chart based on the community kong chart.
-- Kong Ingress Controller is enabled by default.
-- Using Postgres as a data store is turned off by default.
+- Add first version of the kong-app chart based on the community kong chart.
+
+### Updated
+
+- Enable Kong Ingress Controller mode.
+- Use service of type Load Balancer for the Kong proxy service.
+- Disable using Postgres and use Kubernetes resources for storing state.
