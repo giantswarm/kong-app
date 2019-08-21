@@ -2,8 +2,8 @@
 # Declare variables to be passed into your templates.
 
 image:
-  repository: kong
-  # repository: kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition
+  registry: quay.io
+  repository: giantswarm/kong
   tag: 1.2
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
