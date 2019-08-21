@@ -185,7 +185,7 @@ Create the ingress servicePort value string
       fieldRef:
         apiVersion: v1
         fieldPath: metadata.namespace
-  image: "{{ .Values.ingressController.image.repository }}:{{ .Values.ingressController.image.tag }}"
+  image: "{{ .Values.image.registry }}/{{ .Values.ingressController.image.repository }}:{{ .Values.ingressController.image.tag }}"
   imagePullPolicy: {{ .Values.image.pullPolicy }}
   livenessProbe:
     failureThreshold: 3

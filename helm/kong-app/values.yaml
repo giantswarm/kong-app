@@ -353,7 +353,7 @@ ingressController:
   # Giant Swarm: Enable ingress controller mode by default.
   enabled: true
   image:
-    repository: kong-docker-kubernetes-ingress-controller.bintray.io/kong-ingress-controller
+    repository: giantswarm/kong-ingress-controller
     tag: 0.5.0
   replicaCount: 1
   livenessProbe:
