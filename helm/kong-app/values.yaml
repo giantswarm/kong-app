@@ -2,9 +2,9 @@
 # Declare variables to be passed into your templates.
 
 image:
-  repository: kong
-  # repository: kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition
-  tag: 1.2
+  registry: quay.io
+  repository: giantswarm/kong
+  tag: 1.2.2
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
   ## Secrets must be manually created in the namespace.
@@ -15,8 +15,8 @@ image:
   #   - myRegistrKeySecretName
 
 waitImage:
-  repository: busybox
-  tag: latest
+  repository: giantswarm/busybox
+  tag: 1.31.0
 
 # Specify Kong admin and proxy services configurations
 admin:
@@ -31,7 +31,7 @@ admin:
   servicePort: 8444
   containerPort: 8444
   # Kong admin service type
-  type: NodePort
+  type: ClusterIP
   # Set a nodePort which is available
   # nodePort: 32444
   # Kong admin ingress settings.
@@ -108,7 +108,7 @@ manager:
     # Set a nodePort which is available if service type is NodePort
     # nodePort: 32443
 
-  type: NodePort
+  type: ClusterIP
 
   # Kong proxy ingress settings.
   ingress:
@@ -146,7 +146,7 @@ portal:
     # Set a nodePort which is available if service type is NodePort
     # nodePort: 32443
 
-  type: NodePort
+  type: ClusterIP
 
   # Kong proxy ingress settings.
   ingress:
@@ -184,7 +184,7 @@ portalapi:
     # Set a nodePort which is available if service type is NodePort
     # nodePort: 32443
 
-  type: NodePort
+  type: ClusterIP
 
   # Kong proxy ingress settings.
   ingress:
@@ -359,7 +359,7 @@ ingressController:
   # Giant Swarm: Enable ingress controller mode by default.
   enabled: true
   image:
-    repository: kong-docker-kubernetes-ingress-controller.bintray.io/kong-ingress-controller
+    repository: giantswarm/kong-ingress-controller
     tag: 0.5.0
   replicaCount: 1
   livenessProbe:
