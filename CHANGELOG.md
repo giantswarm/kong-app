@@ -9,6 +9,12 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Added
 
+- Add support for a external postgres database.
+
+## [v0.1.0]
+
+### Added
+
 - Add first version of the kong-app chart based on the community Kong chart.
 
 ### Updated
