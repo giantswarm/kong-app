@@ -348,8 +348,8 @@ postgresql:
 
   external: 
     enabled: false
-    password: kongpassword
-    host: kong.postgres.com
+    password: "" # Postgres password
+    host: "" # Postgres endpoint host
     port: 5432
 
 # Kong Ingress Controller's primary purpose is to satisfy Ingress resources
