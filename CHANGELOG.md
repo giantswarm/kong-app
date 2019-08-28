@@ -11,7 +11,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Use retagged images.
 - Use ClusterIP for all services except proxy which uses LoadBalancer.
-- Add support for a external postgres database.
+- Add support for an external PostgreSQL database.
 
 ## [v0.1.0]
 

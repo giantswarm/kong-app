@@ -343,7 +343,7 @@ helm install stable/kong --set ingressController.enabled=true \
   --set postgresql.enabled=false --set env.database=off
 # with a database
 helm install stable/kong --set ingressController.enabled=true
-# with a external database
+# with an external database
 helm install stable/kong --set ingressController.enabled=true \
   --set postgresql.external.enabled=true --set env.database=postgres
 ```
