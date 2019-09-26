@@ -20,6 +20,7 @@ spec:
   supplementalGroups:
     rule: RunAsAny
   volumes:
+    - 'configMap'
     - 'secret'
   allowPrivilegeEscalation: false
   hostNetwork: false
