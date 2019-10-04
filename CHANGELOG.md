@@ -10,6 +10,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Updated
 
 - Add option to deploy redis for rate limiting plugin.
+- Add support to configure custom plugins.
 
 ## [v0.2.0] 
 
