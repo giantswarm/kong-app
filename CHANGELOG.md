@@ -10,7 +10,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Added
 
 - Add support for validation controller as optional.
-- Add option to configure an horizontal pod autoscaler.
+- Add option to configure a horizontal pod autoscaler.
 
 ## [v0.3.0] 
 
