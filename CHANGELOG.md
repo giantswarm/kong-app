@@ -9,7 +9,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## Changed
 
-- Add registry in all wait images to make it deployable in all regions
+- Add registry in all wait images entries to make it deployable in all regions
 
 ## [v0.4.0] 
 
