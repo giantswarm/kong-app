@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project's packages adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [v0.4.4]
+
+## Changed
+
+- Update redis version to `9.5.0` that supports pod security policies.
+
 ## [v0.4.3]
 
 ## Added
