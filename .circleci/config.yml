@@ -1,10 +1,48 @@
 version: 2.1
 orbs:
-  architect: giantswarm/architect@0.2.0
+  architect: giantswarm/architect@0.8.0
+
+jobs:
+  test-in-kind:
+    environment:
+      KUBECONFIG: "/tmp/kubeconfig_${CIRCLE_SHA1}.yaml"
+      KUBECONFIG_INTERNAL: "/tmp/internal_kubeconfig_${CIRCLE_SHA1}.yaml"
+    executor: architect/machine
+    steps:
+      - checkout
+      - architect/machine-install-go
+      - architect/integration-test-install-tools:
+          kubernetes-version: "v1.17.2"
+      - architect/integration-test-create-cluster:
+          kubernetes-version: "v1.17.2"
+          kind-config: ".circleci/kind.yaml"
+      - run:
+          name: Get 'internal' kubeconfig
+          command: kind get kubeconfig --internal > "${KUBECONFIG_INTERNAL}"
+      - run:
+          name: Get kubeconfig
+          command: kind get kubeconfig > "${KUBECONFIG}"
+      - run:
+          name: Print Kind Cluster Info
+          command: kubectl cluster-info
+      - run:
+          name: Launch app-operator
+          command: |
+            echo ${KUBECONFIG}
+            ls -lart /tmp
+            kind get clusters
+            kubectl config view
+            kubectl cluster-info
+            kubectl get serviceaccounts
+            kubectl run app-operator --generator=run-pod/v1 --image=quay.io/giantswarm/app-operator -- daemon --service.kubernetes.kubeconfig="${KUBECONFIG_INTERNAL}" --service.kubernetes.incluster="false"
+      - run:
+          name: Launch chart-operator
+          command: kubectl run chart-operator --generator=run-pod/v1 --image=quay.io/giantswarm/chart-operator -- daemon --service.kubernetes.kubeconfig="${KUBECONFIG_INTERNAL}" --server.listen.address="http://127.0.0.1:7000" --service.kubernetes.incluster="false"
 
 workflows:
   package-and-push-chart-on-tag:
     jobs:
+      - test-in-kind
       - architect/push-to-app-catalog:
           name: "package and push kong-app chart"
           app_catalog: "giantswarm-incubator-catalog"
@@ -14,3 +52,5 @@ workflows:
           filters:
             tags:
               only: /^v.*/
+          requires:
+            - test-in-kind
