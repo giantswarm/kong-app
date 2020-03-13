@@ -38,7 +38,7 @@ jobs:
           command: kubectl run chart-operator --generator=run-pod/v1 --image=quay.io/giantswarm/chart-operator -- daemon --service.kubernetes.kubeconfig="${KUBECONFIG_INTERNAL}" --server.listen.address="http://127.0.0.1:7000" --service.kubernetes.incluster="false"
       - run:
           name: Launch Helm Test
-          command: docker run -ti -v ${PWD}:/src quay.io/giantswarm/helm-chart-testing:v2.4.0 ct lint --validate-maintainers=false --charts="/src/helm/kong-app"
+          command: docker run -ti -v ${PWD}:/src quay.io/giantswarm/helm-chart-testing:v2.4.0 ct lint-and-install --validate-maintainers=false --charts="/src/helm/kong-app"
 
 workflows:
   package-and-push-chart-on-tag:
