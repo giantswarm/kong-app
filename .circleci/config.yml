@@ -46,7 +46,9 @@ jobs:
           at: .
       - run:
           name: Launch Helm Test
-          command: docker run -ti -v ${PWD}:/src quay.io/giantswarm/helm-chart-testing:v2.4.0 ct lint-and-install --validate-maintainers=false --charts="/src/helm/kong-app"
+          command: |
+            cat helm/kong-app/Chart.yaml
+            docker run -ti -v ${PWD}:/src quay.io/giantswarm/helm-chart-testing:v2.4.0 ct lint-and-install --validate-maintainers=false --charts="/src/helm/kong-app"
 
 workflows:
   package-and-push-chart-on-tag:
