@@ -6,6 +6,7 @@ jobs:
   template-chart:
     executor: architect/architect
     steps:
+      - checkout
       - architect/helm-chart-template:
           chart: "kong-app"
   test-in-kind:
@@ -45,7 +46,9 @@ workflows:
   package-and-push-chart-on-tag:
     jobs:
       - template-chart
-      - test-in-kind
+      - test-in-kind:
+          requires:
+            - template-chart
       - architect/push-to-app-catalog:
           name: "package and push kong-app chart"
           app_catalog: "giantswarm-incubator-catalog"
