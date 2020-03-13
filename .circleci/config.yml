@@ -9,6 +9,10 @@ jobs:
       - checkout
       - architect/helm-chart-template:
           chart: "kong-app"
+      - persist_to_workspace:
+          root: .
+          paths:
+            - helm
   test-in-kind:
     environment:
       KUBECONFIG: /tmp/kubeconfig_${CIRCLE_SHA1}.yaml
@@ -38,6 +42,8 @@ jobs:
       - run:
           name: Launch chart-operator
           command: kubectl run chart-operator --generator=run-pod/v1 --image=quay.io/giantswarm/chart-operator -- daemon --service.kubernetes.kubeconfig="${KUBECONFIG_INTERNAL}" --server.listen.address="http://127.0.0.1:7000" --service.kubernetes.incluster="false"
+      - attach_workspace:
+          at: .
       - run:
           name: Launch Helm Test
           command: docker run -ti -v ${PWD}:/src quay.io/giantswarm/helm-chart-testing:v2.4.0 ct lint-and-install --validate-maintainers=false --charts="/src/helm/kong-app"
