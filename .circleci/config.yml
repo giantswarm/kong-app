@@ -3,10 +3,14 @@ orbs:
   architect: giantswarm/architect@0.8.0
 
 jobs:
+  template-chart:
+    steps:
+      - architect/helm-chart-template:
+          chart: "kong-app"
   test-in-kind:
     environment:
-      KUBECONFIG: "/tmp/kubeconfig_${CIRCLE_SHA1}.yaml"
-      KUBECONFIG_INTERNAL: "/tmp/internal_kubeconfig_${CIRCLE_SHA1}.yaml"
+      KUBECONFIG: /tmp/kubeconfig_${CIRCLE_SHA1}.yaml
+      KUBECONFIG_INTERNAL: /tmp/internal_kubeconfig_${CIRCLE_SHA1}.yaml
     executor: architect/machine
     steps:
       - checkout
@@ -28,20 +32,18 @@ jobs:
       - run:
           name: Launch app-operator
           command: |
-            echo ${KUBECONFIG}
-            ls -lart /tmp
-            kind get clusters
-            kubectl config view
-            kubectl cluster-info
-            kubectl get serviceaccounts
             kubectl run app-operator --generator=run-pod/v1 --image=quay.io/giantswarm/app-operator -- daemon --service.kubernetes.kubeconfig="${KUBECONFIG_INTERNAL}" --service.kubernetes.incluster="false"
       - run:
           name: Launch chart-operator
           command: kubectl run chart-operator --generator=run-pod/v1 --image=quay.io/giantswarm/chart-operator -- daemon --service.kubernetes.kubeconfig="${KUBECONFIG_INTERNAL}" --server.listen.address="http://127.0.0.1:7000" --service.kubernetes.incluster="false"
+      - run:
+          name: Launch Helm Test
+          command: docker run -ti -v ${PWD}:/src quay.io/giantswarm/helm-chart-testing:v2.4.0 ct lint --validate-maintainers=false --charts="/src/helm/kong-app"
 
 workflows:
   package-and-push-chart-on-tag:
     jobs:
+      - template-chart
       - test-in-kind
       - architect/push-to-app-catalog:
           name: "package and push kong-app chart"
