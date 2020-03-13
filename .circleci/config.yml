@@ -4,6 +4,7 @@ orbs:
 
 jobs:
   template-chart:
+    executor: architect/architect
     steps:
       - architect/helm-chart-template:
           chart: "kong-app"
