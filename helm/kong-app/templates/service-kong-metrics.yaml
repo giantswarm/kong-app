@@ -16,3 +16,4 @@ spec:
 {{- include "kong.selectorLabels" . | nindent 4 }}
   sessionAffinity: None
   type: ClusterIP
+  clusterIP: None
