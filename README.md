@@ -38,9 +38,9 @@ for more detailed explanation and usage.
 
 #### Ingress Controller Class
 The default ingress controller class used by this app is `kong-app`. This
-differs from the upstream default `kong`. We have changed the defualt, as this
+differs from the upstream default `kong`. We have changed the default, as this
 conflicts with other ingress controllers and the default ingress controller in
-Giant Searm clusters is `nginx`.
+Giant Swarm clusters is `nginx`.
 
 For more details about this please have a look [upstream deployment
 documentation](https://github.com/Kong/kubernetes-ingress-controller/blob/master/docs/concepts/deployment.md#multiple-ingress-controllers)
