@@ -37,7 +37,6 @@ jobs:
             - /tmp/bin
       - run: /tmp/bin/helm init -c
       - run: PATH="/tmp/bin:$PATH" /tmp/kind-app-testing.sh -c kong-app -l
-      - run: sudo chown -R circleci.circleci /tmp/kat
       - store_test_results:
           path: test-results
       - store_artifacts:
