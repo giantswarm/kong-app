@@ -3,20 +3,7 @@ orbs:
   architect: giantswarm/architect@0.8.5
 
 jobs:
-  template-chart:
-    executor: architect/architect
-    steps:
-      - checkout
-      - architect/helm-chart-template:
-          chart: "kong-app"
-      - persist_to_workspace:
-          root: .
-          paths:
-            - helm
   test-in-kind:
-    environment:
-      KUBECONFIG: /tmp/kubeconfig_${CIRCLE_SHA1}.yaml
-      KUBECONFIG_INTERNAL: /tmp/internal_kubeconfig_${CIRCLE_SHA1}.yaml
     machine:
       image: ubuntu-1604:201903-01
     steps:
@@ -45,14 +32,11 @@ jobs:
 workflows:
   package-and-push-chart-on-tag:
     jobs:
-      - template-chart
       - test-in-kind:
-          requires:
-            - template-chart
       - architect/push-to-app-catalog:
           name: "package and push kong-app chart"
-          app_catalog: "giantswarm-incubator-catalog"
-          app_catalog_test: "giantswarm-incubator-test-catalog"
+          app_catalog: "giantswarm-catalog"
+          app_catalog_test: "giantswarm-test-catalog"
           chart: "kong-app"
           # Trigger job on git tag.
           filters:

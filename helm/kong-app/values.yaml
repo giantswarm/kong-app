@@ -35,7 +35,7 @@ image:
   repository: quay.io/giantswarm/kong
   # repository: kong-docker-kong-enterprise-k8s.bintray.io/kong-enterprise-k8s
   # repository: kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition
-  tag: 1.4.3
+  tag: 2.0.1
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
   ## Secrets must be manually created in the namespace.
@@ -139,15 +139,23 @@ proxy:
 # The `name` property refers to the name of the ConfigMap or Secret
 # itself, while the pluginName refers to the name of the plugin as it appears
 # in Kong.
+# Subdirectories (which are optional) require separate ConfigMaps/Secrets.
+# "path" indicates their directory under the main plugin directory: the example
+# below will mount the contents of kong-plugin-rewriter-migrations at "/opt/kong/rewriter/migrations".
 plugins: {}
   # configMaps:
   # - pluginName: rewriter
   #   name: kong-plugin-rewriter
+  #   subdirectories:
+  #   - name: kong-plugin-rewriter-migrations
+  #     path: migrations
   # secrets:
   # - pluginName: rewriter
   #   name: kong-plugin-rewriter
 # Inject specified secrets as a volume in Kong Container at path /etc/secrets/{secret-name}/
-# This can be used to override default SSL certificates
+# This can be used to override default SSL certificates.
+# Be aware that the secret name will be used verbatim, and that certain types
+# of punctuation (e.g. `.`) can cause issues.
 # Example configuration
 # secretVolumes:
 # - kong-proxy-tls
@@ -186,7 +194,7 @@ ingressController:
   enabled: true
   image:
     repository: quay.io/giantswarm/kong-ingress-controller
-    tag: 0.7.0
+    tag: 0.7.1
 
   # Specify Kong Ingress Controller configuration via environment variables
   env: {}
@@ -196,7 +204,11 @@ ingressController:
     failurePolicy: Fail
     port: 8080
 
-  ingressClass: kong
+  # This has been changed from the default `kong`
+  # as it allows this app to exist alongside other
+  # ingress controllers, such as nginx which is the
+  # default in the cluster.
+  ingressClass: kong-app
 
   rbac:
     # Specifies whether RBAC resources should be created
@@ -323,29 +335,33 @@ tolerations: []
 nodeSelector: {}
 
 # Annotation to be added to Kong pods
-podAnnotations: {}
+# Removing giantswarm.io annotations will result in Giant Swarm being unable to
+# monitor the deployment.
+podAnnotations:
+  giantswarm.io/monitoring: "true"
+  giantswarm.io/monitoring-path: metrics
+  giantswarm.io/monitoring-port: "9542"
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "9542"
 
 # Kong pod count
-replicaCount: 2
+replicaCount: 1
 
 # Enable autoscaling using HorizontalPodAutoscaler
 autoscaling:
   enabled: false
   minReplicas: 2
   maxReplicas: 5
+  ## targetCPUUtilizationPercentage only used if the cluster doesn't support autoscaling/v2beta
+  targetCPUUtilizationPercentage:
+  ## Otherwise for clusters that do support autoscaling/v2beta, use metrics
   metrics:
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: 70
-    - type: Resource
-      resource:
-        name: memory
-        target:
-          type: Utilization
-          averageUtilization: 70
+          averageUtilization: 80
 
 # Kong Pod Disruption Budget
 podDisruptionBudget:
@@ -354,6 +370,9 @@ podDisruptionBudget:
 
 podSecurityPolicy:
   enabled: true
+
+
+priorityClassName: ""
 
 # securityContext for Kong pods.
 securityContext:
@@ -381,21 +400,10 @@ enterprise:
   # This secret must contain a single 'license' key, containing your base64-encoded license data
   # The license secret is required for all Kong Enterprise deployments
   license_secret: you-must-create-a-kong-license-secret
-  # Session configuration secret
-  # The session conf secret is required if using RBAC or the Portal
   vitals:
     enabled: true
   portal:
     enabled: false
-    # portal_auth here sets the default authentication mechanism for the Portal
-    # FIXME This can be changed per-workspace, but must currently default to
-    # basic-auth to work around limitations with session configuration
-    portal_auth: basic-auth
-    # If the Portal is enabled and any workspace's Portal uses authentication,
-    # this Secret must contain an portal_session_conf key
-    # The key value must be a secret configuration, following the example at
-    # https://docs.konghq.com/enterprise/latest/developer-portal/configuration/authentication/sessions
-    session_conf_secret: you-must-create-a-portal-session-conf-secret
   rbac:
     enabled: false
     admin_gui_auth: basic-auth

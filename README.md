@@ -36,6 +36,15 @@ Ingress Controller
 [documentation](https://github.com/Kong/kubernetes-ingress-controller/tree/master/docs)
 for more detailed explanation and usage.
 
+#### Ingress Controller Class
+The default ingress controller class used by this app is `kong-app`. This
+differs from the upstream default `kong`. We have changed the default, as this
+conflicts with other ingress controllers and the default ingress controller in
+Giant Swarm clusters is `nginx`.
+
+For more details about this please have a look [upstream deployment
+documentation](https://github.com/Kong/kubernetes-ingress-controller/blob/master/docs/concepts/deployment.md#multiple-ingress-controllers)
+
 ### DBLess Kong
 The [official documentation](https://docs.konghq.com/1.4.x/db-less-and-declarative-config/)
 explains how DBLess Kong works and the possible limitations. To use this method
@@ -139,6 +148,13 @@ Note:
 > they won't be deleted by the Ingress Controller.
 (Taken from https://github.com/Kong/kubernetes-ingress-controller/blob/master/docs/faq.md#is-it-possible-to-create-consumers-using-the-admin-api)
 
+## Known Issues
+
+- TLS SNI Issues
+  Using same certificate across multiple endpoints can result in the following
+  error:
+  ```while processing event: {Create} failed: 400 Bad Request {"message":"schema violation (snis: xyz.api.example.com already associated with existing certificate '9798a52d-86fb-41f1-a7c3-eb9331f39092')","name":"schema violation","fields":{"snis":"xyz.api.example.com already associated with existing certificate '9798a52d-86fb-41f1-a7c3-eb9331f39092'"},"code":2}```
+  This is related to : https://github.com/Kong/kubernetes-ingress-controller/issues/524
 
 ## Credit
 

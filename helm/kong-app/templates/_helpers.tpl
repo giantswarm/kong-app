@@ -58,17 +58,17 @@ Create the KONG_PROXY_LISTEN value string
 {{- define "kong.kongProxyListenValue" -}}
 
 {{- if and .Values.proxy.http.enabled .Values.proxy.tls.enabled -}}
-   0.0.0.0:{{ .Values.proxy.http.containerPort }},0.0.0.0:{{ .Values.proxy.tls.containerPort }} ssl
+   0.0.0.0:{{ .Values.proxy.http.containerPort }},0.0.0.0:{{ .Values.proxy.tls.containerPort }} ssl http2
 {{- else -}}
 {{- if .Values.proxy.http.enabled -}}
    0.0.0.0:{{ .Values.proxy.http.containerPort }}
 {{- end -}}
 {{- if .Values.proxy.tls.enabled -}}
-   0.0.0.0:{{ .Values.proxy.tls.containerPort }} ssl
+   0.0.0.0:{{ .Values.proxy.tls.containerPort }} ssl http2
 {{- end -}}
 {{- end -}}
 
-{{- end }}
+{{- end -}}
 
 {{/*
 Create the KONG_ADMIN_GUI_LISTEN value string
@@ -177,14 +177,24 @@ The name of the service used for the ingress controller's validation webhook
 - name: {{ template "kong.fullname" . }}-tmp
   emptyDir: {}
 {{- range .Values.plugins.configMaps }}
-- name: kong-plugin-{{ empty .path | ternary .pluginName .name }}
+- name: kong-plugin-{{ .pluginName }}
   configMap:
     name: {{ .name }}
+{{- range .subdirectories }}
+- name: {{ .name }}
+  configMap:
+    name: {{ .name }}
+{{- end }}
 {{- end }}
 {{- range .Values.plugins.secrets }}
 - name: kong-plugin-{{ .pluginName }}
   secret:
     secretName: {{ .name }}
+{{- range .subdirectories }}
+- name: {{ .name }}
+  secret:
+    secretName: {{ .name }}
+{{- end }}
 {{- end }}
 - name: custom-nginx-template-volume
   configMap:
@@ -226,14 +236,26 @@ The name of the service used for the ingress controller's validation webhook
   mountPath: /etc/secrets/{{ . }}
 {{- end }}
 {{- range .Values.plugins.configMaps }}
-- name:  kong-plugin-{{ empty .path | ternary .pluginName .name }}
-  mountPath: /opt/kong/plugins/{{ coalesce .path .pluginName }}
+{{- $mountPath := printf "/opt/kong/plugins/%s" .pluginName }}
+- name:  kong-plugin-{{ .pluginName }}
+  mountPath: {{ $mountPath }}
+  readOnly: true
+{{- range .subdirectories }}
+- name: {{ .name }}
+  mountPath: {{ printf "%s/%s" $mountPath .path }}
   readOnly: true
 {{- end }}
+{{- end }}
 {{- range .Values.plugins.secrets }}
-- name:  kong-plugin-{{ empty .path | ternary .pluginName .name }}
-  mountPath: /opt/kong/plugins/{{ coalesce .path .pluginName }}
+{{- $mountPath := printf "/opt/kong/plugins/%s" .pluginName }}
+- name:  kong-plugin-{{ .pluginName }}
+  mountPath: {{ $mountPath }}
   readOnly: true
+{{- range .subdirectories }}
+- name: {{ .name }}
+  mountPath: {{ printf "%s/%s" $mountPath .path }}
+  readOnly: true
+{{- end }}
 {{- end }}
 {{- end -}}
 
@@ -336,7 +358,7 @@ the template that it itself is using form the above sections.
 */}}
 {{- $autoEnv := dict -}}
 
-{{- $_ := set $autoEnv "KONG_LUA_PACKAGE_PATH" "/opt/?.lua;;" -}}
+{{- $_ := set $autoEnv "KONG_LUA_PACKAGE_PATH" "/opt/?.lua;/opt/?/init.lua;;" -}}
 
 {{- if .Values.admin.useTLS }}
   {{- $_ := set $autoEnv "KONG_ADMIN_LISTEN" (printf "0.0.0.0:%d ssl" (int64 .Values.admin.containerPort)) -}}
@@ -388,7 +410,7 @@ the template that it itself is using form the above sections.
 
   {{- if .Values.enterprise.portal.enabled }}
     {{- $_ := set $autoEnv "KONG_PORTAL" "on" -}}
-    {{- if .Values.enterprise.portal.portal_auth }}
+    {{- if .Values.enterprise.portal.portal_auth }} {{/* TODO: deprecated, remove in a future version */}}
       {{- $_ := set $autoEnv "KONG_PORTAL_AUTH" .Values.enterprise.portal.portal_auth -}}
       {{- $portalSession := include "secretkeyref" (dict "name" .Values.enterprise.portal.session_conf_secret "key" "portal_session_conf") -}}
       {{- $_ := set $autoEnv "KONG_PORTAL_SESSION_CONF" $portalSession -}}

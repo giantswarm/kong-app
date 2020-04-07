@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "kong.metaLabels" . | nindent 4 }}
     app.kubernetes.io/component: app
+    giantswarm.io/monitoring_basic_sli: "true"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -33,6 +34,9 @@ spec:
         {{- include "kong.metaLabels" . | nindent 8 }}
         app.kubernetes.io/component: app
     spec:
+      {{- if .Values.priorityClassName }}
+      priorityClassName: "{{ .Values.priorityClassName }}"
+      {{- end }}
       {{- if or .Values.ingressController.enabled .Values.podSecurityPolicy.enabled }}
       serviceAccountName: {{ template "kong.serviceAccountName" . }}
       {{ end }}
