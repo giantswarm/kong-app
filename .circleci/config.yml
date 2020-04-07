@@ -32,7 +32,7 @@ jobs:
 workflows:
   package-and-push-chart-on-tag:
     jobs:
-      - test-in-kind:
+      - test-in-kind
       - architect/push-to-app-catalog:
           name: "package and push kong-app chart"
           app_catalog: "giantswarm-catalog"
