@@ -364,6 +364,7 @@ section of `values.yaml` file:
 | installCRDs                        | Create CRDs. **FOR HELM3, MAKE SURE THIS VALUE IS SET TO `false`.**  Regardless of value of this, Helm v3+ will install the CRDs if those are not present already. Use `--skip-crds` with `helm install` if you want to skip CRD creation.| false |
 | serviceAccount.create              | Create Service Account for IngresController                                           | true
 | serviceAccount.name                | Use existing Service Account, specifiy it's name                                      | ""
+| serviceAccount.annotations         | Annotations for Service Account                                                       | {}
 | env                                | Specify Kong Ingress Controller configuration via environment variables               |                                                                              |
 | ingressClass                       | The ingress-class value for controller                                                | kong                                                                         |
 | args                               | List of ingress-controller cli arguments                                              | []                                                                           |
