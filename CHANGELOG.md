@@ -17,12 +17,6 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Fix template helpers issue converting port number for the webhook endpoint.
 
-## [v0.8.2] - 2020-06-02
-
-### Added
-
-- Added dates to CHANELOG entries.
-
 ## [v0.8.1] - 2020-06-02
 
 - Sync with upstream - [v1.6.1](https://github.com/Kong/charts/blob/master/charts/kong/CHANGELOG.md#161)

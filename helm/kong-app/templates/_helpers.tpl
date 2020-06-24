@@ -190,7 +190,7 @@ The name of the service used for the ingress controller's validation webhook
 {{- $_ := set $autoEnv "CONTROLLER_ELECTION_ID" (printf "kong-ingress-controller-leader-%s" .Values.ingressController.ingressClass) -}}
 {{- $_ := set $autoEnv "CONTROLLER_KONG_URL" (include "kong.adminLocalURL" .) -}}
 {{- if .Values.ingressController.admissionWebhook.enabled }}
-  {{- $_ := set $autoEnv "CONTROLLER_ADMISSION_WEBHOOK_LISTEN" (printf "0.0.0.0:%d" .Values.ingressController.admissionWebhook.port) -}}
+  {{- $_ := set $autoEnv "CONTROLLER_ADMISSION_WEBHOOK_LISTEN" (printf "0.0.0.0:%s" (.Values.ingressController.admissionWebhook.port | toString)) -}}
 {{- end }}
 
 {{/*
@@ -285,8 +285,8 @@ The name of the service used for the ingress controller's validation webhook
   mountPath: {{ $mountPath }}
   readOnly: true
 {{- range .subdirectories }}
-- name: {{ .name  }}
-  mountPath: {{ printf "%s/%s" $mountPath ( .path | default .name ) }}
+- name: {{ .name }}
+  mountPath: {{ printf "%s/%s" $mountPath .path }}
   readOnly: true
 {{- end }}
 {{- end }}
@@ -311,7 +311,7 @@ The name of the service used for the ingress controller's validation webhook
 {{- range .Values.plugins.secrets -}}
   {{ $myList = append $myList .pluginName -}}
 {{- end }}
-{{- $myList | join "," -}}
+{{- $myList | uniq | join "," -}}
 {{- end -}}
 
 {{- define "kong.wait-for-db" -}}
