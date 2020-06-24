@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Sync with upstream - [v1.7.0](https://github.com/Kong/charts/blob/master/charts/kong/CHANGELOG.md#170) 
+
 ### Fixed
 
 - Force cast to string for Admission Webhook port [#59](https://github.com/giantswarm/kong-app/pull/59)
