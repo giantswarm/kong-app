@@ -286,7 +286,7 @@ The name of the service used for the ingress controller's validation webhook
   readOnly: true
 {{- range .subdirectories }}
 - name: {{ .name }}
-  mountPath: {{ printf "%s/%s" $mountPath .path }}
+  mountPath: {{ printf "%s/%s" $mountPath ( .path | default .name ) }}
   readOnly: true
 {{- end }}
 {{- end }}
