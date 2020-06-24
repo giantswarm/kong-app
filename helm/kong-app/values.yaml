@@ -351,7 +351,7 @@ ingressController:
 # -----------------------------------------------------------------------------
 
 # Kong can run without a database or use either Postgres or Cassandra
-# as a backend datatstore for it's configuration.
+# as a backend datatstore for its configuration.
 # By default, this chart installs Kong without a database.
 
 # If you would like to use a database, there are two options:
