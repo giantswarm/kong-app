@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project's packages adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [v.0.8.4] - 2020-06-26
 
 ### Changed
 
@@ -13,7 +13,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Fixed
 
-- Force cast to string for Admission Webhook port [#59](https://github.com/giantswarm/kong-app/pull/59)
+- Uses fix from upstream-branch next to resolve issue "CONTROLLER_ADMISSION_WEBHOOK_LISTEN" which overwrites our fix below.
+    - Force cast to string for Admission Webhook port [#59](https://github.com/giantswarm/kong-app/pull/59)
 
 ## [v0.8.3] - 2020-06-17
 
