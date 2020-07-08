@@ -10,7 +10,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Changed
 
 - Sync with upstream - [v1.7.0](https://github.com/Kong/charts/blob/master/charts/kong/CHANGELOG.md#170) 
-
+- Update architect-orb to 0.10.0
 ### Fixed
 
 - Uses fix from upstream-branch next to resolve issue "CONTROLLER_ADMISSION_WEBHOOK_LISTEN" which overwrites our fix below.
