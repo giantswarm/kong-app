@@ -9,6 +9,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [0.9.1] - 2020-08-25
 
+### Fixed
+
+- Split registry value in `values.yaml` to allow to switch registry per installation
+
 ## [0.9.0] - 2020-08-25
 
 ### Updated
