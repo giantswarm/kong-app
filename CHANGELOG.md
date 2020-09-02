@@ -9,6 +9,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [0.9.1] - 2020-08-25
 
+### Changed
+
+- Split registry value to allow switching registry
+
 ## [0.9.0] - 2020-08-25
 
 ### Updated
