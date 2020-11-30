@@ -293,6 +293,16 @@ The name of the service used for the ingress controller's validation webhook
   secret:
     secretName: {{ . }}
 {{- end }}
+{{- range .Values.extraConfigMaps }}
+- name: {{ .name }}
+  configMap:
+    name: {{ .name }}
+{{- end }}
+{{- range .Values.extraSecrets }}
+- name: {{ .name }}
+  secret:
+    secretName: {{ .name }}
+{{- end }}
 {{- end -}}
 
 {{- define "kong.volumeMounts" -}}
@@ -316,7 +326,7 @@ The name of the service used for the ingress controller's validation webhook
   mountPath: {{ $mountPath }}
   readOnly: true
 {{- range .subdirectories }}
-- name: {{ .name }}
+- name: {{ .name  }}
   mountPath: {{ printf "%s/%s" $mountPath ( .path | default .name ) }}
   readOnly: true
 {{- end }}
@@ -332,6 +342,24 @@ The name of the service used for the ingress controller's validation webhook
   readOnly: true
 {{- end }}
 {{- end }}
+
+{{- range .Values.extraConfigMaps }}
+- name:  {{ .name }}
+  mountPath: {{ .mountPath }}
+
+  {{- if .subPath }}
+  subPath: {{ .subPath }}
+  {{- end }}
+{{- end }}
+{{- range .Values.extraSecrets }}
+- name:  {{ .name }}
+  mountPath: {{ .mountPath }}
+
+  {{- if .subPath }}
+  subPath: {{ .subPath }}
+  {{- end }}
+{{- end }}
+
 {{- end -}}
 
 {{- define "kong.plugins" -}}
@@ -342,7 +370,7 @@ The name of the service used for the ingress controller's validation webhook
 {{- range .Values.plugins.secrets -}}
   {{ $myList = append $myList .pluginName -}}
 {{- end }}
-{{- $myList | uniq | join "," -}}
+{{- $myList | join "," -}}
 {{- end -}}
 
 {{- define "kong.wait-for-db" -}}
@@ -350,7 +378,7 @@ The name of the service used for the ingress controller's validation webhook
 {{- if .Values.image.unifiedRepoTag }}
   image: "{{ .Values.image.unifiedRepoTag }}"
 {{- else }}
-  image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+  image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
 {{- end }}
   imagePullPolicy: {{ .Values.image.pullPolicy }}
   env:
@@ -384,7 +412,7 @@ The name of the service used for the ingress controller's validation webhook
 {{- if .Values.ingressController.image.unifiedRepoTag }}
   image: "{{ .Values.ingressController.image.unifiedRepoTag }}"
 {{- else }}
-  image: "{{ .Values.image.registry }}/{{ .Values.ingressController.image.repository }}:{{ .Values.ingressController.image.tag }}"
+  image: "{{ .Values.ingressController.image.repository }}:{{ .Values.ingressController.image.tag }}"
 {{- end }}
   imagePullPolicy: {{ .Values.image.pullPolicy }}
   readinessProbe:
@@ -623,7 +651,7 @@ Environment variables are sorted alphabetically
 {{- if .Values.waitImage.unifiedRepoTag }}
   image: "{{ .Values.waitImage.unifiedRepoTag }}"
 {{- else }}
-  image: "{{ .Values.image.registry }}/{{ .Values.waitImage.repository }}:{{ .Values.waitImage.tag }}"
+  image: "{{ .Values.waitImage.repository }}:{{ .Values.waitImage.tag }}"
 {{- end }}
   imagePullPolicy: {{ .Values.waitImage.pullPolicy }}
   env:
@@ -632,4 +660,14 @@ Environment variables are sorted alphabetically
   volumeMounts:
   - name: {{ template "kong.fullname" . }}-bash-wait-for-postgres
     mountPath: /wait_postgres
+{{- end -}}
+
+{{- define "kong.deprecation-warnings" -}}
+  {{- $warnings := list -}}
+  {{- range $warning := . }}
+    {{- $warnings = append $warnings (wrap 80 (printf "WARNING: %s" $warning)) -}}
+    {{- $warnings = append $warnings "\n\n" -}}
+  {{- end -}}
+  {{- $warningString := ($warnings | join "") -}}
+  {{- $warningString -}}
 {{- end -}}
