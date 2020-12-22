@@ -195,7 +195,7 @@ proxy:
     - http2
 
   # Define stream (TCP) listen
-  # To enable, remove "{}", uncomment the section below, and select your desired
+  # To enable, remove "[]", uncomment the section below, and select your desired
   # ports and parameters. Listens are dynamically named after their servicePort,
   # e.g. "stream-9000" for the below.
   stream: []
