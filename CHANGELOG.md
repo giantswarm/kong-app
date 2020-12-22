@@ -54,6 +54,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ## [0.9.0] - 2020-08-25
 
 ### Updated
+
 - Upgraded architect-orb to 0.10.0
 - Add github workflows for release automation
 - Sync with upstream chart [v1.8.0](https://github.com/Kong/charts/tree/kong-1.8.0)
