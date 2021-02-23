@@ -52,7 +52,8 @@ env:
 
 # Specify Kong's Docker image and repository details here
 image:
-  repository: kong
+  registry: quay.io
+  repository: giantswarm/kong
   tag: "2.2"
   # Kong Enterprise
   # repository: kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition
@@ -194,10 +195,10 @@ proxy:
     - http2
 
   # Define stream (TCP) listen
-  # To enable, remove "{}", uncomment the section below, and select your desired
+  # To enable, remove "[]", uncomment the section below, and select your desired
   # ports and parameters. Listens are dynamically named after their servicePort,
   # e.g. "stream-9000" for the below.
-  stream: {}
+  stream: []
     #   # Set the container (internal) and service (external) ports for this listen.
     #   # These values should normally be the same. If your environment requires they
     #   # differ, note that Kong will match routes based on the containerPort only.
@@ -307,7 +308,7 @@ dblessConfig:
 ingressController:
   enabled: true
   image:
-    repository: kong-docker-kubernetes-ingress-controller.bintray.io/kong-ingress-controller
+    repository: giantswarm/kong-ingress-controller
     tag: "1.0"
   args: []
 
@@ -330,7 +331,11 @@ ingressController:
     failurePolicy: Fail
     port: 8080
 
-  ingressClass: kong
+  # This has been changed from the default `kong`
+  # as it allows this app to exist alongside other
+  # ingress controllers, such as nginx which is the
+  # default in the cluster.
+  ingressClass: kong-app
 
   rbac:
     # Specifies whether RBAC resources should be created
@@ -345,7 +350,7 @@ ingressController:
     # The annotations for service account
     annotations: {}
 
-  installCRDs: true
+  installCRDs: false
 
   # general properties
   livenessProbe:
@@ -368,14 +373,20 @@ ingressController:
     periodSeconds: 10
     successThreshold: 1
     failureThreshold: 3
-  resources: {}
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
 
 # -----------------------------------------------------------------------------
 # Postgres sub-chart parameters
 # -----------------------------------------------------------------------------
 
 # Kong can run without a database or use either Postgres or Cassandra
-# as a backend datatstore for it's configuration.
+# as a backend datatstore for its configuration.
 # By default, this chart installs Kong without a database.
 
 # If you would like to use a database, there are two options:
@@ -399,8 +410,8 @@ postgresql:
 # -----------------------------------------------------------------------------
 
 waitImage:
-  repository: bash
-  tag: 5
+  repository: giantswarm/busybox
+  tag: 1.32.0
   pullPolicy: IfNotPresent
 
 # update strategy
@@ -412,13 +423,13 @@ updateStrategy: {}
 
 # If you want to specify resources, uncomment the following
 # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-resources: {}
-  # limits:
-  #  cpu: 100m
-  #  memory: 256Mi
-  # requests:
-  #  cpu: 100m
-  #  memory: 256Mi
+resources:
+  limits:
+    cpu: 100m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 512Mi
 
 # readinessProbe for Kong pods
 # If using Kong Enterprise with RBAC, you must add a Kong-Admin-Token header
@@ -465,7 +476,14 @@ tolerations: []
 nodeSelector: {}
 
 # Annotation to be added to Kong pods
-podAnnotations: {}
+# Removing giantswarm.io annotations will result in Giant Swarm being unable to
+# monitor the deployment.
+podAnnotations:
+  giantswarm.io/monitoring: "true"
+  giantswarm.io/monitoring-path: metrics
+  giantswarm.io/monitoring-port: "9542"
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "9542"
 
 # Labels to be added to Kong pods
 podLabels: {}
@@ -501,7 +519,7 @@ podDisruptionBudget:
   maxUnavailable: "50%"
 
 podSecurityPolicy:
-  enabled: false
+  enabled: true
   spec:
     privileged: false
     fsGroup:
