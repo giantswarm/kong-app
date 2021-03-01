@@ -12,7 +12,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Fixed
 
-- Change `waitImage` values to make migration pods work.
+- Change `waitImage` values to make migration pods work. [#100](https://github.com/giantswarm/kong-app/pull/100)
 
 ## [v1.1.0] - 2020-12-02
 
