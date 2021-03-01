@@ -410,8 +410,8 @@ postgresql:
 # -----------------------------------------------------------------------------
 
 waitImage:
-  repository: giantswarm/busybox
-  tag: 1.32.0
+  repository: giantswarm/bash
+  tag: 5.0
   pullPolicy: IfNotPresent
 
 # update strategy

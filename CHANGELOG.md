@@ -10,6 +10,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Added
 - Added values.schema.json for validation of default values
 
+### Fixed
+
+- Change `waitImage` values to make migration pods work.
+
 ## [v1.1.0] - 2020-12-02
 
 ### Updated
