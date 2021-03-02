@@ -38,7 +38,7 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": "string"
+                            "type": ["null", "string"]
                         },
                         "path": {
                             "type": "string"
@@ -113,7 +113,7 @@
                     "type": "integer"
                 },
                 "targetCPUUtilizationPercentage": {
-                    "type": "integer"
+                    "type": ["null", "integer"]
                 }
             }
         },
@@ -195,7 +195,7 @@
                             "type": "string"
                         },
                         "services": {
-                            "type": "array"
+                            "type": ["null", "array"]
                         }
                     }
                 },
@@ -537,7 +537,7 @@
                             "type": "boolean"
                         },
                         "name": {
-                            "type": "string"
+                            "type": ["null", "string"]
                         }
                     }
                 }
@@ -637,7 +637,7 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": "string"
+                            "type": ["null", "string"]
                         },
                         "path": {
                             "type": "string"
@@ -847,7 +847,7 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": "string"
+                            "type": ["null", "string"]
                         },
                         "path": {
                             "type": "string"
@@ -918,7 +918,7 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": "string"
+                            "type": ["null", "string"]
                         },
                         "path": {
                             "type": "string"
