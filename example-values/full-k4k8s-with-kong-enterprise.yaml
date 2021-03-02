@@ -11,11 +11,8 @@
 #   the Portal and Portal API.
 
 image:
-  repository: kong-docker-kong-enterprise-edition-docker.bintray.io/kong-enterprise-edition
-  tag: 2.2.1.0-alpine
-  pullSecrets:
-    # CHANGEME: https://github.com/Kong/charts/blob/main/charts/kong/README.md#kong-enterprise-docker-registry-access
-    - kong-enterprise-edition-docker
+  repository: kong-docker-kong-gateway-docker.bintray.io/kong-enterprise-edition
+  tag: "2.3.2.0-alpine"
 
 env:
   prefix: /kong_prefix/
@@ -69,7 +66,6 @@ proxy:
 
   ingress:
     enabled: false
-    hosts: []
     annotations: {}
     path: /
 
@@ -97,7 +93,7 @@ enterprise:
     smtp_admin_emails: none@example.com
     smtp_host: smtp.example.com
     smtp_port: 587
-    smtp_auth_type: nil
+    smtp_auth_type: ''
     smtp_ssl: nil
     smtp_starttls: true
     auth:
