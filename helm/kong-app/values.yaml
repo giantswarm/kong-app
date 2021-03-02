@@ -432,7 +432,7 @@ waitImage:
   # Optionally specify an image that provides bash for pre-migration database
   # checks. If none is specified, the chart uses the Kong image. The official
   # Kong images provide bash
-  # repository: bash
+  # repository: giantswarm/bash
   # tag: 5
   pullPolicy: IfNotPresent
 

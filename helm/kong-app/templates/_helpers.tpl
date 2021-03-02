@@ -771,8 +771,10 @@ Environment variables are sorted alphabetically
 - name: wait-for-postgres
 {{- if (or .Values.waitImage.unifiedRepoTag .Values.waitImage.repository) }}
   image: "{{ .Values.waitImage.unifiedRepoTag }}"
-{{- else }}
+{{- else if .Values.waitImage.repository }}
   image: "{{ .Values.image.registry }}/{{ .Values.waitImage.repository }}:{{ .Values.waitImage.tag }}"
+{{- else }} {{/* default to the Kong image */}}
+  image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
 {{- end }}
   imagePullPolicy: {{ .Values.waitImage.pullPolicy }}
   env:
