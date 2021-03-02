@@ -410,8 +410,17 @@ postgresql:
 # -----------------------------------------------------------------------------
 
 waitImage:
-  repository: giantswarm/bash
-  tag: 5.0
+  # Wait for the database to come online before starting Kong or running migrations
+  # If Kong is to access the database through a service mesh that injects a sidecar to
+  # Kong's container, this must be disabled. Otherwise there'll be a deadlock:
+  # InitContainer waiting for DB access that requires the sidecar, and the sidecar
+  # waiting for InitContainers to finish.
+  enabled: true
+  # Optionally specify an image that provides bash for pre-migration database
+  # checks. If none is specified, the chart uses the Kong image. The official
+  # Kong images provide bash
+  # repository: giantswarm/bash
+  # tag: 5
   pullPolicy: IfNotPresent
 
 # update strategy
