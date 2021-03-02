@@ -5,18 +5,8 @@ orbs:
 workflows:
   package-and-push-chart-on-tag:
     jobs:
-      - architect/run-kat-tests:
-          name: "test with kat"
-          chart: "kong-app"
-          ct_config: ".circleci/ct-config.yaml"
-          kube-app-testing-version: "fix-helm-url"
-          filters:
-            tags:
-              only: /^v.*/
       - architect/push-to-app-catalog:
           name: "package and push kong-app chart"
-          requires:
-            - "test with kat"
           app_catalog: "giantswarm-catalog"
           app_catalog_test: "giantswarm-test-catalog"
           chart: "kong-app"
