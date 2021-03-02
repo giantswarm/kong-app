@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Do not set `waitImage.repository` in alignment with upstream.
+
 ## [1.1.1] - 2021-03-02
 
 ### Added
