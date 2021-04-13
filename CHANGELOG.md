@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project's packages adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+
+- Fix for golang 1.15 deprecation of "legacy Common Name field"
+
+Reference:
+- https://github.com/golang/go/issues/39568#issuecomment-671424481
 
 ## [0.9.2] - 2020-10-28
 ### Added
