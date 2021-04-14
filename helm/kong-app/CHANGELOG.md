@@ -1,5 +1,146 @@
 # Changelog
 
+## 1.15.0
+
+1.15.0 is an interim release before the planned release of 2.0.0. There were
+several feature changes we wanted to release prior to the removal of deprecated
+functionality for 2.0. The original planned deprecations covered in the [1.14.0
+changelog](#1140) are still planned for 2.0.0.
+
+### Improvements
+
+* The default Kong version is now 2.3 and the default Kong Enterprise version
+  is now 2.3.2.0.
+* Added configurable `terminationGracePeriodSeconds` for the pre-stop lifecycle
+  hook.
+  ([#271](https://github.com/Kong/charts/pull/271)).
+* Initial migration database wait init containers no longer have a default
+  image configuration in values.yaml. When no image is specified, the chart
+  will use the Kong image. The standard Kong images include bash, and can run
+  the database wait script without downloading a separate image. Configuring a
+  wait image is now only necessary if you use a custom Kong image that lacks
+  bash.
+  ([#285](https://github.com/Kong/charts/pull/285)).
+* Init containers for database availability and migration completeness can now
+  be disabled. They cause compatibility issues with many service meshes.
+  ([#285](https://github.com/Kong/charts/pull/285)).
+* Removed the default migration Job annotation that disabled Kuma's mesh proxy.
+  The latest version of Kuma no longer prevents Jobs from completing.
+  ([#285](https://github.com/Kong/charts/pull/285)).
+* Services now support user-configurable labels, and the Prometheus
+  ServiceMonitor label is included on the proxy Service by default. Users that
+  disable the proxy Service and add this label to another Service to collect
+  metrics.
+  ([#290](https://github.com/Kong/charts/pull/290)).
+* Migration Jobs now allow resource quota configuration. Init containers
+  inherit their resource quotas from their associated Kong container.
+  ([#294](https://github.com/Kong/charts/pull/294)).
+
+### Fixed
+
+* The database readiness wait script ConfigMap and associated mounts are no
+  longer created if that feature is not in use.
+  ([#285](https://github.com/Kong/charts/pull/285)).
+* Removed a duplicated field from CRDs.
+  ([#281](https://github.com/Kong/charts/pull/281)).
+
+## 1.14.5
+
+### Fixed
+
+* Removed `http2` from default status listen TLS parameters. It only supports a
+  limited subset of the extra listen parameters, and does not allow `http2`.
+
+## 1.14.4
+
+### Fixed
+
+* Status listens now include parameters in the default values.yaml. The absence
+  of these defaults caused a template rendering error when the TLS listen was
+  enabled.
+
+### Documentation
+
+* Updated status listen comments to reflect TLS listen availability on Kong
+  2.1+.
+
+## 1.14.3
+
+### Fixed
+
+* Fix issues with legacy proxy Ingress object template.
+
+## 1.14.2
+
+### Fixed
+
+* Corrected invalid default value for `enterprise.smtp.smtp_auth`.
+
+## 1.14.1
+
+### Fixed
+
+* Moved several Kong container settings into the appropriate template block.
+  Previously these were rendered whether or not the Kong container was enabled,
+  which unintentionally applied them to the controller container.
+
+## 1.14.0
+
+### Breaking changes
+
+1.14 is the last planned 1.x version of the Kong chart. 2.x will remove support
+for Helm 2.x and all deprecated configuration. The chart prints a warning when
+upgrading or installing if it detects any configuration still using an old
+format.
+
+* All Ingress and Service resources now use the same template. This ensures
+  that all chart Ingresses and Services support the same configuration. The
+  proxy previously used a unique Ingress configuration, which is now
+  deprecated. If you use the proxy Ingress, [see the instructions in
+  UPGRADE.md](https://github.com/Kong/charts/blob/kong-1.14.0/charts/kong/UPGRADE.md#removal-of-multi-host-proxy-ingress)
+  to update your configuration. No changes are required for other Service and
+  Ingress configurations.
+  ([#251](https://github.com/Kong/charts/pull/251)).
+* The chart now uses the standard Kong status endpoint instead of custom
+  configuration, allowing users to specify their own custom configuration. The
+  status endpoint is no available in versions older than Kong 1.4.0 or Kong
+  Enterprise 1.5.0; if you use an older version, you will need to [add and load
+  the old custom configuration](https://github.com/Kong/charts/blob/main/charts/kong/UPGRADE.md#default-custom-server-block-replaced-with-status-listen).
+
+  If you use a newer version and include Kong container readinessProbe and/or
+  livenessProbe configuration in your values.yaml, you must change the port
+  from `metrics` to `status`.
+  ([#255](https://github.com/Kong/charts/pull/255)).
+
+### Fixed
+
+* Correct an issue with migrations Job toggles.
+  ([#231](https://github.com/Kong/charts/pull/231))
+
+## 1.13.0
+
+### Improvements
+
+* Updated default Kong Enterprise version to 2.2.1.0-alpine.
+* Updated default Kong Ingress Controller version to 1.1.
+* Add `namespace` to values.yaml to override release namespace if desired.
+  ([#231](https://github.com/Kong/charts/pull/231))
+
+### Fixed
+
+* Migration Jobs now use the same nodeSelector configuration as the main Kong
+  Deployment.
+  ([#238](https://github.com/Kong/charts/pull/238))
+* Disabled custom Kong template mount if Kong is not enabled.
+  ([#240](https://github.com/Kong/charts/pull/240))
+* Changed YAML string to a YAML boolean.
+  ([#240](https://github.com/Kong/charts/pull/240))
+
+### Documentation
+
+* Clarify requirements for using horizontal pod autoscalers.
+  ([#236](https://github.com/Kong/charts/pull/236))
+
 ## 1.12.0
 
 ### Improvements
