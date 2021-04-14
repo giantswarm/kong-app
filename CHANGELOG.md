@@ -7,6 +7,13 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Fix for golang 1.15 deprecation of "legacy Common Name field"
+
+Reference:
+- https://github.com/golang/go/issues/39568#issuecomment-671424481
+
 ### IMPORTANT
 
 >1.15.0 is an interim release before the planned release of 2.0.0. There were
@@ -24,6 +31,7 @@ Make sure to review the upstream [changelog](helm/kong-app/CHANGELOG.md) and the
 - Kong 2.2 --> 2.3
 
 See [upgrade documentation](helm/kong-app/UPGRADE.md) for detailed list of changes and improvements.
+
 
 ## [1.1.2] - 2021-03-02
 
