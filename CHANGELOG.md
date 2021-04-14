@@ -7,6 +7,13 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Fix for golang 1.15 deprecation of "legacy Common Name field"
+
+Reference:
+- https://github.com/golang/go/issues/39568#issuecomment-671424481
+
 ## [1.1.2] - 2021-03-02
 
 ### Changed
