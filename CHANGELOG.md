@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [.1.1.3] - 2021-04-14
+
 ### Added
 
 - Fix for golang 1.15 deprecation of "legacy Common Name field"
@@ -302,7 +304,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v1.1.2...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v.1.1.3...HEAD
+[.1.1.3]: https://github.com/giantswarm/kong-app/compare/v1.1.2...v.1.1.3
 [1.1.2]: https://github.com/giantswarm/kong-app/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/giantswarm/kong-app/compare/v1.1.0...v1.1.1
 [v1.1.0]: https://github.com/giantswarm/kong-app/compare/v1.0.0...v1.1.0
