@@ -7,6 +7,13 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Updated
+
+- Update kong image version to 2.2.3
+
+Reference:
+- https://github.com/Kong/kong/issues/6739
+
 ## [.1.1.3] - 2021-04-14
 
 ### Added
