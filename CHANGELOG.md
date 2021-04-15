@@ -25,6 +25,8 @@ Reference:
 Reference:
 - https://github.com/golang/go/issues/39568#issuecomment-671424481
 
+## [1.2.0] - 2021-03-04
+
 ### IMPORTANT
 
 >1.15.0 is an interim release before the planned release of 2.0.0. There were
@@ -40,6 +42,7 @@ Make sure to review the upstream [changelog](helm/kong-app/CHANGELOG.md) and the
 
 - architect-orb 0.18.1 --> 2.1.0
 - Kong 2.2 --> 2.3
+- upstream chart 1.12.0 --> 1.15.0
 
 See [upgrade documentation](helm/kong-app/UPGRADE.md) for detailed list of changes and improvements.
 
@@ -313,7 +316,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v1.1.4...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/giantswarm/kong-app/compare/v1.1.4...v1.2.0
 [1.1.4]: https://github.com/giantswarm/kong-app/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/giantswarm/kong-app/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/giantswarm/kong-app/compare/v1.1.1...v1.1.2
