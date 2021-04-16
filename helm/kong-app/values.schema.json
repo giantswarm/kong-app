@@ -45,6 +45,9 @@
                         }
                     }
                 },
+                "labels": {
+                    "type": "object"
+                },
                 "tls": {
                     "type": "object",
                     "properties": {
@@ -126,8 +129,8 @@
                 "enabled": {
                     "type": "boolean"
                 },
-                "externalIPs": {
-                    "type": "array"
+                "labels": {
+                    "type": "object"
                 },
                 "tls": {
                     "type": "object",
@@ -160,8 +163,8 @@
                 "enabled": {
                     "type": "boolean"
                 },
-                "externalIPs": {
-                    "type": "array"
+                "labels": {
+                    "type": "object"
                 },
                 "tls": {
                     "type": "object",
@@ -358,6 +361,12 @@
                     "type": "string"
                 }
             }
+        },
+        "extraConfigMaps": {
+            "type": "array"
+        },
+        "extraSecrets": {
+            "type": "array"
         },
         "image": {
             "type": "object",
@@ -607,9 +616,6 @@
                 "enabled": {
                     "type": "boolean"
                 },
-                "externalIPs": {
-                    "type": "array"
-                },
                 "http": {
                     "type": "object",
                     "properties": {
@@ -644,6 +650,9 @@
                         }
                     }
                 },
+                "labels": {
+                    "type": "object"
+                },
                 "tls": {
                     "type": "object",
                     "properties": {
@@ -675,19 +684,22 @@
                 "annotations": {
                     "type": "object",
                     "properties": {
-                        "kuma.io/sidecar-injection": {
-                            "type": "string"
-                        },
                         "sidecar.istio.io/inject": {
                             "type": "boolean"
                         }
                     }
+                },
+                "jobAnnotations": {
+                    "type": "object"
                 },
                 "postUpgrade": {
                     "type": "boolean"
                 },
                 "preUpgrade": {
                     "type": "boolean"
+                },
+                "resources": {
+                    "type": "object"
                 }
             }
         },
@@ -817,9 +829,6 @@
                 "enabled": {
                     "type": "boolean"
                 },
-                "externalIPs": {
-                    "type": "array"
-                },
                 "http": {
                     "type": "object",
                     "properties": {
@@ -853,6 +862,9 @@
                             "type": "string"
                         }
                     }
+                },
+                "labels": {
+                    "type": "object"
                 },
                 "tls": {
                     "type": "object",
@@ -888,9 +900,6 @@
                 "enabled": {
                     "type": "boolean"
                 },
-                "externalIPs": {
-                    "type": "array"
-                },
                 "http": {
                     "type": "object",
                     "properties": {
@@ -924,6 +933,9 @@
                             "type": "string"
                         }
                     }
+                },
+                "labels": {
+                    "type": "object"
                 },
                 "tls": {
                     "type": "object",
@@ -970,9 +982,6 @@
                 "enabled": {
                     "type": "boolean"
                 },
-                "externalIPs": {
-                    "type": "array"
-                },
                 "http": {
                     "type": "object",
                     "properties": {
@@ -999,10 +1008,18 @@
                         "enabled": {
                             "type": "boolean"
                         },
-                        "hosts": {
-                            "type": "array"
+                        "hostname": {
+                            "type": ["null", "string"]
                         },
                         "path": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "labels": {
+                    "type": "object",
+                    "properties": {
+                        "enable-metrics": {
                             "type": "string"
                         }
                     }
@@ -1116,6 +1133,9 @@
         "status": {
             "type": "object",
             "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
                 "http": {
                     "type": "object",
                     "properties": {
@@ -1124,6 +1144,9 @@
                         },
                         "enabled": {
                             "type": "boolean"
+                        },
+                        "parameters": {
+                            "type": "array"
                         }
                     }
                 },
@@ -1135,10 +1158,16 @@
                         },
                         "enabled": {
                             "type": "boolean"
+                        },
+                        "parameters": {
+                            "type": "array"
                         }
                     }
                 }
             }
+        },
+        "terminationGracePeriodSeconds": {
+            "type": "integer"
         },
         "tolerations": {
             "type": "array"
@@ -1149,13 +1178,10 @@
         "waitImage": {
             "type": "object",
             "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
                 "pullPolicy": {
-                    "type": "string"
-                },
-                "repository": {
-                    "type": "string"
-                },
-                "tag": {
                     "type": "string"
                 }
             }

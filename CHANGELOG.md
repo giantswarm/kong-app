@@ -28,6 +28,24 @@ Make sure to review the upstream [changelog](helm/kong-app/CHANGELOG.md) and the
 
 See [upgrade documentation](helm/kong-app/UPGRADE.md) for detailed list of changes and improvements.
 
+## [1.1.4] - 2021-04-15
+
+### Updated
+
+- Update kong image version to 2.2.3
+
+Reference:
+- https://github.com/Kong/kong/issues/6739
+
+## [.1.1.3] - 2021-04-14
+
+### Added
+
+- Fix for golang 1.15 deprecation of "legacy Common Name field"
+
+Reference:
+- https://github.com/golang/go/issues/39568#issuecomment-671424481
+
 ## [1.1.2] - 2021-03-02
 
 ### Changed
@@ -298,7 +316,9 @@ From upstream CHANGELOG:
 - Disable using Postgres and use Kubernetes resources for storing state.
 
 [Unreleased]: https://github.com/giantswarm/kong-app/compare/v1.2.0...HEAD
-[1.2.0]: https://github.com/giantswarm/kong-app/compare/v1.1.2...v1.2.0
+[1.2.0]: https://github.com/giantswarm/kong-app/compare/v1.1.4...v1.2.0
+[1.1.4]: https://github.com/giantswarm/kong-app/compare/v1.1.3...v1.1.4
+[1.1.3]: https://github.com/giantswarm/kong-app/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/giantswarm/kong-app/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/giantswarm/kong-app/compare/v1.1.0...v1.1.1
 [v1.1.0]: https://github.com/giantswarm/kong-app/compare/v1.0.0...v1.1.0
