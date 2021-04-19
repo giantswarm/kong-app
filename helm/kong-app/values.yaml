@@ -205,7 +205,7 @@ proxy:
     - http2
 
   # Define stream (TCP) listen
-  # To enable, remove "[]", uncomment the section below, and select your desired
+  # To enable, remove "{}", uncomment the section below, and select your desired
   # ports and parameters. Listens are dynamically named after their servicePort,
   # e.g. "stream-9000" for the below.
   stream: []
@@ -486,7 +486,7 @@ lifecycle:
       # Note kong quit has a default timeout of 10 seconds
       command: ["/bin/sh", "-c", "/bin/sleep 15 && kong quit"]
 
-# terminationGracePeriodSeconds is closely related to the lifecycle preStop hook
+# Sets the termination grace period for pods spawned by the Kubernetes Deployment.
 # Ref: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#hook-handler-execution
 terminationGracePeriodSeconds: 30
 
@@ -601,8 +601,9 @@ enterprise:
   enabled: false
   # Kong Enterprise license secret name
   # This secret must contain a single 'license' key, containing your base64-encoded license data
-  # The license secret is required for all Kong Enterprise deployments
-  license_secret: kong-enterprise-license
+  # The license secret is required to unlock all Enterprise features. If you omit it,
+  # Kong will run in free mode, with some Enterprise features disabled.
+  # license_secret: kong-enterprise-license
   vitals:
     enabled: true
   portal:
