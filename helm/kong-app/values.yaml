@@ -56,8 +56,9 @@ env:
 
 # Specify Kong's Docker image and repository details here
 image:
-  repository: kong
-  tag: "2.3"
+  registry: quay.io
+  repository: giantswarm/kong
+  tag: "2.3.3"
   # Kong Enterprise
   # repository: kong-docker-kong-gateway-docker.bintray.io/kong-enterprise-edition
   # tag: "2.3.2.0-alpine"
@@ -207,7 +208,7 @@ proxy:
   # To enable, remove "{}", uncomment the section below, and select your desired
   # ports and parameters. Listens are dynamically named after their servicePort,
   # e.g. "stream-9000" for the below.
-  stream: {}
+  stream: []
     #   # Set the container (internal) and service (external) ports for this listen.
     #   # These values should normally be the same. If your environment requires they
     #   # differ, note that Kong will match routes based on the containerPort only.
@@ -320,7 +321,7 @@ dblessConfig:
 ingressController:
   enabled: true
   image:
-    repository: kong/kubernetes-ingress-controller
+    repository: giantswarm/kong-ingress-controller
     tag: "1.1"
   args: []
 
@@ -343,7 +344,11 @@ ingressController:
     failurePolicy: Fail
     port: 8080
 
-  ingressClass: kong
+  # This has been changed from the default `kong`
+  # as it allows this app to exist alongside other
+  # ingress controllers, such as nginx which is the
+  # default in the cluster.
+  ingressClass: kong-app
 
   rbac:
     # Specifies whether RBAC resources should be created
@@ -379,15 +384,13 @@ ingressController:
     periodSeconds: 10
     successThreshold: 1
     failureThreshold: 3
-  resources: {}
-  # Example reasonable setting for "resources":
-  # resources:
-  #   limits:
-  #     cpu: 100m
-  #     memory: 256Mi
-  #   requests:
-  #     cpu: 50m
-  #     memory: 128Mi
+  resources:
+    limits:
+      cpu: 100m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
 
 # -----------------------------------------------------------------------------
 # Postgres sub-chart parameters
@@ -427,7 +430,7 @@ waitImage:
   # Optionally specify an image that provides bash for pre-migration database
   # checks. If none is specified, the chart uses the Kong image. The official
   # Kong images provide bash
-  # repository: bash
+  # repository: giantswarm/bash
   # tag: 5
   pullPolicy: IfNotPresent
 
@@ -440,13 +443,13 @@ updateStrategy: {}
 
 # If you want to specify resources, uncomment the following
 # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-resources: {}
-  # limits:
-  #  cpu: 100m
-  #  memory: 256Mi
-  # requests:
-  #  cpu: 100m
-  #  memory: 256Mi
+resources:
+  limits:
+    cpu: 100m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 512Mi
 
 # readinessProbe for Kong pods
 # If using Kong Enterprise with RBAC, you must add a Kong-Admin-Token header
@@ -502,7 +505,14 @@ tolerations: []
 nodeSelector: {}
 
 # Annotation to be added to Kong pods
-podAnnotations: {}
+# Removing giantswarm.io annotations will result in Giant Swarm being unable to
+# monitor the deployment.
+podAnnotations:
+  giantswarm.io/monitoring: "true"
+  giantswarm.io/monitoring-path: metrics
+  giantswarm.io/monitoring-port: "9542"
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "9542"
 
 # Labels to be added to Kong pods
 podLabels: {}
@@ -540,7 +550,7 @@ podDisruptionBudget:
   maxUnavailable: "50%"
 
 podSecurityPolicy:
-  enabled: false
+  enabled: true
   spec:
     privileged: false
     fsGroup:
