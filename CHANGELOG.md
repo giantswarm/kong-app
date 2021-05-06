@@ -18,7 +18,7 @@ changelog](#1140) are still planned for 2.0.0.
 
 This update bundles all changes since upstream chart version [1.12.0](https://github.com/Kong/charts/tree/kong-1.12.0)
 
-Make sure to review the upstream [changelog](helm/kong-app/CHANGELOG.md) and the [upgrade documentation](helm/kong-app/UPGRADE.md).
+Make sure to review the upstream [changelog](helm/kong-app/CHANGELOG.md) and the [upgrade documentation](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/UPGRADE.md).
 
 ### Updates
 

@@ -34,9 +34,12 @@ equivalents of these settings and can proceed with upgrading to 2.0.0-rc1.
   ([#305](https://github.com/Kong/charts/pull/305))
 * Added support for Pod `topologySpreadConstraints`.
   ([#308](https://github.com/Kong/charts/pull/308))
+<<<<<<< HEAD
 * Kong Ingress Controller image now pulled from Docker Hub (due to Bintray being
   discontinued). Changed the default Docker image repository for the ingress
   controller.
+=======
+>>>>>>> master
 
 ### Fixed
 
