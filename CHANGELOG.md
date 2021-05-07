@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+2.0.0 marks the stable release of synchronization with upstream [2.0.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#200).
+
+Make sure to review the upstream [changelog](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#200) and the [upgrade documentation](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/UPGRADE.md).
+
 ## [1.2.0] - 2021-03-04
 
 ### IMPORTANT
@@ -18,7 +22,7 @@ changelog](#1140) are still planned for 2.0.0.
 
 This update bundles all changes since upstream chart version [1.12.0](https://github.com/Kong/charts/tree/kong-1.12.0)
 
-Make sure to review the upstream [changelog](helm/kong-app/CHANGELOG.md) and the [upgrade documentation](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/UPGRADE.md).
+Make sure to review the upstream [changelog](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#200) and the [upgrade documentation](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/UPGRADE.md).
 
 ### Updates
 
@@ -26,7 +30,7 @@ Make sure to review the upstream [changelog](helm/kong-app/CHANGELOG.md) and the
 - Kong 2.2 --> 2.3
 - upstream chart 1.12.0 --> 1.15.0
 
-See [upgrade documentation](helm/kong-app/UPGRADE.md) for detailed list of changes and improvements.
+See [upgrade documentation](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/UPGRADE.md) for detailed list of changes and improvements.
 
 ## [1.1.4] - 2021-04-15
 
