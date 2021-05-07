@@ -430,9 +430,6 @@
                 "ingressClass": {
                     "type": "string"
                 },
-                "installCRDs": {
-                    "type": "boolean"
-                },
                 "livenessProbe": {
                     "type": "object",
                     "properties": {
