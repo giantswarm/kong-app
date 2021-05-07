@@ -1169,6 +1169,12 @@
         "terminationGracePeriodSeconds": {
             "type": "integer"
         },
+        "affinity":{
+            "type": "object"
+        },
+        "topologySpreadConstraints": {
+            "type": "object"
+        },
         "tolerations": {
             "type": "array"
         },
