@@ -672,9 +672,9 @@ the template that it itself is using form the above sections.
   {{- end }}
 
   {{- if .Values.enterprise.license_secret -}}
-  {{- $lic := include "secretkeyref" (dict "name" .Values.enterprise.license_secret "key" "license") -}}
-  {{- $_ := set $autoEnv "KONG_LICENSE_DATA" $lic -}}
-    {{- end }}
+    {{- $lic := include "secretkeyref" (dict "name" .Values.enterprise.license_secret "key" "license") -}}
+    {{- $_ := set $autoEnv "KONG_LICENSE_DATA" $lic -}}
+  {{- end }}
 
 {{- end }} {{/* End of the Enterprise settings block */}}
 

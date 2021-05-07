@@ -430,9 +430,6 @@
                 "ingressClass": {
                     "type": "string"
                 },
-                "installCRDs": {
-                    "type": "boolean"
-                },
                 "livenessProbe": {
                     "type": "object",
                     "properties": {
@@ -1168,6 +1165,12 @@
         },
         "terminationGracePeriodSeconds": {
             "type": "integer"
+        },
+        "affinity":{
+            "type": "object"
+        },
+        "topologySpreadConstraints": {
+            "type": "object"
         },
         "tolerations": {
             "type": "array"
