@@ -213,6 +213,9 @@
                 "kong": {
                     "type": "object",
                     "properties": {
+                        "daemonset": {
+                            "type": "boolean"
+                        },
                         "enabled": {
                             "type": "boolean"
                         }

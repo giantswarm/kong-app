@@ -45,10 +45,10 @@ spec:
       {{- end }}
       containers:
       - name: {{ template "kong.name" . }}-post-upgrade-migrations
-        {{- if .Values.image.unifiedRepoTag }}
-        image: "{{ .Values.image.unifiedRepoTag }}"
+        {{- if .Values.image.registry }}
+        image: {{ .Values.image.registry }}/{{ include "kong.getRepoTag" .Values.image }}
         {{- else }}
-        image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: {{ include "kong.getRepoTag" .Values.image }}
         {{- end }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
@@ -63,6 +63,10 @@ spec:
       {{- if .Values.nodeSelector }}
       nodeSelector:
       {{- toYaml .Values.nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations:
+      {{- toYaml .Values.tolerations | nindent 8 }}
       {{- end }}
       restartPolicy: OnFailure
       volumes:

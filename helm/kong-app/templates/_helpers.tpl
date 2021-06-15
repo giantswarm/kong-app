@@ -355,6 +355,12 @@ The name of the service used for the ingress controller's validation webhook
 
 {{- end -}}
 
+{{- define "kong.userDefinedVolumes" -}}
+{{- if .Values.deployment.userDefinedVolumes }}
+{{- toYaml .Values.deployment.userDefinedVolumes }}
+{{- end }}
+{{- end -}}
+
 {{- define "kong.volumes" -}}
 - name: {{ template "kong.fullname" . }}-prefix-dir
   emptyDir: {}
@@ -414,6 +420,12 @@ The name of the service used for the ingress controller's validation webhook
 - name: {{ .name }}
   secret:
     secretName: {{ .name }}
+{{- end }}
+{{- end -}}
+
+{{- define "kong.userDefinedVolumeMounts" -}}
+{{- if .Values.deployment.userDefinedVolumeMounts }}
+{{- toYaml .Values.deployment.userDefinedVolumeMounts }}
 {{- end }}
 {{- end -}}
 
@@ -486,10 +498,10 @@ The name of the service used for the ingress controller's validation webhook
 {{- define "kong.wait-for-db" -}}
 {{ $sockFile := (printf "%s/stream_rpc.sock" (default "/usr/local/kong" .Values.env.prefix)) }}
 - name: wait-for-db
-{{- if .Values.image.unifiedRepoTag }}
-  image: "{{ .Values.image.unifiedRepoTag }}"
+{{- if .Values.image.registry }}
+  image: {{ .Values.image.registry }}/{{ include "kong.getRepoTag" .Values.image }}
 {{- else }}
-  image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+  image: {{ include "kong.getRepoTag" .Values.image }}
 {{- end }}
   imagePullPolicy: {{ .Values.image.pullPolicy }}
   env:
@@ -499,6 +511,7 @@ The name of the service used for the ingress controller's validation webhook
   command: [ "/bin/sh", "-c", "until kong start; do echo 'waiting for db'; sleep 1; done; kong stop; rm -fv {{ $sockFile | squote }}"]
   volumeMounts:
   {{- include "kong.volumeMounts" . | nindent 4 }}
+  {{- include "kong.userDefinedVolumeMounts" . | nindent 4 }}
   resources:
   {{- toYaml .Values.resources | nindent 4 }}
 {{- end -}}
@@ -524,10 +537,10 @@ The name of the service used for the ingress controller's validation webhook
         apiVersion: v1
         fieldPath: metadata.namespace
 {{- include "kong.ingressController.env" .  | indent 2 }}
-{{- if .Values.ingressController.image.unifiedRepoTag }}
-  image: "{{ .Values.ingressController.image.unifiedRepoTag }}"
+{{- if .Values.image.registry }}
+  image: {{ .Values.image.registry }}/{{ include "kong.getRepoTag" .Values.ingressController.image }}
 {{- else }}
-  image: "{{ .Values.image.registry }}/{{ .Values.ingressController.image.repository }}:{{ .Values.ingressController.image.tag }}"
+  image: {{ include "kong.getRepoTag" .Values.ingressController.image }}
 {{- end }}
   imagePullPolicy: {{ .Values.image.pullPolicy }}
   readinessProbe:
@@ -745,12 +758,18 @@ Environment variables are sorted alphabetically
 
 {{- define "kong.wait-for-postgres" -}}
 - name: wait-for-postgres
+{{- if (.Values.image.registry) }}
 {{- if (or .Values.waitImage.unifiedRepoTag .Values.waitImage.repository) }}
-  image: "{{ .Values.waitImage.unifiedRepoTag }}"
-{{- else if .Values.waitImage.repository }}
-  image: "{{ .Values.image.registry }}/{{ .Values.waitImage.repository }}:{{ .Values.waitImage.tag }}"
+  image: {{ .Values.image.registry }}/{{ include "kong.getRepoTag" .Values.waitImage }}
 {{- else }} {{/* default to the Kong image */}}
-  image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+  image: {{ .Values.image.registry }}/{{ include "kong.getRepoTag" .Values.image }}
+{{- end }}
+{{- else }}
+{{- if (or .Values.waitImage.unifiedRepoTag .Values.waitImage.repository) }}
+  image: {{ include "kong.getRepoTag" .Values.waitImage }}
+{{- else }} {{/* default to the Kong image */}}
+  image: {{ include "kong.getRepoTag" .Values.image }}
+{{- end }}
 {{- end }}
   imagePullPolicy: {{ .Values.waitImage.pullPolicy }}
   env:
