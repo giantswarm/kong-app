@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [2.1.0] - 2021-06-15
+
 ### Updates
 
 - Update to align with upstream chart [2.1.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#210) which includes updates for kong to [2.4.1](https://github.com/Kong/kong/blob/master/CHANGELOG.md#241) and kong ingress controller [1.2.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#120---20210324). For more information check the linked changelogs.
@@ -325,7 +327,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/giantswarm/kong-app/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/giantswarm/kong-app/compare/v1.2.0...v2.0.0
 [1.2.0]: https://github.com/giantswarm/kong-app/compare/v1.1.4...v1.2.0
 [1.1.4]: https://github.com/giantswarm/kong-app/compare/v1.1.3...v1.1.4
