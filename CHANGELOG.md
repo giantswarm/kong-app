@@ -102,7 +102,7 @@ Reference:
 
 - Update architect-orb to 0.11.0
 - Sync with upstream chart [1.11.0](https://github.com/Kong/charts/tree/kong-1.11.0)
-- Please check the upstream [CHANGELOG.md](/helm/kong-app/CHANGELOG.md)
+- Please check the upstream [CHANGELOG.md](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#1110)
 
 ### Changed
 
