@@ -14,4 +14,4 @@ sources:
 annotations:
   application.giantswarm.io/values-schema: https://raw.githubusercontent.com/giantswarm/kong-app/v[[ .Version ]]/helm/kong-app/values.schema.json
 version: [[ .Version ]]
-appVersion: "2.4.1"
+appVersion: "2.5"
