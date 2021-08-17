@@ -7,6 +7,18 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Breaking Changes
+
+**Please check ["Breaking Changes" paragraph](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#changelog) of upstream changelog for details**
+
+Overview:
+- Upgraded CRDs to V1 from the previous deprecated v1beta1.
+- Added support for controller metrics ot the Prometheus resources.
+
+### Updates
+
+- Align with upstream chart [2.3.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#230) which includes updates for kong to [2.5](https://github.com/Kong/kong/blob/master/CHANGELOG.md#250) and kong ingress controller [1.3.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#130---20210527). For more information check the linked changelogs.
+
 ## [2.1.0] - 2021-06-15
 
 ### Updates
