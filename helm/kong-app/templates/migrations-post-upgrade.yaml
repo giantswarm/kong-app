@@ -45,7 +45,11 @@ spec:
       {{- end }}
       containers:
       - name: {{ template "kong.name" . }}-post-upgrade-migrations
+        {{- if .Values.image.registry }}
+        image: {{ .Values.image.registry }}/{{ include "kong.getRepoTag" .Values.image }}
+        {{- else }}
         image: {{ include "kong.getRepoTag" .Values.image }}
+        {{- end }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
         {{- include "kong.no_daemon_env" . | nindent 8 }}

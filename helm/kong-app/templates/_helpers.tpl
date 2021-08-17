@@ -492,13 +492,17 @@ The name of the service used for the ingress controller's validation webhook
 {{- range .Values.plugins.secrets -}}
   {{ $myList = append $myList .pluginName -}}
 {{- end }}
-{{- $myList | join "," -}}
+{{- $myList | uniq | join "," -}}
 {{- end -}}
 
 {{- define "kong.wait-for-db" -}}
 {{ $sockFile := (printf "%s/stream_rpc.sock" (default "/usr/local/kong" .Values.env.prefix)) }}
 - name: wait-for-db
+{{- if .Values.image.registry }}
+  image: {{ .Values.image.registry }}/{{ include "kong.getRepoTag" .Values.image }}
+{{- else }}
   image: {{ include "kong.getRepoTag" .Values.image }}
+{{- end }}
   imagePullPolicy: {{ .Values.image.pullPolicy }}
   env:
   {{- include "kong.env" . | nindent 2 }}
@@ -533,7 +537,11 @@ The name of the service used for the ingress controller's validation webhook
         apiVersion: v1
         fieldPath: metadata.namespace
 {{- include "kong.ingressController.env" .  | indent 2 }}
+{{- if .Values.image.registry }}
+  image: {{ .Values.image.registry }}/{{ include "kong.getRepoTag" .Values.ingressController.image }}
+{{- else }}
   image: {{ include "kong.getRepoTag" .Values.ingressController.image }}
+{{- end }}
   imagePullPolicy: {{ .Values.image.pullPolicy }}
   readinessProbe:
 {{ toYaml .Values.ingressController.readinessProbe | indent 4 }}
@@ -750,10 +758,18 @@ Environment variables are sorted alphabetically
 
 {{- define "kong.wait-for-postgres" -}}
 - name: wait-for-postgres
+{{- if (.Values.image.registry) }}
+{{- if (or .Values.waitImage.unifiedRepoTag .Values.waitImage.repository) }}
+  image: {{ .Values.image.registry }}/{{ include "kong.getRepoTag" .Values.waitImage }}
+{{- else }} {{/* default to the Kong image */}}
+  image: {{ .Values.image.registry }}/{{ include "kong.getRepoTag" .Values.image }}
+{{- end }}
+{{- else }}
 {{- if (or .Values.waitImage.unifiedRepoTag .Values.waitImage.repository) }}
   image: {{ include "kong.getRepoTag" .Values.waitImage }}
 {{- else }} {{/* default to the Kong image */}}
   image: {{ include "kong.getRepoTag" .Values.image }}
+{{- end }}
 {{- end }}
   imagePullPolicy: {{ .Values.waitImage.pullPolicy }}
   env:

@@ -11,6 +11,7 @@ metadata:
   labels:
     {{- include "kong.metaLabels" . | nindent 4 }}
     app.kubernetes.io/component: app
+    giantswarm.io/monitoring_basic_sli: "true"
   {{- if .Values.deploymentAnnotations }}
   annotations:
   {{- range $key, $value := .Values.deploymentAnnotations }}
@@ -85,7 +86,11 @@ spec:
       {{- end }}
       {{- if .Values.deployment.kong.enabled }}
       - name: "proxy"
+        {{- if .Values.image.registry }}
+        image: {{ .Values.image.registry }}/{{ include "kong.getRepoTag" .Values.image }}
+        {{- else }}
         image: {{ include "kong.getRepoTag" .Values.image }}
+        {{- end }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
         {{- include "kong.no_daemon_env" . | nindent 8 }}
