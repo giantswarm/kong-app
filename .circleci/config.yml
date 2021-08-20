@@ -1,17 +1,18 @@
 version: 2.1
 orbs:
-  architect: giantswarm/architect@3.2.0
+  architect: giantswarm/architect@4.0.0
 
 workflows:
-  package-and-push-chart-on-tag:
+  version: 2
+  build:
     jobs:
       - architect/push-to-app-catalog:
-          name: "package and push kong-app chart"
+          name: "push-to-giantswarm-app-catalog"
           app_catalog: "giantswarm-catalog"
           app_catalog_test: "giantswarm-test-catalog"
           chart: "kong-app"
-          ct_config: ".circleci/ct-config.yaml"
-          # Trigger job on git tag.
+          executor: "app-build-suite"
           filters:
+            # Trigger job on git tag.
             tags:
               only: /^v.*/

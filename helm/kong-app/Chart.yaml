@@ -10,8 +10,6 @@ maintainers:
   email: traines@konghq.com
 name: kong-app
 sources:
-- https://raw.githubusercontent.com/giantswarm/kong-app/v[[ .Version ]]/README.md
-annotations:
-  application.giantswarm.io/values-schema: https://raw.githubusercontent.com/giantswarm/kong-app/v[[ .Version ]]/helm/kong-app/values.schema.json
-version: [[ .Version ]]
+- https://github.com/giantswarm/kong-app/blob/master/README.md
+version: 2.2.0
 appVersion: "2.5"

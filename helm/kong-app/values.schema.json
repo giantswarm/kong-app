@@ -1047,7 +1047,7 @@
                     }
                 },
                 "stream": {
-                    "type": "object"
+                    "type": "array"
                 },
                 "tls": {
                     "type": "object",
