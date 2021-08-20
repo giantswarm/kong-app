@@ -12,3 +12,4 @@ checks:
   - "no-liveness-probe"
   - "no-readiness-probe"
   - "exposed-services"
+  - "dangling-service"
