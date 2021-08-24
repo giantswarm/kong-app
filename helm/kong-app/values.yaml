@@ -386,7 +386,7 @@ dblessConfig:
 ingressController:
   enabled: true
   image:
-    repository: giantswarm/kong-ingress-controller
+    repository: giantswarm/kubernetes-ingress-controller
     tag: "1.3"
     # Optionally set a semantic version for version-gated features. This can normally
     # be left unset. You only need to set this if your tag is not a semver string,
