@@ -188,6 +188,9 @@
                 }
             }
         },
+        "containerSecurityContext": {
+            "type": "object"
+        },
         "dblessConfig": {
             "type": "object",
             "properties": {
@@ -210,12 +213,20 @@
         "deployment": {
             "type": "object",
             "properties": {
+                "daemonset": {
+                    "type": "boolean"
+                },
                 "kong": {
                     "type": "object",
                     "properties": {
-                        "daemonset": {
+                        "enabled": {
                             "type": "boolean"
-                        },
+                        }
+                    }
+                },
+                "test": {
+                    "type": "object",
+                    "properties": {
                         "enabled": {
                             "type": "boolean"
                         }
@@ -239,9 +250,6 @@
             "properties": {
                 "enabled": {
                     "type": "boolean"
-                },
-                "license_secret": {
-                    "type": "string"
                 },
                 "portal": {
                     "type": "object",
@@ -368,6 +376,9 @@
         "extraConfigMaps": {
             "type": "array"
         },
+        "extraLabels": {
+            "type": "object"
+        },
         "extraSecrets": {
             "type": "array"
         },
@@ -394,6 +405,14 @@
                 "admissionWebhook": {
                     "type": "object",
                     "properties": {
+                        "certificate": {
+                            "type": "object",
+                            "properties": {
+                                "provided": {
+                                    "type": "boolean"
+                                }
+                            }
+                        },
                         "enabled": {
                             "type": "boolean"
                         },
@@ -422,6 +441,9 @@
                 "image": {
                     "type": "object",
                     "properties": {
+                        "effectiveSemver": {
+                            "type": "null"
+                        },
                         "repository": {
                             "type": "string"
                         },
@@ -549,6 +571,9 @@
                             "type": ["null", "string"]
                         }
                     }
+                },
+                "watchNamespaces": {
+                    "type": "array"
                 }
             }
         },
@@ -734,9 +759,6 @@
             "properties": {
                 "enabled": {
                     "type": "boolean"
-                },
-                "maxUnavailable": {
-                    "type": "string"
                 }
             }
         },
@@ -1169,14 +1191,28 @@
         "terminationGracePeriodSeconds": {
             "type": "integer"
         },
-        "affinity":{
-            "type": "object"
-        },
-        "topologySpreadConstraints": {
-            "type": "object"
-        },
         "tolerations": {
             "type": "array"
+        },
+        "udpProxy": {
+            "type": "object",
+            "properties": {
+                "annotations": {
+                    "type": "object"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "labels": {
+                    "type": "object"
+                },
+                "stream": {
+                    "type": "object"
+                },
+                "type": {
+                    "type": "string"
+                }
+            }
         },
         "updateStrategy": {
             "type": "object"
