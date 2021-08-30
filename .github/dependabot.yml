@@ -14,3 +14,11 @@ updates:
       - giantswarm/team-halo-engineers
     ignore:
       - dependency-name: zricethezav/gitleaks-action
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+      time: "04:00"
+    open-pull-requests-limit: 10
+    reviewers:
+      - giantswarm/team-halo-engineers
