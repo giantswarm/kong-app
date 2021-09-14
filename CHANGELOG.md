@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [2.3.1] - 2021-09-14
+
 ### Fixed
 
 - Fix lookup for CA secret for admission webhook.
@@ -345,7 +347,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.3.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.3.1...HEAD
+[2.3.1]: https://github.com/giantswarm/kong-app/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/giantswarm/kong-app/compare/v2.1.0...v2.3.0
 [2.1.0]: https://github.com/giantswarm/kong-app/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/giantswarm/kong-app/compare/v1.2.0...v2.0.0
