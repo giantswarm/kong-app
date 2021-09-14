@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix lookup for CA secret for admission webhook.
+
 ## [2.3.0] - 2021-08-25
 
 ### Breaking Changes
