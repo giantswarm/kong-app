@@ -85,6 +85,8 @@ kind: Secret
 metadata:
   name: {{ template "kong.fullname" . }}-validation-webhook-ca-keypair
   namespace:  {{ template "kong.namespace" . }}
+  annotations:
+    releaseRevision: {{ .Release.Revision | quote }}
   labels:
     {{- include "kong.metaLabels" . | nindent 4 }}
 type: kubernetes.io/tls
@@ -97,6 +99,8 @@ kind: Secret
 metadata:
   name: {{ template "kong.fullname" . }}-validation-webhook-keypair
   namespace:  {{ template "kong.namespace" . }}
+  annotations:
+    releaseRevision: {{ .Release.Revision | quote }}
   labels:
     {{- include "kong.metaLabels" . | nindent 4 }}
 type: kubernetes.io/tls
