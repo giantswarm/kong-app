@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Option to specify [Min Ready Seconds](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#min-ready-seconds) to kong deployment to mitigate kong dropping traffic during upgrades.
+
 ## [2.3.1] - 2021-09-14
 
 ### Fixed
