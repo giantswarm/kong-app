@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [2.3.2] - 2021-10-05
+
 ### Added
 
 - Option to specify [Min Ready Seconds](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#min-ready-seconds) to kong deployment to mitigate kong dropping traffic during upgrades.
@@ -351,7 +353,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.3.1...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.3.2...HEAD
+[2.3.2]: https://github.com/giantswarm/kong-app/compare/v2.3.1...v2.3.2
 [2.3.1]: https://github.com/giantswarm/kong-app/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/giantswarm/kong-app/compare/v2.1.0...v2.3.0
 [2.1.0]: https://github.com/giantswarm/kong-app/compare/v2.0.0...v2.1.0
