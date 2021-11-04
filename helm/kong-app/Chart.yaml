@@ -11,7 +11,7 @@ maintainers:
 name: kong-app
 sources:
 - https://konghq.com/
-version: 2.2.0
+version: 2.3.2
 appVersion: "2.5"
 annotations:
   application.giantswarm.io/team: team-cabbage
