@@ -15,4 +15,3 @@ version: 2.3.2
 appVersion: "2.5"
 annotations:
   application.giantswarm.io/team: team-cabbage
-  application.giantswarm.io/readme: https://raw.githubusercontent.com/giantswarm/kong-app/v[[ .Version ]]/README.md
