@@ -1,8 +1,8 @@
 apiVersion: v1
 description: The Cloud-Native Ingress and API-management
 engine: gotpl
-home: https://konghq.com/
-icon: https://s.giantswarm.io/app-icons/1/png/kong-app-light.png
+home: https://github.com/giantswarm/kong-app
+icon: https://s.giantswarm.io/app-icons/kong/1/light.svg
 maintainers:
 - name: hbagdi
   email: harry@konghq.com
@@ -10,6 +10,8 @@ maintainers:
   email: traines@konghq.com
 name: kong-app
 sources:
-- https://github.com/giantswarm/kong-app/blob/master/README.md
-version: 2.2.0
+- https://konghq.com/
+version: 2.3.2
 appVersion: "2.5"
+annotations:
+  application.giantswarm.io/team: team-cabbage
