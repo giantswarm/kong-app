@@ -9,7 +9,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Added
 
-- monitoring label
+- Add monitoring label so Kong is scraped by monitoring infrastructure.
 
 ## [2.3.2] - 2021-10-05
 
