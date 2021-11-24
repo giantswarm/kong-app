@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Giantswarm monitoring label to metric service to enable scraping of kong.
+
 ## [2.3.2] - 2021-10-05
 
 ### Added
