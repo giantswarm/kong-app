@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Add label `giantswarm.io/service-type: "managed"` so managed app monitoring rules are applied
+
 ## [2.3.3] - 2021-11-24
 
 ### Added
