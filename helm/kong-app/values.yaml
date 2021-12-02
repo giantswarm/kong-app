@@ -848,7 +848,7 @@ portalapi:
   # To specify annotations or labels for the Portal API service, add them to the respective
   # "annotations" or "labels" dictionaries below.
   annotations: {}
-  #  service.beta.kubernetes.io/aws-load-balancer-f-protocol: "*"
+  #  service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
   labels: {}
 
   http:
