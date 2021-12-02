@@ -11,6 +11,7 @@ metadata:
   labels:
     {{- include "kong.metaLabels" . | nindent 4 }}
     app.kubernetes.io/component: app
+    giantswarm.io/service-type: "managed"
     giantswarm.io/monitoring_basic_sli: "true"
   {{- if .Values.deploymentAnnotations }}
   annotations:

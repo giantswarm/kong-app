@@ -735,24 +735,7 @@
             "type": "object"
         },
         "podAnnotations": {
-            "type": "object",
-            "properties": {
-                "giantswarm.io/monitoring": {
-                    "type": "string"
-                },
-                "giantswarm.io/monitoring-path": {
-                    "type": "string"
-                },
-                "giantswarm.io/monitoring-port": {
-                    "type": "string"
-                },
-                "prometheus.io/port": {
-                    "type": "string"
-                },
-                "prometheus.io/scrape": {
-                    "type": "string"
-                }
-            }
+            "type": "object"
         },
         "podDisruptionBudget": {
             "type": "object",
@@ -1155,6 +1138,17 @@
         "status": {
             "type": "object",
             "properties": {
+                "annotations": {
+                    "type": "object",
+                    "properties": {
+                        "giantswarm.io/monitoring": {
+                            "type": "string"
+                        },
+                        "giantswarm.io/monitoring-port": {
+                            "type": "string"
+                        }
+                    }
+                },
                 "enabled": {
                     "type": "boolean"
                 },
@@ -1169,6 +1163,9 @@
                         },
                         "parameters": {
                             "type": "array"
+                        },
+                        "servicePort": {
+                            "type": "integer"
                         }
                     }
                 },
@@ -1183,6 +1180,9 @@
                         },
                         "parameters": {
                             "type": "array"
+                        },
+                        "servicePort": {
+                            "type": "integer"
                         }
                     }
                 }
