@@ -150,6 +150,7 @@ admin:
 # The following settings are required for Giant Swarm to monitor kong
 status:
   enabled: true
+  type: ClusterIP
   annotations:
     giantswarm.io/monitoring: "true"
     giantswarm.io/monitoring-port: "8100"
@@ -847,7 +848,7 @@ portalapi:
   # To specify annotations or labels for the Portal API service, add them to the respective
   # "annotations" or "labels" dictionaries below.
   annotations: {}
-  #  service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
+  #  service.beta.kubernetes.io/aws-load-balancer-f-protocol: "*"
   labels: {}
 
   http:
