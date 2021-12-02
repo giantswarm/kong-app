@@ -147,12 +147,16 @@ admin:
     path: /
 
 # Specify Kong status listener configuration
-# This listen is internal-only. It cannot be exposed through a service or ingress.
+# The following settings are required for Giant Swarm to monitor kong
 status:
   enabled: true
+  annotations:
+    giantswarm.io/monitoring: "true"
+    giantswarm.io/monitoring-port: "8100"
   http:
     # Enable plaintext HTTP listen for the status listen
     enabled: true
+    servicePort: 8100
     containerPort: 8100
     parameters: []
 
@@ -161,6 +165,7 @@ status:
     # Kong versions prior to 2.1 do not support TLS status listens.
     # This setting must remain false on those versions
     enabled: false
+    servicePort: 8543
     containerPort: 8543
     parameters: []
 
@@ -594,12 +599,7 @@ nodeSelector: {}
 # Annotation to be added to Kong pods
 # Removing giantswarm.io annotations will result in Giant Swarm being unable to
 # monitor the deployment.
-podAnnotations:
-  giantswarm.io/monitoring: "true"
-  giantswarm.io/monitoring-path: metrics
-  giantswarm.io/monitoring-port: "9542"
-  prometheus.io/scrape: "true"
-  prometheus.io/port: "9542"
+podAnnotations: {}
 
 # Labels to be added to Kong pods
 podLabels: {}
