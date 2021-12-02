@@ -7,9 +7,15 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- metricsService template and default values to align with chart design
+- remove un-required podAnnotations from values.yaml
+
 ### Added
 
-- Add label `giantswarm.io/service-type: "managed"` so managed app monitoring rules are applied
+- required serviceAnnotations to values.yaml
+- label `giantswarm.io/service-type: "managed"` so managed app monitoring rules are applied
 
 ## [2.3.3] - 2021-11-24
 
