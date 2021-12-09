@@ -147,13 +147,14 @@ admin:
     path: /
 
 # Specify Kong status listener configuration
-# The following settings are required for Giant Swarm to monitor kong
+# DO NOT CHANGE! The following settings are required for Giant Swarm to monitor kong
 status:
   enabled: true
   type: ClusterIP
   annotations:
     giantswarm.io/monitoring: "true"
     giantswarm.io/monitoring-port: "8100"
+    giantswarm.io/monitoring-app-label: "kong-app"
   http:
     # Enable plaintext HTTP listen for the status listen
     enabled: true
