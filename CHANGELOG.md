@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Adds annotation `giantswarm.io/monitoring-app-label` to metrics (status) service as a persistent identifier for monitoring
+
 ## [2.3.4] - 2021-12-02
 
 ### Fixed
