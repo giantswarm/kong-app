@@ -1139,15 +1139,7 @@
             "type": "object",
             "properties": {
                 "annotations": {
-                    "type": "object",
-                    "properties": {
-                        "giantswarm.io/monitoring": {
-                            "type": "string"
-                        },
-                        "giantswarm.io/monitoring-port": {
-                            "type": "string"
-                        }
-                    }
+                    "type": "object"
                 },
                 "enabled": {
                     "type": "boolean"
