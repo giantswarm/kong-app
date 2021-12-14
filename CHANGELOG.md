@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [2.3.5] - 2021-12-14
+
 ### Added
 
 - Adds annotation `giantswarm.io/monitoring-app-label` to metrics (status) service as a persistent identifier for monitoring
@@ -375,7 +377,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.3.4...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.3.5...HEAD
+[2.3.5]: https://github.com/giantswarm/kong-app/compare/v2.3.4...v2.3.5
 [2.3.4]: https://github.com/giantswarm/kong-app/compare/v2.3.3...v2.3.4
 [2.3.3]: https://github.com/giantswarm/kong-app/compare/v2.3.2...v2.3.3
 [2.3.2]: https://github.com/giantswarm/kong-app/compare/v2.3.1...v2.3.2
