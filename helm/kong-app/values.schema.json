@@ -195,15 +195,7 @@
             "type": "object",
             "properties": {
                 "config": {
-                    "type": "object",
-                    "properties": {
-                        "_format_version": {
-                            "type": "string"
-                        },
-                        "services": {
-                            "type": ["null", "array"]
-                        }
-                    }
+                    "type": "string"
                 },
                 "configMap": {
                     "type": "string"
