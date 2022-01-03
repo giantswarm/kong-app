@@ -1,1 +1,5 @@
 kong-app-*.tgz
+
+# app-build/test-suite artifacts
+build
+test_results_*.xml

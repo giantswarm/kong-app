@@ -1,0 +1,10 @@
+# copied from helm/kong-app/ci/default-values.yaml
+proxy:
+  type: NodePort
+
+env:
+  anonymous_reports: "off"
+ingressController:
+  env:
+    anonymous_reports: "false"
+  installCRDs: false
