@@ -9,14 +9,14 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Breaking Changes
 
-- KIC now defaults to version 2.0. If you use a database, you must first perform a temporary intermediate upgrade to disable KIC before upgrading it to 2.0 and re-enabling it. See the [upgrade guide](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/UPGRADE.md#disable-ingress-controller-prior-to-2x-upgrade-when-using-postgresql) for detailed instructions.
+- KIC now defaults to version 2.1. If you use a database, you must first perform a temporary intermediate upgrade to disable KIC before upgrading it to 2.x and re-enabling it. See the [upgrade guide](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/UPGRADE.md#disable-ingress-controller-prior-to-2x-upgrade-when-using-postgresql) for detailed instructions.
 - ServiceAccount are now always created by default unless explicitly disabled. ServiceAccount customization has [moved under the `deployment` section of configuration](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/UPGRADE.md#changed-serviceaccount-configuration-location) to reflect this. This accommodates configurations that need a ServiceAccount but that do not use the ingress controller. ([#455](https://github.com/Kong/charts/pull/455))
 
 ### Updates
 
-- Align with upstream chart [2.6.3](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#263)
-- Default Kong IC version updated to 2.0
-- Default Kong proxy version updated to 2.6
+- Align with upstream chart [2.6.4](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#264)
+- Default Kong IC version updated to 2.1
+- Default Kong proxy version updated to 2.7
 
 **Note** chart versions 2.3.0 through 2.5.0 contained an incorrect KongIngress CRD. The proxy.path field was missing. Helm will not fix this automatically on upgrade. You can fix it by running:
 ```
