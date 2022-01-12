@@ -12,7 +12,18 @@ workflows:
           app_catalog_test: "giantswarm-test-catalog"
           chart: "kong-app"
           executor: "app-build-suite"
+          persist_chart_archive: true
           filters:
             # Trigger job on git tag.
             tags:
               only: /^v.*/
+
+      - architect/run-tests-with-ats:
+          name: execute chart tests
+          filters:
+            # Do not trigger the job on merge to master.
+            branches:
+              ignore:
+                - master
+          requires:
+            - push-to-giantswarm-app-catalog

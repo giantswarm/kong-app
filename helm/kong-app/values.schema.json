@@ -40,6 +40,9 @@
                         "hostname": {
                             "type": ["null", "string"]
                         },
+                        "ingressClassName": {
+                            "type": ["null", "string"]
+                        },
                         "path": {
                             "type": "string"
                         }
@@ -195,15 +198,7 @@
             "type": "object",
             "properties": {
                 "config": {
-                    "type": "object",
-                    "properties": {
-                        "_format_version": {
-                            "type": "string"
-                        },
-                        "services": {
-                            "type": ["null", "array"]
-                        }
-                    }
+                    "type": "string"
                 },
                 "configMap": {
                     "type": "string"
@@ -216,10 +211,21 @@
                 "daemonset": {
                     "type": "boolean"
                 },
+                "hostNetwork": {
+                    "type": "boolean"
+                },
                 "kong": {
                     "type": "object",
                     "properties": {
                         "enabled": {
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "serviceAccount": {
+                    "type": "object",
+                    "properties": {
+                        "create": {
                             "type": "boolean"
                         }
                     }
@@ -235,15 +241,7 @@
             }
         },
         "deploymentAnnotations": {
-            "type": "object",
-            "properties": {
-                "kuma.io/gateway": {
-                    "type": "string"
-                },
-                "traffic.sidecar.istio.io/includeInboundPorts": {
-                    "type": "string"
-                }
-            }
+            "type": "object"
         },
         "enterprise": {
             "type": "object",
@@ -455,6 +453,9 @@
                 "ingressClass": {
                     "type": "string"
                 },
+                "ingressClassAnnotations": {
+                    "type": "object"
+                },
                 "livenessProbe": {
                     "type": "object",
                     "properties": {
@@ -558,20 +559,6 @@
                         }
                     }
                 },
-                "serviceAccount": {
-                    "type": "object",
-                    "properties": {
-                        "annotations": {
-                            "type": "object"
-                        },
-                        "create": {
-                            "type": "boolean"
-                        },
-                        "name": {
-                            "type": ["null", "string"]
-                        }
-                    }
-                },
                 "watchNamespaces": {
                     "type": "array"
                 }
@@ -670,6 +657,9 @@
                         "hostname": {
                             "type": ["null", "string"]
                         },
+                        "ingressClassName": {
+                            "type": ["null", "string"]
+                        },
                         "path": {
                             "type": "string"
                         }
@@ -713,6 +703,9 @@
                             "type": "boolean"
                         }
                     }
+                },
+                "backoffLimit": {
+                    "type": ["null", "integer"]
                 },
                 "jobAnnotations": {
                     "type": "object"
@@ -863,6 +856,9 @@
                         "hostname": {
                             "type": ["null", "string"]
                         },
+                        "ingressClassName": {
+                            "type": ["null", "string"]
+                        },
                         "path": {
                             "type": "string"
                         }
@@ -934,6 +930,9 @@
                         "hostname": {
                             "type": ["null", "string"]
                         },
+                        "ingressClassName": {
+                            "type": ["null", "string"]
+                        },
                         "path": {
                             "type": "string"
                         }
@@ -996,6 +995,9 @@
                         "enabled": {
                             "type": "boolean"
                         },
+                        "nodePort": {
+                            "type": "integer"
+                        },
                         "parameters": {
                             "type": "array"
                         },
@@ -1014,6 +1016,9 @@
                             "type": "boolean"
                         },
                         "hostname": {
+                            "type": ["null", "string"]
+                        },
+                        "ingressClassName": {
                             "type": ["null", "string"]
                         },
                         "path": {
@@ -1139,7 +1144,18 @@
             "type": "object",
             "properties": {
                 "annotations": {
-                    "type": "object"
+                    "type": "object",
+                    "properties": {
+                        "giantswarm.io/monitoring": {
+                            "type": "string"
+                        },
+                        "giantswarm.io/monitoring-app-label": {
+                            "type": "string"
+                        },
+                        "giantswarm.io/monitoring-port": {
+                            "type": "string"
+                        }
+                    }
                 },
                 "enabled": {
                     "type": "boolean"
@@ -1177,6 +1193,9 @@
                             "type": "integer"
                         }
                     }
+                },
+                "type": {
+                    "type": "string"
                 }
             }
         },
