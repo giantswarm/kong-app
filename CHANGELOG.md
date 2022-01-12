@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [2.4.0] - 2022-01-12
+
 ### Breaking Changes
 
 - KIC now defaults to version 2.1. If you use a database, you must first perform a temporary intermediate upgrade to disable KIC before upgrading it to 2.x and re-enabling it. See the [upgrade guide](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/UPGRADE.md#disable-ingress-controller-prior-to-2x-upgrade-when-using-postgresql) for detailed instructions.
@@ -395,7 +397,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.3.5...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.4.0...HEAD
+[2.4.0]: https://github.com/giantswarm/kong-app/compare/v2.3.5...v2.4.0
 [2.3.5]: https://github.com/giantswarm/kong-app/compare/v2.3.4...v2.3.5
 [2.3.4]: https://github.com/giantswarm/kong-app/compare/v2.3.3...v2.3.4
 [2.3.3]: https://github.com/giantswarm/kong-app/compare/v2.3.2...v2.3.3
