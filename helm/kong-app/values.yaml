@@ -451,11 +451,7 @@ ingressController:
     # caBundle:
     #   | Add the CA bundle content here.
 
-  # This has been changed from the default `kong`
-  # as it allows this app to exist alongside other
-  # ingress controllers, such as nginx which is the
-  # default in the cluster.
-  ingressClass: kong-app
+  ingressClass: kong
   # annotations for IngressClass resource (Kubernetes 1.18+)
   ingressClassAnnotations: {}
 
