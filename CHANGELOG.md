@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Adds KIC startupProbes to allow longer boot times in big clusters. As stated in [upstream docs](https://github.com/Kong/kubernetes-ingress-controller/pull/1742/files#diff-4c367c8cb3b51bfff330a4004032f813e7c5a4f309d0d2a07b8010bc4fee69d3R25), during boot time it gathers all Services, Endpoints and Secrets on the cluster, which can take longer than the liveness probe threshold.
+
 ## [2.4.0] - 2022-01-12
 
 ### Breaking Changes
