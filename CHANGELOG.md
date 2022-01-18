@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [2.5.0] - 2022-01-18
+
 ### Added
 
 - Adds KIC startupProbes to allow longer boot times in big clusters. As stated in [upstream docs](https://github.com/Kong/kubernetes-ingress-controller/pull/1742/files#diff-4c367c8cb3b51bfff330a4004032f813e7c5a4f309d0d2a07b8010bc4fee69d3R25), during boot time it gathers all Services, Endpoints and Secrets on the cluster, which can take longer than the liveness probe threshold.
@@ -401,7 +403,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.4.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.5.0...HEAD
+[2.5.0]: https://github.com/giantswarm/kong-app/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/giantswarm/kong-app/compare/v2.3.5...v2.4.0
 [2.3.5]: https://github.com/giantswarm/kong-app/compare/v2.3.4...v2.3.5
 [2.3.4]: https://github.com/giantswarm/kong-app/compare/v2.3.3...v2.3.4
