@@ -15,3 +15,4 @@ version: 2.6.4
 appVersion: "2.7"
 annotations:
   application.giantswarm.io/team: team-cabbage
+kubeVersion: ">=1.20.0-0"
