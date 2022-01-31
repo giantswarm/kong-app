@@ -166,7 +166,7 @@ This is not required for Helm 3, as CRDs will be installed automatically.
 
 The helm chart in this repository undergoes [a series of automated tests](tests/ats/test_basic_cluster.py) running on a [kind](https://kind.sigs.k8s.io/) cluster ([kind cluster config](tests/kind_config.yaml)) executed by [app-test-suite](https://github.com/giantswarm/app-test-suite). ([chart values used for tests](tests/test-values.yaml))
 
-Testing includes creation of a `Deployment`, `Service` and `Ingress` resources to check if reconciliation works as intented.
+Testing includes creation of `Deployment`, `Service`, and `Ingress` resources to check if reconciliation works as intended.
 
 To execute tests on your machine, obtain a copy of the [dats.sh](https://github.com/giantswarm/app-test-suite/releases/download/v0.2.2/dats.sh) helper script and a chart archive (`helm pull https://giantswarm.github.io/giantswarm-catalog/kong-app-2.5.0.tgz` or build an archive with your changes using [`app-build-suite`](http://github.com/giantswarm/app-build-suite)), then execute
 
