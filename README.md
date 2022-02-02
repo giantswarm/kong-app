@@ -10,16 +10,17 @@ Giant Swarm offers a Kong Managed App which can be installed in tenant clusters.
 
 ## Available Versions
 
-| Chart Release | Kong Version | Kong IC Version |
-| --- | --- | --- |
-| [v2.5.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#250---2022-01-18) | [2.7.0](https://github.com/Kong/kong/blob/master/CHANGELOG.md#270) | [2.1.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#210) |
-| [v2.4.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#240---2022-01-12) | [2.7.0](https://github.com/Kong/kong/blob/master/CHANGELOG.md#270) | [2.1.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#210) |
-| [v2.3.5](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#235---2021-12-14) | [2.5.0](https://github.com/Kong/kong/blob/master/CHANGELOG.md#250) | [1.3.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#130) |
-| [v2.3.4](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#234---2021-12-02) | [2.5.0](https://github.com/Kong/kong/blob/master/CHANGELOG.md#250) | [1.3.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#130) |
-| [v2.3.3](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#233---2021-11-24) | [2.5.0](https://github.com/Kong/kong/blob/master/CHANGELOG.md#250) | [1.3.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#130) |
-| [v2.3.1](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#231---2021-09-14) | [2.5.0](https://github.com/Kong/kong/blob/master/CHANGELOG.md#250) | [1.3.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#130) |
-| [v2.3.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#230---2021-08-25) | [2.5.0](https://github.com/Kong/kong/blob/master/CHANGELOG.md#250) | [1.3.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#130) |
-| [v2.1.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#210---2021-06-15) | [2.4.1](https://github.com/Kong/kong/blob/master/CHANGELOG.md#241) | [1.2.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#120) |
+| Giant Swarm Chart Release | Upstream Chart Release | Kong Version | Kong IC Version |
+| --- | --- | --- | --- |
+| [v2.5.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#250---2022-01-18) | [2.6.4](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#264) | [2.7.0](https://github.com/Kong/kong/blob/master/CHANGELOG.md#270) | [2.1.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#210) |
+| [v2.4.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#240---2022-01-12) | [2.6.4](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#264) | [2.7.0](https://github.com/Kong/kong/blob/master/CHANGELOG.md#270) | [2.1.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#210) |
+| [v2.3.5](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#235---2021-12-14) | [2.3.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#230) | [2.5.0](https://github.com/Kong/kong/blob/master/CHANGELOG.md#250) | [1.3.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#130) |
+| [v2.3.4](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#234---2021-12-02) | [2.3.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#230) | [2.5.0](https://github.com/Kong/kong/blob/master/CHANGELOG.md#250) | [1.3.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#130) |
+| [v2.3.3](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#233---2021-11-24) | [2.3.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#230) | [2.5.0](https://github.com/Kong/kong/blob/master/CHANGELOG.md#250) | [1.3.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#130) |
+| [v2.3.2](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#232---2021-10-05) | [2.3.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#230) | [2.5.0](https://github.com/Kong/kong/blob/master/CHANGELOG.md#250) | [1.3.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#130) |
+| [v2.3.1](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#231---2021-09-14) | [2.3.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#230) | [2.5.0](https://github.com/Kong/kong/blob/master/CHANGELOG.md#250) | [1.3.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#130) |
+| [v2.3.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#230---2021-08-25) | [2.3.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#230) | [2.5.0](https://github.com/Kong/kong/blob/master/CHANGELOG.md#250) | [1.3.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#130) |
+| [v2.1.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#210---2021-06-15) | [2.1.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#210) | [2.4.1](https://github.com/Kong/kong/blob/master/CHANGELOG.md#241) | [1.2.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#120) |
 
 For older versions, please refer to the [changelog](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md)
 
