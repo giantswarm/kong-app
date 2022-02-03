@@ -36,13 +36,14 @@ def test_api_working(kube_cluster: Cluster) -> None:
 
 @pytest.mark.smoke
 def test_cluster_info(
-    kube_cluster: Cluster, cluster_type: str, chart_extra_info: Dict[str, str]
+    kube_cluster: Cluster, cluster_type: str, chart_extra_info: Dict[str, str], chart_version: str
 ) -> None:
     """Example shows how you can access additional information about the cluster the tests are running on"""
     logger.info(f"Running on cluster type {cluster_type}")
-    key = "external_cluster_type"
-    if key in chart_extra_info:
-        logger.info(f"{key} is {chart_extra_info[key]}")
+    for key, value in chart_extra_info.items():
+        logger.info(f"chart_extra_info '{key}': '{value}'")
+
+    logger.info(f"chart_version '{chart_version}'")
     assert kube_cluster.kube_client is not None
     assert cluster_type != ""
 
@@ -75,10 +76,27 @@ def test_pods_available(kube_cluster: Cluster, ic_deployment: List[pykube.Deploy
 
 
 @pytest.mark.functional
+@pytest.mark.upgrade
 def test_ingress_creation(
-    request, kube_cluster: Cluster, ic_deployment: List[pykube.Deployment]
+    request, kube_cluster: Cluster, ic_deployment: List[pykube.Deployment], chart_version: str
 ):
     kube_cluster.kubectl("apply", filename=Path(request.fspath.dirname) / "test-ingress.yaml", output_format="")
+
+    int_ver = int("".join(chart_version.split(".")))
+
+    if int_ver < 250:
+        # patch ingress to the old ingress-class kong-app
+        # otherwise tests won't work
+        ingress_patch = dumps(
+            {
+                "spec": {
+                    "ingressClassName": "kong-app"
+                }
+            }
+        )
+        kube_cluster.kubectl("patch ingress helloworld", patch=ingress_patch, namespace="helloworld")
+        logger.info("Patched hellworld ingress to old ingress-class name")
+
 
     kube_cluster.kubectl(
         "wait deployment helloworld --for=condition=Available",
