@@ -7,6 +7,7 @@ proxy:
 env:
   anonymous_reports: "off"
 ingressController:
+  ingressClass: kong
   env:
     anonymous_reports: "false"
   installCRDs: false

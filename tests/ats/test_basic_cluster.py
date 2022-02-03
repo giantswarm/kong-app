@@ -99,22 +99,6 @@ def test_ingress_creation(
 ):
     kube_cluster.kubectl("apply", filename=Path(request.fspath.dirname) / "test-ingress.yaml", output_format="")
 
-    int_ver = int("".join([v.split("-")[0] for v in chart_version.split(".")]))
-
-    if int_ver < 250:
-        # patch ingress to the old ingress-class kong-app
-        # otherwise tests won't work
-        ingress_patch = dumps(
-            {
-                "spec": {
-                    "ingressClassName": "kong-app"
-                }
-            }
-        )
-        kube_cluster.kubectl("patch ingress helloworld", patch=ingress_patch, namespace="helloworld")
-        logger.info("Patched hellworld ingress to old ingress-class name")
-
-
     kube_cluster.kubectl(
         "wait deployment helloworld --for=condition=Available",
         timeout="60s",
