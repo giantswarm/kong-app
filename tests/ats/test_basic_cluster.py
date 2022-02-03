@@ -75,6 +75,23 @@ def test_pods_available(kube_cluster: Cluster, ic_deployment: List[pykube.Deploy
         assert int(s.obj["status"]["readyReplicas"]) > 0
 
 
+def try_ingress():
+    # try the ingress
+    retries = 10
+    last_status = 0
+    while last_status != 200:
+        r = requests.get("http://127.0.0.1:8080/", headers={"Host": "helloworld"})
+        last_status = r.status_code
+
+        if last_status == 200 or retries == 0:
+            break
+
+        retries = retries - 1
+        time.sleep(5)
+
+    return last_status == 200
+
+
 @pytest.mark.functional
 @pytest.mark.upgrade
 def test_ingress_creation(
@@ -82,7 +99,7 @@ def test_ingress_creation(
 ):
     kube_cluster.kubectl("apply", filename=Path(request.fspath.dirname) / "test-ingress.yaml", output_format="")
 
-    int_ver = int("".join(chart_version.split(".")))
+    int_ver = int("".join([v.split("-")[0] for v in chart_version.split(".")]))
 
     if int_ver < 250:
         # patch ingress to the old ingress-class kong-app
@@ -105,17 +122,7 @@ def test_ingress_creation(
         namespace="helloworld",
     )
 
-    # try the ingress
-    retries = 10
-    last_status = 0
-    while last_status != 200:
-        r = requests.get("http://127.0.0.1:8080/", headers={"Host": "helloworld"})
-        last_status = r.status_code
+    assert try_ingress()
 
-        if last_status == 200 or retries == 0:
-            break
-
-        retries = retries - 1
-        time.sleep(5)
-
-    assert last_status == 200
+    # clean up
+    kube_cluster.kubectl("delete", filename=Path(request.fspath.dirname) / "test-ingress.yaml", output_format="")
