@@ -80,8 +80,6 @@ def test_ingress_creation(
 ):
     kube_cluster.kubectl("apply", filename=Path(request.fspath.dirname) / "test-ingress.yaml", output_format="")
 
-    time.sleep(9999999999999)
-
     kube_cluster.kubectl(
         "wait deployment helloworld --for=condition=Available",
         timeout="60s",
