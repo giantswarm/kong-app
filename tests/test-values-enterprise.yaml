@@ -1,0 +1,19 @@
+# copied from helm/kong-app/ci/default-values.yaml
+proxy:
+  type: NodePort
+  http:
+    nodePort: 32080
+
+env:
+  anonymous_reports: "off"
+ingressController:
+  env:
+    anonymous_reports: "false"
+  installCRDs: false
+
+image:
+  repository: giantswarm/kong-gateway
+  tag: "2.7.1.1-alpine"
+
+enterprise:
+  enabled: true

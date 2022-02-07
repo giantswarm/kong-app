@@ -27,3 +27,27 @@ workflows:
                 - master
           requires:
             - push-to-giantswarm-app-catalog
+
+      # Require manual approval for running enterprise tests
+      - hold-tests:
+          name: hold enterprise tests
+          type: approval
+          filters:
+            # Do not trigger the job on master branch or release tags.
+            branches:
+              ignore:
+                - master
+            tags:
+              ignore: /^v.*/
+
+      - architect/run-tests-with-ats:
+          name: execute enterprise tests
+          additional_app-test-suite_flags: "--app-tests-app-config-file=tests/test-values-enterprise.yaml --skip-steps=upgrade"
+          filters:
+            # Do not trigger the job on merge to master.
+            branches:
+              ignore:
+                - master
+          requires:
+            - hold enterprise tests
+            - push-to-giantswarm-app-catalog
