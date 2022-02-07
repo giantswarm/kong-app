@@ -80,6 +80,50 @@ spec:
   selector:
     app: helloworld
 ---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helloworld-creds
+  namespace: helloworld
+stringData:
+  kongCredType: key-auth
+  key: 1-secret-api-key-lol
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: consumer
+  namespace: helloworld
+  annotations:
+    kubernetes.io/ingress.class: kong
+username: secretuser
+credentials:
+- helloworld-creds
+---
+apiVersion: configuration.konghq.com/v1
+config:
+  hide_groups_header: true
+  whitelist:
+  - secretuser
+kind: KongPlugin
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: kong
+  name: acl
+  namespace: helloworld
+plugin: acl
+---
+apiVersion: configuration.konghq.com/v1
+config:
+  hide_credentials: true
+kind: KongPlugin
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: kong
+  name: basic-auth
+  namespace: helloworld
+plugin: basic-auth
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:

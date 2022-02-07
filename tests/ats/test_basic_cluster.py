@@ -80,7 +80,7 @@ def try_ingress():
     retries = 10
     last_status = 0
     while last_status != 200:
-        r = requests.get("http://127.0.0.1:8080/", headers={"Host": "helloworld"})
+        r = requests.get("http://127.0.0.1:8080/", headers={"Host": "helloworld", "apikey: 1-secret-api-key-lol"})
         last_status = r.status_code
 
         if last_status == 200 or retries == 0:
@@ -97,6 +97,7 @@ def try_ingress():
 def test_ingress_creation(
     request, kube_cluster: Cluster, ic_deployment: List[pykube.Deployment], chart_version: str
 ):
+    kube_cluster.kubectl("apply", filename=Path(request.fspath.dirname) / "global-plugins.yaml", output_format="")
     kube_cluster.kubectl("apply", filename=Path(request.fspath.dirname) / "test-ingress.yaml", output_format="")
 
     kube_cluster.kubectl(
@@ -106,7 +107,15 @@ def test_ingress_creation(
         namespace="helloworld",
     )
 
+    # is it even available?
     assert try_ingress()
+
+    # test some plugins
+    # we're not testing every plugin
+    r = requests.get("http://127.0.0.1:8080/", headers={"Host": "helloworld", "apikey: 1-secret-api-key-lol"})
+
+
 
     # clean up
     kube_cluster.kubectl("delete", filename=Path(request.fspath.dirname) / "test-ingress.yaml", output_format="")
+    kube_cluster.kubectl("delete", filename=Path(request.fspath.dirname) / "global-plugins.yaml", output_format="")

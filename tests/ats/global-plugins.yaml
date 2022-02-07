@@ -1,0 +1,65 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongClusterPlugin
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: kong
+  labels:
+    global: "true"
+  name: global-prometheus
+plugin: prometheus
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongClusterPlugin
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: kong
+  labels:
+    global: "true"
+  name: global-response-headers
+plugin: response-transformer
+config:
+  add:
+    headers:
+    - 'Strict-Transport-Security: max-age=63072000; includeSubDomains'
+    - 'Content-Security-Policy: default-src ''none'';'
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongClusterPlugin
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: kong
+  labels:
+    global: "true"
+  name: kongproxycache
+plugin: proxy-cache
+config:
+  cache_ttl: 300
+  content_type:
+  - text/plain
+  - application/json
+  memory:
+    dictionary_name: kong_cache # Default, maybe needs creation https://docs.konghq.com/hub/kong-inc/proxy-cache/
+  request_method:
+  - GET
+  - HEAD
+  response_code:
+  - 200
+  strategy: memory
+
+# KongPlugin/aws-lambda
+# KongPlugin/basic-auth
+# KongPlugin/cors
+# KongPlugin/file-log
+# KongPlugin/ip-restriction
+# KongPlugin/key-auth
+# KongPlugin/key-auth-secret
+# KongPlugin/oauth2
+# KongPlugin/oidc
+# KongPlugin/oidc-ecp
+# KongPlugin/post-function
+# KongPlugin/pre-function
+# KongPlugin/proxy-cache
+# KongPlugin/rate-limiting
+# KongPlugin/request-size-limiting
+# KongPlugin/request-transformer
+# KongPlugin/response-transformer
