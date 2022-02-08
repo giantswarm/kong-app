@@ -36,7 +36,10 @@ def test_api_working(kube_cluster: Cluster) -> None:
 
 @pytest.mark.smoke
 def test_cluster_info(
-    kube_cluster: Cluster, cluster_type: str, chart_extra_info: Dict[str, str], chart_version: str
+    kube_cluster: Cluster,
+    cluster_type: str,
+    chart_extra_info: Dict[str, str],
+    chart_version: str,
 ) -> None:
     """Example shows how you can access additional information about the cluster the tests are running on"""
     logger.info(f"Running on cluster type {cluster_type}")
@@ -80,7 +83,13 @@ def try_ingress():
     retries = 10
     last_status = 0
     while last_status != 200:
-        r = requests.get("http://127.0.0.1:8080/", headers={"Host": "helloworld", "apikey": "1-secret-api-key-lol"})
+        r = requests.get(
+            "http://127.0.0.1:8080/",
+            headers={
+                "Host": "helloworld",
+                "Authorization": "Basic YmFzaWMtYXV0aC11c2VyOmJhc2ljLWF1dGgtcGFzc3dvcmQ=",
+            },
+        )
         last_status = r.status_code
 
         if last_status == 200 or retries == 0:
@@ -95,10 +104,23 @@ def try_ingress():
 @pytest.mark.functional
 @pytest.mark.upgrade
 def test_ingress_creation(
-    request, kube_cluster: Cluster, ic_deployment: List[pykube.Deployment], chart_version: str
+    request,
+    kube_cluster: Cluster,
+    ic_deployment: List[pykube.Deployment],
+    chart_version: str,
 ):
-    kube_cluster.kubectl("apply", filename=Path(request.fspath.dirname) / "global-plugins.yaml", output_format="")
-    kube_cluster.kubectl("apply", filename=Path(request.fspath.dirname) / "test-ingress.yaml", output_format="")
+    kube_cluster.kubectl(
+        "apply",
+        filename=Path(request.fspath.dirname) / "global-plugins.yaml",
+        output_format="",
+    )
+    kube_cluster.kubectl(
+        "apply",
+        filename=Path(request.fspath.dirname) / "test-ingress.yaml",
+        output_format="",
+    )
+
+    # time.sleep(9223372036)
 
     kube_cluster.kubectl(
         "wait deployment helloworld --for=condition=Available",
@@ -112,10 +134,48 @@ def test_ingress_creation(
 
     # test some plugins
     # we're not testing every plugin
-    r = requests.get("http://127.0.0.1:8080/", headers={"Host": "helloworld", "apikey": "1-secret-api-key-lol"})
+    r = requests.get(
+        "http://127.0.0.1:8080/",
+        headers={
+            "Host": "helloworld",
+            "Authorization": "Basic YmFzaWMtYXV0aC11c2VyOmJhc2ljLWF1dGgtcGFzc3dvcmQ=",
+        },
+    )
+    r.raise_for_status()
+    logger.info(f"basic-auth plugin works")
 
+    # global-response-transformer
+    assert r.headers["global-reponse-headers"] == "enabled"
+    logger.info(f"response-transformer plugin works")
 
+    # cache plugin
+    assert "x-cache-status" in r.headers
+    logger.info(f"cache plugin works")
+
+    # keyauth + cors
+    r = requests.get(
+        "http://127.0.0.1:8080/",
+        headers={
+            "Host": "helloworld-keyauth",
+            "test-api-key": "123-secret-api-key",
+            "Access-Control-Request-Method": "GET",
+        },
+    )
+    r.raise_for_status()
+    logger.info(f"Key-auth plugin works")
+
+    # cors plugin
+    assert r.headers["access-control-allow-origin"] == "*"
+    logger.info(f"Cors plugin works")
 
     # clean up
-    kube_cluster.kubectl("delete", filename=Path(request.fspath.dirname) / "test-ingress.yaml", output_format="")
-    kube_cluster.kubectl("delete", filename=Path(request.fspath.dirname) / "global-plugins.yaml", output_format="")
+    kube_cluster.kubectl(
+        "delete",
+        filename=Path(request.fspath.dirname) / "test-ingress.yaml",
+        output_format="",
+    )
+    kube_cluster.kubectl(
+        "delete",
+        filename=Path(request.fspath.dirname) / "global-plugins.yaml",
+        output_format="",
+    )

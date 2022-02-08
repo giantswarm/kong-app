@@ -83,28 +83,46 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: helloworld-creds
+  name: helloworld-acl-creds
   namespace: helloworld
 stringData:
-  kongCredType: key-auth
-  key: 1-secret-api-key-lol
+  kongCredType: acl
+  group: acl-group
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helloworld-basic-auth-creds
+  namespace: helloworld
+stringData:
+  kongCredType: basic-auth
+  username: basic-auth-user
+  password: basic-auth-password
+  group: acl-group
 ---
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
 metadata:
-  name: consumer
+  name: acl-consumer
   namespace: helloworld
   annotations:
     kubernetes.io/ingress.class: kong
-username: secretuser
+username: allowed-testing-user
 credentials:
-- helloworld-creds
+- helloworld-acl-creds
 ---
 apiVersion: configuration.konghq.com/v1
-config:
-  hide_groups_header: true
-  whitelist:
-  - secretuser
+kind: KongConsumer
+metadata:
+  name: basic-auth-consumer
+  namespace: helloworld
+  annotations:
+    kubernetes.io/ingress.class: kong
+username: basic-auth-user
+credentials:
+- helloworld-basic-auth-creds
+---
+apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
   annotations:
@@ -112,10 +130,19 @@ metadata:
   name: acl
   namespace: helloworld
 plugin: acl
+config:
+  # hide_groups_header: true
+  allow:
+  - basic-auth-user
+  - acl
+  - acl-consumer
+  - acl-group
+  - basic-auth-consumer
+  - allowed-testing-user
+  - basic-auth
+  - kong
 ---
 apiVersion: configuration.konghq.com/v1
-config:
-  hide_credentials: true
 kind: KongPlugin
 metadata:
   annotations:
@@ -123,10 +150,98 @@ metadata:
   name: basic-auth
   namespace: helloworld
 plugin: basic-auth
+# config:
+#   hide_credentials: true
+---
+apiVersion: configuration.konghq.com/v1
+config:
+  methods:
+  - GET
+  origins:
+  - '*'
+kind: KongPlugin
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: kong
+  name: helloworld-cors
+  namespace: helloworld
+plugin: cors
+---
+apiVersion: configuration.konghq.com/v1
+config:
+  path: /dev/stdout
+kind: KongPlugin
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: kong
+  name: log-to-stdout
+  namespace: helloworld
+plugin: file-log
+---
+apiVersion: configuration.konghq.com/v1
+config:
+  allow:
+  - 10.0.0.1/8
+kind: KongPlugin
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: kong
+  name: ip-restrict-to-ten
+  namespace: helloworld
+plugin: ip-restriction
+---
+apiVersion: configuration.konghq.com/v1
+config:
+  hide_client_headers: true
+  hour: 10000000
+  policy: local
+  second: 6000
+kind: KongPlugin
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: kong
+  name: local-rate-limiting
+  namespace: helloworld
+plugin: rate-limiting
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: limit-request-size
+  namespace: helloworld
+config:
+  allowed_payload_size: 128
+  size_unit: bytes
+  require_content_length: false
+plugin: request-size-limiting
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: correlate-id
+config:
+  header_name: Kong-Request-ID
+  generator: uuid#counter
+  echo_downstream: false
+plugin: correlation-id
+---
+apiVersion: configuration.konghq.com/v1
+config:
+  replace:
+    uri: /blacklist-report/
+kind: KongPlugin
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: kong
+  name: transform-requests
+  namespace: helloworld
+plugin: request-transformer
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    konghq.com/plugins: global-prometheus, global-response-headers, kongproxycache, basic-auth, helloworld-cors, log-to-stdout, ip-restrict-to-ten, local-rate-limiting, limit-request-size, correlate-id, transform-requests #, acl
   labels:
     app: helloworld
   name: helloworld
@@ -135,6 +250,61 @@ spec:
   ingressClassName: kong
   rules:
   - host: helloworld
+    http:
+      paths:
+      - backend:
+          service:
+            name: helloworld
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+---
+apiVersion: configuration.konghq.com/v1
+config:
+  key_names:
+  - test-api-key
+kind: KongPlugin
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: kong
+  name: key-auth-plugin
+  namespace: helloworld
+plugin: key-auth
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helloworld-key-auth-creds
+  namespace: helloworld
+stringData:
+  kongCredType: key-auth
+  key: 123-secret-api-key
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: key-auth-consumer
+  namespace: helloworld
+  annotations:
+    kubernetes.io/ingress.class: kong
+username: key-auth-user
+credentials:
+- helloworld-key-auth-creds
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    konghq.com/plugins: global-prometheus, global-response-headers, kongproxycache, key-auth-plugin, helloworld-cors
+  labels:
+    app: helloworld
+  name: helloworld-keyauth
+  namespace: helloworld
+spec:
+  ingressClassName: kong
+  rules:
+  - host: helloworld-keyauth
     http:
       paths:
       - backend:
