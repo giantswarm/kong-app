@@ -227,8 +227,9 @@ plugin: correlation-id
 ---
 apiVersion: configuration.konghq.com/v1
 config:
-  replace:
-    uri: /blacklist-report/
+  add:
+    headers:
+    - "x-request-transformer:works"
 kind: KongPlugin
 metadata:
   annotations:
