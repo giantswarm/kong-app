@@ -80,7 +80,7 @@ def try_ingress():
     retries = 10
     last_status = 0
     while last_status != 200:
-        r = requests.get("http://127.0.0.1:8080/", headers={"Host": "helloworld", "apikey: 1-secret-api-key-lol"})
+        r = requests.get("http://127.0.0.1:8080/", headers={"Host": "helloworld", "apikey": "1-secret-api-key-lol"})
         last_status = r.status_code
 
         if last_status == 200 or retries == 0:
@@ -112,7 +112,7 @@ def test_ingress_creation(
 
     # test some plugins
     # we're not testing every plugin
-    r = requests.get("http://127.0.0.1:8080/", headers={"Host": "helloworld", "apikey: 1-secret-api-key-lol"})
+    r = requests.get("http://127.0.0.1:8080/", headers={"Host": "helloworld", "apikey": "1-secret-api-key-lol"})
 
 
 
