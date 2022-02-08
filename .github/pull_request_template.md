@@ -7,7 +7,9 @@ this PR has been submitted.
 -->
 
 <!--
-Please update the version matrix in Readme.md after a release
+Please update after a release:
+- the version matrix in README.md
+- the kong-gateway tag in tests/test-values-enterprise.yaml
 -->
 
 This PR...
