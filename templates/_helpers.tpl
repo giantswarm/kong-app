@@ -789,10 +789,20 @@ the template that it itself is using form the above sections.
 {{- end -}}
 
 {{/*
+    ====== CUSTOM-SET ENVIRONMENT VARIABLES ======
+*/}}
+
+{{- $customEnv := dict -}}
+{{- range $key, $val := .Values.customEnv }}
+  {{- $upper := upper $key -}}
+  {{- $_ := set $customEnv $upper $val -}}
+{{- end -}}
+
+{{/*
       ====== MERGE AND RENDER ENV BLOCK ======
 */}}
 
-{{- $completeEnv := mergeOverwrite $autoEnv $userEnv -}}
+{{- $completeEnv := mergeOverwrite $autoEnv $userEnv $customEnv -}}
 {{- template "kong.renderEnv" $completeEnv -}}
 
 {{- end -}}
@@ -1048,6 +1058,52 @@ Kubernetes resources it uses to build Kong configuration.
   verbs:
   - get
   - patch
+  - update
+- apiGroups:
+  - gateway.networking.k8s.io
+  resources:
+  - gatewayclasses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - gateway.networking.k8s.io
+  resources:
+  - gatewayclasses/status
+  verbs:
+  - get
+  - update
+- apiGroups:
+  - gateway.networking.k8s.io
+  resources:
+  - gateways
+  verbs:
+  - get
+  - list
+  - update
+  - watch
+- apiGroups:
+  - gateway.networking.k8s.io
+  resources:
+  - gateways/status
+  verbs:
+  - get
+  - update
+- apiGroups:
+  - gateway.networking.k8s.io
+  resources:
+  - httproutes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - gateway.networking.k8s.io
+  resources:
+  - httproutes/status
+  verbs:
+  - get
   - update
 - apiGroups:
   - networking.internal.knative.dev
