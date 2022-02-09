@@ -125,6 +125,14 @@ def test_ingress_creation(
     ic_deployment: List[pykube.Deployment],
     chart_version: str,
 ):
+    # Wait again for kong deployment
+    kube_cluster.kubectl(
+        f"wait deployment {deployment_name} --for=condition=Available",
+        timeout="60s",
+        output_format="",
+        namespace=namespace_name,
+    )
+
     kube_cluster.kubectl(
         "apply",
         filename=Path(request.fspath.dirname) / "global-plugins.yaml",
