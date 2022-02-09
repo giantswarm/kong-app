@@ -16,7 +16,6 @@ logger = logging.getLogger(__name__)
 
 deployment_name = "kong-app-kong-app"
 namespace_name = "kong"
-catalog_name = "chartmuseum"
 
 timeout: int = 360
 
@@ -54,7 +53,24 @@ def test_cluster_info(
 # scope "module" means this is run only once, for the first test case requesting! It might be tricky
 # if you want to assert this multiple times
 @pytest.fixture(scope="module")
-def ic_deployment(kube_cluster: Cluster) -> List[pykube.Deployment]:
+def ic_deployment(request, kube_cluster: Cluster) -> List[pykube.Deployment]:
+    logger.info("Deploying postgres for kong db mode")
+    kube_cluster.kubectl(
+        "apply",
+        filename=Path(request.fspath.dirname) / "postgres.yaml",
+        output_format="",
+    )
+
+    kube_cluster.kubectl(
+        "rollout status --watch statefulset/postgres",
+        timeout="60s",
+        output_format="",
+        namespace="postgres",
+    )
+    logger.info("Postgres pods look ready")
+
+    logger.info("Waiting for kong deployment..")
+
     return wait_for_ic_deployment(kube_cluster)
 
 

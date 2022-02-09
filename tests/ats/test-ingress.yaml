@@ -209,6 +209,8 @@ kind: KongPlugin
 metadata:
   name: limit-request-size
   namespace: helloworld
+  annotations:
+    kubernetes.io/ingress.class: kong
 config:
   allowed_payload_size: 128
   size_unit: bytes
@@ -219,6 +221,9 @@ apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
   name: correlate-id
+  namespace: helloworld
+  annotations:
+    kubernetes.io/ingress.class: kong
 config:
   header_name: Kong-Request-ID
   generator: uuid#counter

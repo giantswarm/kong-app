@@ -44,5 +44,7 @@ config:
   response_code:
   - 200
   strategy: memory
+  memory:
+    dictionary_name: kong_proxy_cache
 
 # acl

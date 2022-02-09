@@ -1,0 +1,93 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+  namespace: postgres
+spec:
+  ports:
+  - name: postgres
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: postgres
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: postgres
+  labels:
+    app: postgres
+spec:
+  serviceName: postgres
+  selector:
+    matchLabels:
+      app: postgres
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  podManagementPolicy: OrderedReady
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        # 13 because 14 does not work yet
+        # https://github.com/Kong/kong/issues/8259
+        image: docker.io/library/postgres:13.5-alpine
+        ports:
+          - containerPort: 5432
+            protocol: TCP
+        env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: kongkong
+        - name: POSTGRES_DB
+          value: kong
+        startupProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 15
+          successThreshold: 1
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - -e
+            - exec pg_isready -U postgres -d kong -h 127.0.0.1 -p 5432
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 6
+          successThreshold: 1
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - -e
+            - exec pg_isready -U postgres -d kong -h 127.0.0.1 -p 5432
+        livenessProbe:
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 6
+          successThreshold: 1
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - -e
+            - exec pg_isready -U postgres -d kong -h 127.0.0.1 -p 5432
