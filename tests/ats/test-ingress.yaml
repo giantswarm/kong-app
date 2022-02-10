@@ -107,7 +107,7 @@ metadata:
   namespace: helloworld
   annotations:
     kubernetes.io/ingress.class: kong
-username: basic-auth-user
+username: basic-auth-acl
 credentials:
 - helloworld-acl-creds
 ---
