@@ -7,6 +7,14 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixes
+
+- Disable Secrets creation validation in ValidatingWebhookConfiguration. This fixes deployments with `ingressController.admissionWebhook.enabled` in values.
+
+### Updates
+
+- Align with upstream chart version [26eff4f](https://github.com/Kong/charts/tree/26eff4f94d23f272a64efdfff3a5d109d923b6df) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.6.4...26eff4f))
+
 ## [2.5.0] - 2022-01-18
 
 ### Added
