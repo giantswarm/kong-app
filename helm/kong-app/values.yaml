@@ -101,7 +101,7 @@ extraLabels: {}
 image:
   registry: quay.io
   repository: giantswarm/kong
-  tag: "2.7"
+  tag: "2.7.1"
   # Kong Enterprise
   # repository: kong/kong-gateway
   # tag: "2.7.0.0-alpine"
@@ -419,7 +419,7 @@ ingressController:
   enabled: true
   image:
     repository: giantswarm/kong-ingress-controller
-    tag: "2.1"
+    tag: "2.1.1"
     # Optionally set a semantic version for version-gated features. This can normally
     # be left unset. You only need to set this if your tag is not a semver string,
     # such as when you are using a "next" tag. Set this to the effective semantic
