@@ -107,7 +107,7 @@ metadata:
   namespace: helloworld
   annotations:
     kubernetes.io/ingress.class: kong
-username: allowed-testing-user
+username: basic-auth-user
 credentials:
 - helloworld-acl-creds
 ---
@@ -125,8 +125,6 @@ credentials:
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
-  annotations:
-    kubernetes.io/ingress.class: kong
   name: acl
   namespace: helloworld
 plugin: acl
@@ -145,8 +143,6 @@ config:
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
-  annotations:
-    kubernetes.io/ingress.class: kong
   name: basic-auth
   namespace: helloworld
 plugin: basic-auth
@@ -154,63 +150,53 @@ plugin: basic-auth
 #   hide_credentials: true
 ---
 apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: helloworld-cors
+  namespace: helloworld
+plugin: cors
 config:
   methods:
   - GET
   origins:
   - '*'
-kind: KongPlugin
-metadata:
-  annotations:
-    kubernetes.io/ingress.class: kong
-  name: helloworld-cors
-  namespace: helloworld
-plugin: cors
 ---
 apiVersion: configuration.konghq.com/v1
-config:
-  path: /dev/stdout
 kind: KongPlugin
 metadata:
-  annotations:
-    kubernetes.io/ingress.class: kong
   name: log-to-stdout
   namespace: helloworld
 plugin: file-log
+config:
+  path: /dev/stdout
 ---
 apiVersion: configuration.konghq.com/v1
-config:
-  allow:
-  - 10.0.0.1/8
 kind: KongPlugin
 metadata:
-  annotations:
-    kubernetes.io/ingress.class: kong
   name: ip-restrict-to-ten
   namespace: helloworld
 plugin: ip-restriction
+config:
+  allow:
+  - 10.0.0.1/8
 ---
 apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: local-rate-limiting
+  namespace: helloworld
+plugin: rate-limiting
 config:
   hide_client_headers: true
   hour: 10000000
   policy: local
   second: 6000
-kind: KongPlugin
-metadata:
-  annotations:
-    kubernetes.io/ingress.class: kong
-  name: local-rate-limiting
-  namespace: helloworld
-plugin: rate-limiting
 ---
 apiVersion: configuration.konghq.com/v1
 kind: KongPlugin
 metadata:
   name: limit-request-size
   namespace: helloworld
-  annotations:
-    kubernetes.io/ingress.class: kong
 config:
   allowed_payload_size: 128
   size_unit: bytes
@@ -222,26 +208,22 @@ kind: KongPlugin
 metadata:
   name: correlate-id
   namespace: helloworld
-  annotations:
-    kubernetes.io/ingress.class: kong
+plugin: correlation-id
 config:
   header_name: Kong-Request-ID
   generator: uuid#counter
   echo_downstream: false
-plugin: correlation-id
 ---
 apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: transform-requests
+  namespace: helloworld
+plugin: request-transformer
 config:
   add:
     headers:
     - "x-request-transformer:works"
-kind: KongPlugin
-metadata:
-  annotations:
-    kubernetes.io/ingress.class: kong
-  name: transform-requests
-  namespace: helloworld
-plugin: request-transformer
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

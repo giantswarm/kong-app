@@ -166,15 +166,15 @@ def test_ingress_creation(
         },
     )
     r.raise_for_status()
-    logger.info(f"basic-auth plugin works")
+    logger.info("basic-auth plugin works")
 
     # global-response-transformer
     assert r.headers["global-reponse-headers"] == "enabled"
-    logger.info(f"response-transformer plugin works")
+    logger.info("response-transformer plugin works")
 
     # cache plugin
     assert "x-cache-status" in r.headers
-    logger.info(f"cache plugin works")
+    logger.info("cache plugin works")
 
     # keyauth + cors
     r = requests.get(
@@ -186,11 +186,11 @@ def test_ingress_creation(
         },
     )
     r.raise_for_status()
-    logger.info(f"Key-auth plugin works")
+    logger.info("Key-auth plugin works")
 
     # cors plugin
     assert r.headers["access-control-allow-origin"] == "*"
-    logger.info(f"Cors plugin works")
+    logger.info("Cors plugin works")
 
     # clean up
     kube_cluster.kubectl(
