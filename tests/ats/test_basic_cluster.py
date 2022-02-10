@@ -16,7 +16,6 @@ logger = logging.getLogger(__name__)
 
 deployment_name = "kong-app-kong-app"
 namespace_name = "kong"
-catalog_name = "chartmuseum"
 
 timeout: int = 360
 
@@ -36,13 +35,17 @@ def test_api_working(kube_cluster: Cluster) -> None:
 
 @pytest.mark.smoke
 def test_cluster_info(
-    kube_cluster: Cluster, cluster_type: str, chart_extra_info: Dict[str, str]
+    kube_cluster: Cluster,
+    cluster_type: str,
+    chart_extra_info: Dict[str, str],
+    chart_version: str,
 ) -> None:
     """Example shows how you can access additional information about the cluster the tests are running on"""
     logger.info(f"Running on cluster type {cluster_type}")
-    key = "external_cluster_type"
-    if key in chart_extra_info:
-        logger.info(f"{key} is {chart_extra_info[key]}")
+    for key, value in chart_extra_info.items():
+        logger.info(f"chart_extra_info '{key}': '{value}'")
+
+    logger.info(f"chart_version '{chart_version}'")
     assert kube_cluster.kube_client is not None
     assert cluster_type != ""
 
@@ -50,7 +53,24 @@ def test_cluster_info(
 # scope "module" means this is run only once, for the first test case requesting! It might be tricky
 # if you want to assert this multiple times
 @pytest.fixture(scope="module")
-def ic_deployment(kube_cluster: Cluster) -> List[pykube.Deployment]:
+def ic_deployment(request, kube_cluster: Cluster) -> List[pykube.Deployment]:
+    logger.info("Deploying postgres for kong db mode")
+    kube_cluster.kubectl(
+        "apply",
+        filename=Path(request.fspath.dirname) / "postgres.yaml",
+        output_format="",
+    )
+
+    kube_cluster.kubectl(
+        "rollout status --watch statefulset/postgres",
+        timeout="60s",
+        output_format="",
+        namespace="postgres",
+    )
+    logger.info("Postgres pods look ready")
+
+    logger.info("Waiting for kong deployment..")
+
     return wait_for_ic_deployment(kube_cluster)
 
 
@@ -74,24 +94,18 @@ def test_pods_available(kube_cluster: Cluster, ic_deployment: List[pykube.Deploy
         assert int(s.obj["status"]["readyReplicas"]) > 0
 
 
-@pytest.mark.functional
-def test_ingress_creation(
-    request, kube_cluster: Cluster, ic_deployment: List[pykube.Deployment]
-):
-    kube_cluster.kubectl("apply", filename=Path(request.fspath.dirname) / "test-ingress.yaml", output_format="")
-
-    kube_cluster.kubectl(
-        "wait deployment helloworld --for=condition=Available",
-        timeout="60s",
-        output_format="",
-        namespace="helloworld",
-    )
-
+def try_ingress():
     # try the ingress
     retries = 10
     last_status = 0
     while last_status != 200:
-        r = requests.get("http://127.0.0.1:8080/", headers={"Host": "helloworld"})
+        r = requests.get(
+            "http://127.0.0.1:8080/",
+            headers={
+                "Host": "helloworld",
+                "Authorization": "Basic YmFzaWMtYXV0aC11c2VyOmJhc2ljLWF1dGgtcGFzc3dvcmQ=",
+            },
+        )
         last_status = r.status_code
 
         if last_status == 200 or retries == 0:
@@ -100,4 +114,93 @@ def test_ingress_creation(
         retries = retries - 1
         time.sleep(5)
 
-    assert last_status == 200
+    return last_status == 200
+
+
+@pytest.mark.functional
+@pytest.mark.upgrade
+def test_ingress_creation(
+    request,
+    kube_cluster: Cluster,
+    ic_deployment: List[pykube.Deployment],
+    chart_version: str,
+):
+    # Wait again for kong deployment
+    kube_cluster.kubectl(
+        f"wait deployment {deployment_name} --for=condition=Available",
+        timeout="60s",
+        output_format="",
+        namespace=namespace_name,
+    )
+
+    kube_cluster.kubectl(
+        "apply",
+        filename=Path(request.fspath.dirname) / "global-plugins.yaml",
+        output_format="",
+    )
+    kube_cluster.kubectl(
+        "apply",
+        filename=Path(request.fspath.dirname) / "test-ingress.yaml",
+        output_format="",
+    )
+
+    # logger.info("ZZZzzzz")
+    # time.sleep(9223372036)
+
+    kube_cluster.kubectl(
+        "wait deployment helloworld --for=condition=Available",
+        timeout="60s",
+        output_format="",
+        namespace="helloworld",
+    )
+
+    # is it even available?
+    assert try_ingress()
+
+    # test some plugins
+    # we're not testing every plugin
+    r = requests.get(
+        "http://127.0.0.1:8080/",
+        headers={
+            "Host": "helloworld",
+            "Authorization": "Basic YmFzaWMtYXV0aC11c2VyOmJhc2ljLWF1dGgtcGFzc3dvcmQ=",
+        },
+    )
+    r.raise_for_status()
+    logger.info("basic-auth plugin works")
+
+    # global-response-transformer
+    assert r.headers["global-reponse-headers"] == "enabled"
+    logger.info("response-transformer plugin works")
+
+    # cache plugin
+    assert "x-cache-status" in r.headers
+    logger.info("cache plugin works")
+
+    # keyauth + cors
+    r = requests.get(
+        "http://127.0.0.1:8080/",
+        headers={
+            "Host": "helloworld-keyauth",
+            "test-api-key": "123-secret-api-key",
+            "Access-Control-Request-Method": "GET",
+        },
+    )
+    r.raise_for_status()
+    logger.info("Key-auth plugin works")
+
+    # cors plugin
+    assert r.headers["access-control-allow-origin"] == "*"
+    logger.info("Cors plugin works")
+
+    # clean up
+    kube_cluster.kubectl(
+        "delete",
+        filename=Path(request.fspath.dirname) / "test-ingress.yaml",
+        output_format="",
+    )
+    kube_cluster.kubectl(
+        "delete",
+        filename=Path(request.fspath.dirname) / "global-plugins.yaml",
+        output_format="",
+    )

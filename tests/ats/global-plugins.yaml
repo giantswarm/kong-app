@@ -1,0 +1,50 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongClusterPlugin
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: kong
+  labels:
+    global: "true"
+  name: global-prometheus
+plugin: prometheus
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongClusterPlugin
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: kong
+  labels:
+    global: "true"
+  name: global-response-headers
+plugin: response-transformer
+config:
+  add:
+    headers:
+    - 'Strict-Transport-Security: max-age=63072000; includeSubDomains'
+    - 'Content-Security-Policy: default-src ''none'';'
+    - 'global-reponse-headers: enabled'
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongClusterPlugin
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: kong
+  labels:
+    global: "true"
+  name: kongproxycache
+plugin: proxy-cache
+config:
+  cache_ttl: 300
+  content_type:
+  - text/plain
+  - application/json
+  request_method:
+  - GET
+  - HEAD
+  response_code:
+  - 200
+  strategy: memory
+  memory:
+    dictionary_name: kong_proxy_cache
+
+# acl
