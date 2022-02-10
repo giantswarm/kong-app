@@ -1,4 +1,3 @@
-# copied from helm/kong-app/ci/default-values.yaml
 proxy:
   type: NodePort
   http:

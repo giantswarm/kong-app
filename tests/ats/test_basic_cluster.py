@@ -144,6 +144,7 @@ def test_ingress_creation(
         output_format="",
     )
 
+    # logger.info("ZZZzzzz")
     # time.sleep(9223372036)
 
     kube_cluster.kubectl(
