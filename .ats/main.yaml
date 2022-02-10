@@ -13,4 +13,7 @@ upgrade-tests-app-config-file: tests/test-values.yaml
 
 # use this configuration option to test upgrade
 # against a different than previous version
-# upgrade-tests-app-version: 2.3.2
+# Chart versions 2.4.0 and 2.5.0 are broken with
+# the testing values we're using (admission webhook)
+# 2.3.2 is a widely used chart release, lets use that.
+upgrade-tests-app-version: 2.3.2
