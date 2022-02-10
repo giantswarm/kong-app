@@ -28,6 +28,11 @@ ingressController:
   env:
     anonymous_reports: "false"
   installCRDs: false
+  image:
+    tag: "2.1.1"
+
+image:
+  tag: "2.7.1"
 
 admin:
   enabled: true
