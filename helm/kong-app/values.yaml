@@ -938,3 +938,35 @@ extraSecrets: []
 # - name: my-secret
 #   mountPath: /mount/to/my/location
 #   subPath: my-subpath # Optional, if you wish to mount a single key and not the entire ConfigMap
+
+# crds
+#
+crds:
+
+  # crds.backoffLimit
+  # setting this higher means the CRD creation is less likely to be marked
+  # as failed.
+  backoffLimit: 10
+
+  # crds.image
+  image:
+
+    # crds.image.pullPolicy
+    pullPolicy: IfNotPresent
+
+  # crds.install
+  # CRDs are installed by default. If this is disabled then CRDs must
+  # be managed by another method.
+  install: true
+
+  # crds.resources
+  resources:
+
+    # crds.resources.requests
+    # Minimum resources requested for the Job.
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
