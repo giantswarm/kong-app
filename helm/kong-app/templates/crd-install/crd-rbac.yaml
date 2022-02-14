@@ -10,7 +10,7 @@ metadata:
     {{- include "kong.CRDInstallAnnotations" . | nindent 4 }}
   labels:
     app.kubernetes.io/component: "{{ template "kong.name.crdInstall" . }}"
-    {{- include "kong.defaultLabels" . | nindent 4 }}
+    {{- include "kong.metaLabels" . | nindent 4 }}
     role: "{{ template "kong.CRDInstallSelector" . }}"
 rules:
 - apiGroups:
@@ -62,7 +62,7 @@ metadata:
     {{- include "kong.CRDInstallAnnotations" . | nindent 4 }}
   labels:
     app.kubernetes.io/component: "{{ template "kong.name.crdInstall" . }}"
-    {{- include "kong.defaultLabels" . | nindent 4 }}
+    {{- include "kong.metaLabels" . | nindent 4 }}
     role: "{{ template "kong.CRDInstallSelector" . }}"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
