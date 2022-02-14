@@ -2,15 +2,15 @@
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
-  name: {{ template "certManager.name.crdInstall" . }}
+  name: {{ template "kong.name.crdInstall" . }}
   annotations:
     # create hook dependencies in the right order
     "helm.sh/hook-weight": "-6"
-    {{- include "certManager.CRDInstallAnnotations" . | nindent 4 }}
+    {{- include "kong.CRDInstallAnnotations" . | nindent 4 }}
   labels:
-    app.kubernetes.io/component: "{{ template "certManager.name.crdInstall" . }}"
-    {{- include "certManager.defaultLabels" . | nindent 4 }}
-    role: "{{ template "certManager.CRDInstallSelector" . }}"
+    app.kubernetes.io/component: "{{ template "kong.name.crdInstall" . }}"
+    {{- include "kong.defaultLabels" . | nindent 4 }}
+    role: "{{ template "kong.CRDInstallSelector" . }}"
 spec:
   privileged: false
   runAsUser:

@@ -2,24 +2,24 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ template "certManager.name.crdInstall" . }}
+  name: {{ template "kong.name.crdInstall" . }}
   namespace: {{ .Release.Namespace | quote }}
   annotations:
     # create hook dependencies in the right order
     "helm.sh/hook-weight": "-1"
-    {{- include "certManager.CRDInstallAnnotations" . | nindent 4 }}
+    {{- include "kong.CRDInstallAnnotations" . | nindent 4 }}
   labels:
-    app.kubernetes.io/component: "{{ template "certManager.name.crdInstall" . }}"
-    {{- include "certManager.defaultLabels" . | nindent 4 }}
-    role: "{{ template "certManager.CRDInstallSelector" . }}"
+    app.kubernetes.io/component: "{{ template "kong.name.crdInstall" . }}"
+    {{- include "kong.defaultLabels" . | nindent 4 }}
+    role: "{{ template "kong.CRDInstallSelector" . }}"
 spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/component: "{{ template "certManager.name.crdInstall" . }}"
-        {{- include "certManager.defaultLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "{{ template "kong.name.crdInstall" . }}"
+        {{- include "kong.defaultLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ template "certManager.name.crdInstall" . }}
+      serviceAccountName: {{ template "kong.name.crdInstall" . }}
       securityContext:
         runAsUser: {{ .Values.global.securityContext.userID }}
         runAsGroup: {{ .Values.global.securityContext.groupID }}
@@ -40,59 +40,59 @@ spec:
 
           kubectl apply --server-side=true --field-manager='kubectl-client-side-apply' --force-conflicts -f /data/ 2>&1
         volumeMounts:
-        - name: {{ template "certManager.name.crdInstall" . }}-certificaterequests
+        - name: {{ template "kong.name.crdInstall" . }}-certificaterequests
           mountPath: /data/certificaterequests.yaml
           subPath: certificaterequests.yaml
-        - name: {{ template "certManager.name.crdInstall" . }}-certificates
+        - name: {{ template "kong.name.crdInstall" . }}-certificates
           mountPath: /data/certificates.yaml
           subPath: certificates.yaml
-        - name: {{ template "certManager.name.crdInstall" . }}-challenges
+        - name: {{ template "kong.name.crdInstall" . }}-challenges
           mountPath: /data/challenges.yaml
           subPath: challenges.yaml
-        - name: {{ template "certManager.name.crdInstall" . }}-clusterissuers
+        - name: {{ template "kong.name.crdInstall" . }}-clusterissuers
           mountPath: /data/clusterissuers.yaml
           subPath: clusterissuers.yaml
-        - name: {{ template "certManager.name.crdInstall" . }}-issuers
+        - name: {{ template "kong.name.crdInstall" . }}-issuers
           mountPath: /data/issuers.yaml
           subPath: issuers.yaml
-        - name: {{ template "certManager.name.crdInstall" . }}-orders
+        - name: {{ template "kong.name.crdInstall" . }}-orders
           mountPath: /data/orders.yaml
           subPath: orders.yaml
         resources: {{- toYaml .Values.crds.resources | nindent 10 }}
       volumes:
-      - name: {{ template "certManager.name.crdInstall" . }}-certificaterequests
+      - name: {{ template "kong.name.crdInstall" . }}-certificaterequests
         configMap:
-          name: {{ template "certManager.name.crdInstall" . }}-certificaterequests
+          name: {{ template "kong.name.crdInstall" . }}-certificaterequests
           items:
           - key: certificaterequests.yaml
             path: certificaterequests.yaml
-      - name: {{ template "certManager.name.crdInstall" . }}-certificates
+      - name: {{ template "kong.name.crdInstall" . }}-certificates
         configMap:
-          name: {{ template "certManager.name.crdInstall" . }}-certificates
+          name: {{ template "kong.name.crdInstall" . }}-certificates
           items:
           - key: certificates.yaml
             path: certificates.yaml
-      - name: {{ template "certManager.name.crdInstall" . }}-challenges
+      - name: {{ template "kong.name.crdInstall" . }}-challenges
         configMap:
-          name: {{ template "certManager.name.crdInstall" . }}-challenges
+          name: {{ template "kong.name.crdInstall" . }}-challenges
           items:
           - key: challenges.yaml
             path: challenges.yaml
-      - name: {{ template "certManager.name.crdInstall" . }}-clusterissuers
+      - name: {{ template "kong.name.crdInstall" . }}-clusterissuers
         configMap:
-          name: {{ template "certManager.name.crdInstall" . }}-clusterissuers
+          name: {{ template "kong.name.crdInstall" . }}-clusterissuers
           items:
           - key: clusterissuers.yaml
             path: clusterissuers.yaml
-      - name: {{ template "certManager.name.crdInstall" . }}-issuers
+      - name: {{ template "kong.name.crdInstall" . }}-issuers
         configMap:
-          name: {{ template "certManager.name.crdInstall" . }}-issuers
+          name: {{ template "kong.name.crdInstall" . }}-issuers
           items:
           - key: issuers.yaml
             path: issuers.yaml
-      - name: {{ template "certManager.name.crdInstall" . }}-orders
+      - name: {{ template "kong.name.crdInstall" . }}-orders
         configMap:
-          name: {{ template "certManager.name.crdInstall" . }}-orders
+          name: {{ template "kong.name.crdInstall" . }}-orders
           items:
           - key: orders.yaml
             path: orders.yaml
