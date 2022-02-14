@@ -17,6 +17,10 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "kong.name.crdInstall" -}}
+{{- printf "%s-%s" ( include "kong.name" . ) "crd-install" | replace "+" "_" | trimSuffix "-" -}}
+{{- end -}}
+
 {{- define "kong.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
@@ -32,10 +36,28 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 {{- end -}}
 
+{{- define "kong.CRDInstallAnnotations" -}}
+"helm.sh/hook": "pre-install,pre-upgrade"
+"helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+{{- end -}}
+
+{{- define "kong.CRDLabels" -}}
+app: "{{ template "kong.name" . }}"
+app.kubernetes.io/name: "{{ template "kong.name" . }}"
+app.kubernetes.io/instance: "{{ template "kong.name" . }}"
+app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+helm.sh/chart: "{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}"
+{{- end -}}
+
 {{- define "kong.selectorLabels" -}}
 app.kubernetes.io/name: {{ template "kong.name" . }}
 app.kubernetes.io/component: app
 app.kubernetes.io/instance: "{{ .Release.Name }}"
+{{- end -}}
+
+{{/* Create a label which can be used to select any orphaned crd-install hook resources */}}
+{{- define "kong.CRDInstallSelector" -}}
+{{- printf "%s" "crd-install-hook" -}}
 {{- end -}}
 
 {{- define "kong.postgresql.fullname" -}}
