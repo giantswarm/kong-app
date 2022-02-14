@@ -2,16 +2,16 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: {{ template "certManager.name.crdInstall" . }}
+  name: {{ template "kong.name.crdInstall" . }}
   namespace: {{ .Release.Namespace | quote }}
   annotations:
     # create hook dependencies in the right order
     "helm.sh/hook-weight": "-3"
-    {{- include "certManager.CRDInstallAnnotations" . | nindent 4 }}
+    {{- include "kong.CRDInstallAnnotations" . | nindent 4 }}
   labels:
-    app.kubernetes.io/component: "{{ template "certManager.name.crdInstall" . }}"
-    {{- include "certManager.defaultLabels" . | nindent 4 }}
-    role: "{{ template "certManager.CRDInstallSelector" . }}"
+    app.kubernetes.io/component: "{{ template "kong.name.crdInstall" . }}"
+    {{- include "kong.defaultLabels" . | nindent 4 }}
+    role: "{{ template "kong.CRDInstallSelector" . }}"
 rules:
 - apiGroups:
   - ""
@@ -30,21 +30,14 @@ rules:
   - get
   - patch
 - apiGroups:
-  - cert-manager.io
+  - configuration.konghq.com
   resources:
-  - certificaterequests
-  - certificates
-  - clusterissuers
-  - issuers
-  verbs:
-  - create
-  - delete
-  - get
-- apiGroups:
-  - acme.cert-manager.io
-  resources:
-  - challenges
-  - orders
+  - kongclusterplugins
+  - kongconsumers
+  - kongingresses
+  - kongplugins
+  - tcpingresses
+  - udpingresses
   verbs:
   - create
   - delete
@@ -54,29 +47,29 @@ rules:
   resources:
   - podsecuritypolicies
   resourceNames:
-  - {{ template "certManager.name.crdInstall" . }}
+  - {{ template "kong.name.crdInstall" . }}
   verbs:
   - use
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: {{ template "certManager.name.crdInstall" . }}
+  name: {{ template "kong.name.crdInstall" . }}
   namespace: {{ .Release.Namespace | quote }}
   annotations:
     # create hook dependencies in the right order
     "helm.sh/hook-weight": "-2"
-    {{- include "certManager.CRDInstallAnnotations" . | nindent 4 }}
+    {{- include "kong.CRDInstallAnnotations" . | nindent 4 }}
   labels:
-    app.kubernetes.io/component: "{{ template "certManager.name.crdInstall" . }}"
-    {{- include "certManager.defaultLabels" . | nindent 4 }}
-    role: "{{ template "certManager.CRDInstallSelector" . }}"
+    app.kubernetes.io/component: "{{ template "kong.name.crdInstall" . }}"
+    {{- include "kong.defaultLabels" . | nindent 4 }}
+    role: "{{ template "kong.CRDInstallSelector" . }}"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: {{ template "certManager.name.crdInstall" . }}
+  name: {{ template "kong.name.crdInstall" . }}
 subjects:
   - kind: ServiceAccount
-    name: {{ template "certManager.name.crdInstall" . }}
+    name: {{ template "kong.name.crdInstall" . }}
     namespace: {{ .Release.Namespace | quote }}
 {{- end }}
