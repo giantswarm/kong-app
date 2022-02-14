@@ -21,8 +21,7 @@ spec:
     spec:
       serviceAccountName: {{ template "kong.name.crdInstall" . }}
       securityContext:
-        runAsUser: {{ .Values.global.securityContext.userID }}
-        runAsGroup: {{ .Values.global.securityContext.groupID }}
+      {{- include "kong.podsecuritycontext" . | nindent 8 }}        
       tolerations:
       - key: node-role.kubernetes.io/master
         effect: NoSchedule
