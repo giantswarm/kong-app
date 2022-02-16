@@ -7,6 +7,15 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- CRD update job via helm hooks
+
+### Updates
+
+- Align with upstream chart version [2.7.0](https://github.com/Kong/charts/releases/tag/kong-2.7.0)
+- Update kong/kubernetes-ingress-controller to [2.2.0](https://github.com/Kong/kubernetes-ingress-controller/releases/tag/v2.2.0)
+
 ## [2.6.0] - 2022-02-11
 
 ### Fixes
