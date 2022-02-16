@@ -21,13 +21,13 @@ spec:
     spec:
       serviceAccountName: {{ template "kong.name.crdInstall" . }}
       securityContext:
-      {{- include "kong.podsecuritycontext" . | nindent 8 }}        
+      {{- include "kong.podsecuritycontext" . | nindent 8 }}
       tolerations:
       - key: node-role.kubernetes.io/master
         effect: NoSchedule
       containers:
       - name: kubectl
-        image: "{{ .Values.image.registry }}/giantswarm/docker-kubectl:1.23.3"
+        image: "{{ .Values.image.registry | default "docker.io" }}/giantswarm/docker-kubectl:1.23.3"
         command:
         - sh
         - -c

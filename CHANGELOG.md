@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixes
+
+- Handle empty `image.registry` in CRD install job
+
 ## [2.7.0] - 2022-02-16
 
 ### Added
