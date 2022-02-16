@@ -39,62 +39,17 @@ spec:
 
           kubectl apply --server-side=true --field-manager='kubectl-client-side-apply' --force-conflicts -f /data/ 2>&1
         volumeMounts:
-        - name: {{ template "kong.name.crdInstall" . }}-certificaterequests
-          mountPath: /data/certificaterequests.yaml
-          subPath: certificaterequests.yaml
-        - name: {{ template "kong.name.crdInstall" . }}-certificates
-          mountPath: /data/certificates.yaml
-          subPath: certificates.yaml
-        - name: {{ template "kong.name.crdInstall" . }}-challenges
-          mountPath: /data/challenges.yaml
-          subPath: challenges.yaml
-        - name: {{ template "kong.name.crdInstall" . }}-clusterissuers
-          mountPath: /data/clusterissuers.yaml
-          subPath: clusterissuers.yaml
-        - name: {{ template "kong.name.crdInstall" . }}-issuers
-          mountPath: /data/issuers.yaml
-          subPath: issuers.yaml
-        - name: {{ template "kong.name.crdInstall" . }}-orders
-          mountPath: /data/orders.yaml
-          subPath: orders.yaml
+        - name: {{ template "kong.name.crdInstall" . }}-crds
+          mountPath: /data/custom-resource-definitions.yaml
+          subPath: custom-resource-definitions.yaml
         resources: {{- toYaml .Values.crds.resources | nindent 10 }}
       volumes:
-      - name: {{ template "kong.name.crdInstall" . }}-certificaterequests
+      - name: {{ template "kong.name.crdInstall" . }}-crds
         configMap:
-          name: {{ template "kong.name.crdInstall" . }}-certificaterequests
+          name: {{ template "kong.name.crdInstall" . }}-crds
           items:
-          - key: certificaterequests.yaml
-            path: certificaterequests.yaml
-      - name: {{ template "kong.name.crdInstall" . }}-certificates
-        configMap:
-          name: {{ template "kong.name.crdInstall" . }}-certificates
-          items:
-          - key: certificates.yaml
-            path: certificates.yaml
-      - name: {{ template "kong.name.crdInstall" . }}-challenges
-        configMap:
-          name: {{ template "kong.name.crdInstall" . }}-challenges
-          items:
-          - key: challenges.yaml
-            path: challenges.yaml
-      - name: {{ template "kong.name.crdInstall" . }}-clusterissuers
-        configMap:
-          name: {{ template "kong.name.crdInstall" . }}-clusterissuers
-          items:
-          - key: clusterissuers.yaml
-            path: clusterissuers.yaml
-      - name: {{ template "kong.name.crdInstall" . }}-issuers
-        configMap:
-          name: {{ template "kong.name.crdInstall" . }}-issuers
-          items:
-          - key: issuers.yaml
-            path: issuers.yaml
-      - name: {{ template "kong.name.crdInstall" . }}-orders
-        configMap:
-          name: {{ template "kong.name.crdInstall" . }}-orders
-          items:
-          - key: orders.yaml
-            path: orders.yaml
+          - key: custom-resource-definitions.yaml
+            path: custom-resource-definitions.yaml
       restartPolicy: Never
   backoffLimit: {{ .Values.crds.backoffLimit }}
 {{- end }}

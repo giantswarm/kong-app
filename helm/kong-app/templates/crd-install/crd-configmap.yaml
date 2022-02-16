@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "kong.name.crdInstall" . }}-certificaterequests
+  name: {{ template "kong.name.crdInstall" . }}-crds
   namespace: {{ .Release.Namespace | quote }}
   annotations:
     # create hook dependencies in the right order
@@ -13,6 +13,6 @@ metadata:
     {{- include "kong.metaLabels" . | nindent 4 }}
     role: "{{ template "kong.CRDInstallSelector" . }}"
 data:
-  certificaterequests.yaml: |
-{{ tpl ( .Files.Get "files/certificaterequests.yaml" ) . | indent 4 }}
+  custom-resource-definitions.yaml: |
+{{ tpl ( .Files.Get "crds/custom-resource-definitions.yaml" ) . | indent 4 }}
 {{- end }}
