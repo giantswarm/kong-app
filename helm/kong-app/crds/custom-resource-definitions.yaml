@@ -853,3 +853,4 @@ status:
     kind: ""
     plural: ""
   conditions: []
+  storedVersions: []
