@@ -1,0 +1,55 @@
+{{- if .Values.crds.install }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "kong.name.crdInstall" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  annotations:
+    # create hook dependencies in the right order
+    "helm.sh/hook-weight": "-1"
+    {{- include "kong.CRDInstallAnnotations" . | nindent 4 }}
+  labels:
+    app.kubernetes.io/component: "{{ template "kong.name.crdInstall" . }}"
+    {{- include "kong.metaLabels" . | nindent 4 }}
+    role: "{{ template "kong.CRDInstallSelector" . }}"
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component: "{{ template "kong.name.crdInstall" . }}"
+        {{- include "kong.metaLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ template "kong.name.crdInstall" . }}
+      securityContext:
+      {{- include "kong.podsecuritycontext" . | nindent 8 }}        
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      containers:
+      - name: kubectl
+        image: "{{ .Values.image.registry }}/giantswarm/docker-kubectl:1.23.3"
+        command:
+        - sh
+        - -c
+        - |
+          set -o errexit ; set -o xtrace ; set -o nounset
+
+          # piping stderr to stdout means kubectl's errors are surfaced
+          # in the pod's logs.
+
+          kubectl apply --server-side=true --field-manager='kubectl-client-side-apply' --force-conflicts -f /data/ 2>&1
+        volumeMounts:
+        - name: {{ template "kong.name.crdInstall" . }}-crds
+          mountPath: /data/custom-resource-definitions.yaml
+          subPath: custom-resource-definitions.yaml
+        resources: {{- toYaml .Values.crds.resources | nindent 10 }}
+      volumes:
+      - name: {{ template "kong.name.crdInstall" . }}-crds
+        configMap:
+          name: {{ template "kong.name.crdInstall" . }}-crds
+          items:
+          - key: custom-resource-definitions.yaml
+            path: custom-resource-definitions.yaml
+      restartPolicy: Never
+  backoffLimit: {{ .Values.crds.backoffLimit }}
+{{- end }}

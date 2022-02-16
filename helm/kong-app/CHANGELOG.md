@@ -17,6 +17,7 @@ kubectl apply -f https://raw.githubusercontent.com/Kong/charts/main/charts/kong/
 * Replaced `sleep 15` in `preStop` command with `--wait=15` argument to `kong quit`.
   ([#531](https://github.com/Kong/charts/pull/531))
 * Added support for non `KONG_` prefixed custom environment variables
+* Added a helm job to upgrade Kongs CRDs
 
 ### Fixed
 

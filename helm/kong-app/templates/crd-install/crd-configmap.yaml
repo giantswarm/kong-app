@@ -1,0 +1,18 @@
+{{- if .Values.crds.install }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "kong.name.crdInstall" . }}-crds
+  namespace: {{ .Release.Namespace | quote }}
+  annotations:
+    # create hook dependencies in the right order
+    "helm.sh/hook-weight": "-5"
+    {{- include "kong.CRDInstallAnnotations" . | nindent 4 }}
+  labels:
+    app.kubernetes.io/component: "{{ template "kong.name.crdInstall" . }}"
+    {{- include "kong.metaLabels" . | nindent 4 }}
+    role: "{{ template "kong.CRDInstallSelector" . }}"
+data:
+  custom-resource-definitions.yaml: |
+{{ tpl ( .Files.Get "crds/custom-resource-definitions.yaml" ) . | indent 4 }}
+{{- end }}
