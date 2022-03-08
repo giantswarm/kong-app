@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixes
+
+- Pin user and group ID to 1000 in CRD install helm hook job
+
 ## [2.7.1] - 2022-02-16
 
 ### Fixes
