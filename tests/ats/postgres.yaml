@@ -19,6 +19,87 @@ spec:
   selector:
     app: postgres
 ---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+  namespace: postgres
+rules:
+- apiGroups:
+  - policy
+  resources:
+  - podsecuritypolicies
+  resourceNames:
+  - postgres
+  verbs:
+  - use
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+  namespace: postgres
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: postgres
+subjects:
+- kind: ServiceAccount
+  name: postgres
+  namespace: postgres
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+  namespace: postgres
+---
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  fsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 70
+        max: 70
+  hostIPC: false
+  hostNetwork: false
+  hostPID: false
+  privileged: false
+  readOnlyRootFilesystem: false
+  runAsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 70
+        max: 70
+  runAsUser:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 70
+        max: 70
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 70
+        max: 70
+  volumes:
+  - 'configMap'
+  - 'secret'
+  - 'emptyDir'
+  - 'hostPath'
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -40,6 +121,10 @@ spec:
       labels:
         app: postgres
     spec:
+      serviceAccountName: postgres
+      volumes:
+      - name: postgres-data
+        emptyDir: {}
       containers:
       - name: postgres
         # 13 because 14 does not work yet
@@ -55,6 +140,9 @@ spec:
           value: kongkong
         - name: POSTGRES_DB
           value: kong
+        volumeMounts:
+        - mountPath: /var/lib/postgresql
+          name: postgres-data
         startupProbe:
           initialDelaySeconds: 5
           periodSeconds: 10
