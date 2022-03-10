@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [2.7.2] - 2022-03-10
+
 ### Fixes
 
 - Pin user and group ID to 1000 in CRD install helm hook job
@@ -436,7 +438,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.7.1...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.7.2...HEAD
+[2.7.2]: https://github.com/giantswarm/kong-app/compare/v2.7.1...v2.7.2
 [2.7.1]: https://github.com/giantswarm/kong-app/compare/v2.7.0...v2.7.1
 [2.7.0]: https://github.com/giantswarm/kong-app/compare/v2.6.0...v2.7.0
 [2.6.0]: https://github.com/giantswarm/kong-app/compare/v2.5.0...v2.6.0
