@@ -31,6 +31,7 @@ helm.sh/chart: {{ template "kong.chart" . }}
 app.kubernetes.io/instance: "{{ .Release.Name }}"
 app.kubernetes.io/managed-by: "{{ .Release.Service }}"
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
 {{- range $key, $value := .Values.extraLabels }}
 {{ $key }}: {{ $value | quote }}
 {{- end }}
@@ -47,6 +48,7 @@ app.kubernetes.io/name: "{{ template "kong.name" . }}"
 app.kubernetes.io/instance: "{{ template "kong.name" . }}"
 app.kubernetes.io/managed-by: "{{ .Release.Service }}"
 helm.sh/chart: "{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}"
+application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
 {{- end -}}
 
 {{- define "kong.selectorLabels" -}}
