@@ -27,9 +27,9 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 
 {{- define "kong.imagesHash" -}}
 {{- if .Values.image.registry }}
-{{- printf "%s-%s-%s" .Values.image.registry (include "kong.getRepoTag" .Values.image) (include "kong.getRepoTag" .Values.ingressController.image) | sha256sum -}}
+{{- printf "%s-%s-%s" .Values.image.registry (include "kong.getRepoTag" .Values.image) (include "kong.getRepoTag" .Values.ingressController.image) | sha256sum | trunc 63 -}}
 {{- else }}
-{{- printf "%s-%s" (include "kong.getRepoTag" .Values.image) (include "kong.getRepoTag" .Values.ingressController.image) | sha256sum -}}
+{{- printf "%s-%s" (include "kong.getRepoTag" .Values.image) (include "kong.getRepoTag" .Values.ingressController.image) | sha256sum | trunc 63 -}}
 {{- end -}}
 {{- end -}}
 
