@@ -76,6 +76,49 @@
                 }
             }
         },
+        "affinity": {
+            "type": "object",
+            "properties": {
+                "nodeAffinity": {
+                    "type": "object",
+                    "properties": {
+                        "requiredDuringSchedulingIgnoredDuringExecution": {
+                            "type": "object",
+                            "properties": {
+                                "nodeSelectorTerms": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "matchExpressions": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "key": {
+                                                            "type": "string"
+                                                        },
+                                                        "operator": {
+                                                            "type": "string"
+                                                        },
+                                                        "values": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "autoscaling": {
             "type": "object",
             "properties": {
@@ -193,6 +236,52 @@
         },
         "containerSecurityContext": {
             "type": "object"
+        },
+        "crds": {
+            "type": "object",
+            "properties": {
+                "backoffLimit": {
+                    "type": "integer"
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "pullPolicy": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "install": {
+                    "type": "boolean"
+                },
+                "resources": {
+                    "type": "object",
+                    "properties": {
+                        "limits": {
+                            "type": "object",
+                            "properties": {
+                                "cpu": {
+                                    "type": "string"
+                                },
+                                "memory": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "requests": {
+                            "type": "object",
+                            "properties": {
+                                "cpu": {
+                                    "type": "string"
+                                },
+                                "memory": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         },
         "dblessConfig": {
             "type": "object",
@@ -1238,6 +1327,9 @@
         },
         "tolerations": {
             "type": "array"
+        },
+        "topologySpreadConstraints": {
+            "type": "string"
         },
         "udpProxy": {
             "type": "object",

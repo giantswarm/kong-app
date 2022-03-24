@@ -25,6 +25,14 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "kong.imagesHash" -}}
+{{- if .Values.image.registry }}
+{{- printf "%s-%s-%s" .Values.image.registry (include "kong.getRepoTag" .Values.image) (include "kong.getRepoTag" .Values.ingressController.image) | sha256sum -}}
+{{- else }}
+{{- printf "%s-%s" (include "kong.getRepoTag" .Values.image) (include "kong.getRepoTag" .Values.ingressController.image) | sha256sum -}}
+{{- end -}}
+{{- end -}}
+
 {{- define "kong.metaLabels" -}}
 app.kubernetes.io/name: {{ template "kong.name" . }}
 helm.sh/chart: {{ template "kong.chart" . }}
@@ -32,6 +40,7 @@ app.kubernetes.io/instance: "{{ .Release.Name }}"
 app.kubernetes.io/managed-by: "{{ .Release.Service }}"
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
+application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
 {{- range $key, $value := .Values.extraLabels }}
 {{ $key }}: {{ $value | quote }}
 {{- end }}

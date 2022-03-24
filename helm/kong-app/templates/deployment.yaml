@@ -283,7 +283,7 @@ spec:
     {{- end }}
     {{- if .Values.topologySpreadConstraints }}
       topologySpreadConstraints:
-{{ toYaml .Values.topologySpreadConstraints | indent 8 }}
+{{ tpl .Values.topologySpreadConstraints . | indent 6 }}
     {{- end }}
       securityContext:
       {{- include "kong.podsecuritycontext" . | nindent 8 }}
