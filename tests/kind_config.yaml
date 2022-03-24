@@ -7,7 +7,7 @@ nodes:
     kind: InitConfiguration
     nodeRegistration:
       kubeletExtraArgs:
-        node-labels: "ingress-ready=true"
+        node-labels: "ingress-ready=true,topology.kubernetes.io/zone=cool-zone"
   extraPortMappings:
   - containerPort: 32080
     hostPort: 8080
