@@ -620,7 +620,12 @@ affinity:
           operator: NotIn
           values:
           - master
-          - controlplane
+      - matchExpressions:
+        - key: node-role.kubernetes.io/master
+          operator: DoesNotExist
+      - matchExpressions:
+        - key: node-role.kubernetes.io/control-plane
+          operator: DoesNotExist
 
 # Topology spread constraints for pod assignment (requires Kubernetes >= 1.19)
 # Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
