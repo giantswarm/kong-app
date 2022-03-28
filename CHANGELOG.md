@@ -10,6 +10,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Added
 
 - Added team ownership to default labels.
+- Default `affinity` and `topologySpreadConstraints` to make sure pods are spread evenly across zones.
 
 ## [2.7.2] - 2022-03-10
 

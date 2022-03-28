@@ -12,6 +12,7 @@ Giant Swarm offers a Kong Managed App which can be installed in tenant clusters.
 
 | Giant Swarm Chart Release | Upstream Chart Release | Kong Version | Kong IC Version | Kong-Gateway Enterprise container tag |
 | --- | --- | --- | --- | --- |
+| Unreleased | [2.7.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#270) | [2.7.1](https://github.com/Kong/kong/blob/master/CHANGELOG.md#271) | [2.2.1](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#221) | 2.7.1.1-alpine |
 | [v2.7.2](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#272---2022-03-10) | [2.7.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#270) | [2.7.1](https://github.com/Kong/kong/blob/master/CHANGELOG.md#271) | [2.2.1](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#221) | 2.7.1.1-alpine |
 | [v2.7.1](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#271---2022-02-16) | [2.7.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#270) | [2.7.1](https://github.com/Kong/kong/blob/master/CHANGELOG.md#271) | [2.2.1](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#221) | 2.7.1.1-alpine |
 | [v2.7.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#270---2022-02-16) | [2.7.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#270) | [2.7.1](https://github.com/Kong/kong/blob/master/CHANGELOG.md#271) | [2.2.1](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#221) | 2.7.1.1-alpine |
@@ -42,8 +43,8 @@ This app does not by default provide a database and if a database is required,
 then you will need to BYOD (Bring Your Own Database). For testing purposes, it
 is possible launch postgres alongside this App (described below).
 
-For detailed configuration options, please refer to the [configuration list](helm/kong-app/README.md#configuration)
-also the [`values.yaml` file](helm/kong-app/values.yaml)
+For detailed configuration options, please refer to the [configuration list](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/README.md#configuration)
+also the [`values.yaml` file](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/values.yaml)
 
 Any key value put under the `env` section translates to environment variables
 used to control Kong's configuration. Every key is prefixed with KONG_ and
@@ -184,7 +185,7 @@ This is not required for Helm 3, as CRDs will be installed automatically.
 
 ## Automatic and manual testing
 
-The helm chart in this repository undergoes [a series of automated tests](tests/ats/test_basic_cluster.py) running on a [kind](https://kind.sigs.k8s.io/) cluster ([kind cluster config](tests/kind_config.yaml)) executed by [app-test-suite](https://github.com/giantswarm/app-test-suite). ([chart values used for tests](tests/test-values.yaml))
+The helm chart in this repository undergoes [a series of automated tests](https://github.com/giantswarm/kong-app/blob/master/tests/ats/test_basic_cluster.py) running on a [kind](https://kind.sigs.k8s.io/) cluster ([kind cluster config](https://github.com/giantswarm/kong-app/blob/master/tests/kind_config.yaml)) executed by [app-test-suite](https://github.com/giantswarm/app-test-suite). ([chart values used for tests](https://github.com/giantswarm/kong-app/blob/master/tests/test-values.yaml))
 
 Testing includes creation of `Deployment`, `Service`, and `Ingress` resources to check if reconciliation works as intended.
 
