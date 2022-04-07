@@ -12,7 +12,7 @@
 
 image:
   repository: kong/kong-gateway
-  tag: "2.7.0.0-alpine"
+  tag: "2.8"
 
 env:
   prefix: /kong_prefix/
@@ -185,10 +185,9 @@ portalapi:
 
 postgresql:
   enabled: true
-  postgresqlUsername: kong
-  postgresqlDatabase: kong
-  service:
-    port: 5432
+  auth:
+    username: kong
+    database: kong
 
 ingressController:
   enabled: true
