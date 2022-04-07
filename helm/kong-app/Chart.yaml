@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 description: The Cloud-Native Ingress and API-management
 engine: gotpl
 home: https://github.com/giantswarm/kong-app
@@ -12,7 +12,12 @@ name: kong-app
 sources:
 - https://konghq.com/
 version: 2.7.0
-appVersion: "2.7"
+appVersion: "2.8"
 annotations:
   application.giantswarm.io/team: team-cabbage
 kubeVersion: ">=1.20.0-0"
+dependencies:
+- name: postgresql
+  version: 11.1.15
+  repository: https://charts.bitnami.com/bitnami
+  condition: postgresql.enabled
