@@ -12,6 +12,10 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{- define "kong.app-kubernetes-io-name" -}}
+{{- .Chart.Name | trunc 63 | trimSuffix "-" | quote -}}
+{{- end -}}
+
 {{- define "kong.fullname" -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
@@ -34,7 +38,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{- define "kong.metaLabels" -}}
-app.kubernetes.io/name: {{- .Chart.Name | trunc 63 | trimSuffix "-" -}}
+app.kubernetes.io/name: {{ template "kong.app-kubernetes-io-name" . }}
 helm.sh/chart: {{ template "kong.chart" . }}
 app.kubernetes.io/instance: "{{ .Release.Name }}"
 app.kubernetes.io/managed-by: "{{ .Release.Service }}"
@@ -53,7 +57,7 @@ application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . 
 
 {{- define "kong.CRDLabels" -}}
 app: "{{ template "kong.name" . }}"
-app.kubernetes.io/name: {{- .Chart.Name | trunc 63 | trimSuffix "-" -}}
+app.kubernetes.io/name: {{ template "kong.app-kubernetes-io-name" . }}
 app.kubernetes.io/instance: "{{ template "kong.name" . }}"
 app.kubernetes.io/managed-by: "{{ .Release.Service }}"
 helm.sh/chart: "{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}"
@@ -61,7 +65,7 @@ application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantsw
 {{- end -}}
 
 {{- define "kong.selectorLabels" -}}
-app.kubernetes.io/name: {{- .Chart.Name | trunc 63 | trimSuffix "-" -}}
+app.kubernetes.io/name: {{ template "kong.app-kubernetes-io-name" . }}
 app.kubernetes.io/component: app
 app.kubernetes.io/instance: "{{ .Release.Name }}"
 {{- end -}}
