@@ -103,6 +103,7 @@ Create Ingress resource for a Kong service
 {{- $servicePort := include "kong.ingress.servicePort" . }}
 {{- $path := .ingress.path -}}
 {{- $hostname := .ingress.hostname -}}
+{{- $pathType := .ingress.pathType -}}
 apiVersion: {{ .ingressVersion }}
 kind: Ingress
 metadata:
@@ -121,7 +122,7 @@ spec:
   ingressClassName: {{ .ingress.ingressClassName }}
 {{- end }}
   rules:
-  - host: {{ $hostname }}
+  - host: {{ $hostname | quote }}
     http:
       paths:
         - backend:
@@ -137,13 +138,13 @@ spec:
           {{- if $path }}
           path: {{ $path }}
           {{- if (not (eq .ingressVersion "extensions/v1beta1")) }}
-          pathType: ImplementationSpecific
+          pathType: {{ $pathType }}
           {{- end }}
           {{- end -}}
   {{- if (hasKey .ingress "tls") }}
   tls:
   - hosts:
-    - {{ $hostname }}
+    - {{ $hostname | quote }}
     secretName: {{ .ingress.tls }}
   {{- end -}}
 {{- end -}}
@@ -193,6 +194,7 @@ spec:
   - name: kong-{{ .serviceName }}
     port: {{ .http.servicePort }}
     targetPort: {{ .http.containerPort }}
+    appProtocol: http
   {{- if (and (or (eq .type "LoadBalancer") (eq .type "NodePort")) (not (empty .http.nodePort))) }}
     nodePort: {{ .http.nodePort }}
   {{- end }}
@@ -203,6 +205,7 @@ spec:
   - name: kong-{{ .serviceName }}-tls
     port: {{ .tls.servicePort }}
     targetPort: {{ .tls.overrideServiceTargetPort | default .tls.containerPort }}
+    appProtocol: https
   {{- if (and (or (eq .type "LoadBalancer") (eq .type "NodePort")) (not (empty .tls.nodePort))) }}
     nodePort: {{ .tls.nodePort }}
   {{- end }}
@@ -413,10 +416,20 @@ The name of the service used for the ingress controller's validation webhook
 {{- end -}}
 
 {{/*
+    ====== CUSTOM-SET INGRESS CONTROLLER ENVIRONMENT VARIABLES ======
+*/}}
+
+{{- $customIngressEnv := dict -}}
+{{- range $key, $val := .Values.ingressController.customEnv }}
+  {{- $upper := upper $key -}}
+  {{- $_ := set $customIngressEnv $upper $val -}}
+{{- end -}}
+
+{{/*
       ====== MERGE AND RENDER ENV BLOCK ======
 */}}
 
-{{- $completeEnv := mergeOverwrite $autoEnv $userEnv -}}
+{{- $completeEnv := mergeOverwrite $autoEnv $userEnv $customIngressEnv -}}
 {{- template "kong.renderEnv" $completeEnv -}}
 
 {{- end -}}
@@ -494,8 +507,8 @@ The name of the service used for the ingress controller's validation webhook
 {{- end -}}
 
 {{- define "kong.userDefinedVolumeMounts" -}}
-{{- if .Values.deployment.userDefinedVolumeMounts }}
-{{- toYaml .Values.deployment.userDefinedVolumeMounts }}
+{{- if .userDefinedVolumeMounts }}
+{{- toYaml .userDefinedVolumeMounts }}
 {{- end }}
 {{- end -}}
 
@@ -579,10 +592,10 @@ The name of the service used for the ingress controller's validation webhook
   {{- include "kong.env" . | nindent 2 }}
 {{/* TODO the prefix override is to work around https://github.com/Kong/charts/issues/295
      Note that we use args instead of command here to /not/ override the standard image entrypoint. */}}
-  args: [ "/bin/sh", "-c", "export KONG_NGINX_DAEMON=on; export KONG_PREFIX=`mktemp -d`; until kong start; do echo 'waiting for db'; sleep 1; done; kong stop"]
+  args: [ "/bin/sh", "-c", "export KONG_NGINX_DAEMON=on KONG_PREFIX=`mktemp -d` KONG_KEYRING_ENABLED=off; until kong start; do echo 'waiting for db'; sleep 1; done; kong stop"]
   volumeMounts:
   {{- include "kong.volumeMounts" . | nindent 4 }}
-  {{- include "kong.userDefinedVolumeMounts" . | nindent 4 }}
+  {{- include "kong.userDefinedVolumeMounts" .Values.deployment | nindent 4 }}
   resources:
   {{- toYaml .Values.resources | nindent 4 }}
 {{- end -}}
@@ -648,12 +661,13 @@ The name of the service used for the ingress controller's validation webhook
 {{- end }}
   resources:
 {{ toYaml .Values.ingressController.resources | indent 4 }}
-{{- if .Values.ingressController.admissionWebhook.enabled }}
   volumeMounts:
+{{- if .Values.ingressController.admissionWebhook.enabled }}
   - name: webhook-cert
     mountPath: /admission-webhook
     readOnly: true
 {{- end }}
+  {{- include "kong.userDefinedVolumeMounts" .Values.ingressController | nindent 2 }}
 {{- end -}}
 
 {{- define "secretkeyref" -}}
@@ -809,10 +823,11 @@ the template that it itself is using form the above sections.
 
 {{- if .Values.postgresql.enabled }}
   {{- $_ := set $autoEnv "KONG_PG_HOST" (include "kong.postgresql.fullname" .) -}}
-  {{- $_ := set $autoEnv "KONG_PG_PORT" .Values.postgresql.service.port -}}
-  {{- $pgPassword := include "secretkeyref" (dict "name" (include "kong.postgresql.fullname" .) "key" "postgresql-password") -}}
+  {{- $_ := set $autoEnv "KONG_PG_PORT" .Values.postgresql.service.ports.postgresql -}}
+  {{- $pgPassword := include "secretkeyref" (dict "name" (include "kong.postgresql.fullname" .) "key" "password") -}}
+
   {{- $_ := set $autoEnv "KONG_PG_PASSWORD" $pgPassword -}}
-{{- else if .Values.postgresql.enabled }}
+{{- else if eq .Values.env.database "postgres" }}
   {{- $_ := set $autoEnv "KONG_PG_PORT" "5432" }}
 {{- end }}
 
@@ -929,7 +944,7 @@ Environment variables are sorted alphabetically
 {{/*
 kong.kubernetesRBACRoles outputs a static list of RBAC rules (the "rules" block
 of a Role or ClusterRole) that provide the ingress controller access to the
-Kubernetes resources it uses to build Kong configuration.
+Kubernetes namespace-scoped resources it uses to build Kong configuration.
 */}}
 {{- define "kong.kubernetesRBACRules" -}}
 - apiGroups:
@@ -996,22 +1011,6 @@ Kubernetes resources it uses to build Kong configuration.
   - ""
   resources:
   - services/status
-  verbs:
-  - get
-  - patch
-  - update
-- apiGroups:
-  - configuration.konghq.com
-  resources:
-  - kongclusterplugins
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - configuration.konghq.com
-  resources:
-  - kongclusterplugins/status
   verbs:
   - get
   - patch
@@ -1115,21 +1114,6 @@ Kubernetes resources it uses to build Kong configuration.
 - apiGroups:
   - gateway.networking.k8s.io
   resources:
-  - gatewayclasses
-  verbs:
-  - get
-  - list
-  - watch
-- apiGroups:
-  - gateway.networking.k8s.io
-  resources:
-  - gatewayclasses/status
-  verbs:
-  - get
-  - update
-- apiGroups:
-  - gateway.networking.k8s.io
-  resources:
   - gateways
   verbs:
   - get
@@ -1190,6 +1174,60 @@ Kubernetes resources it uses to build Kong configuration.
   - get
   - patch
   - update
+{{- end -}}
+
+{{/*
+kong.kubernetesRBACClusterRoles outputs a static list of RBAC rules (the "rules" block
+of a Role or ClusterRole) that provide the ingress controller access to the
+Kubernetes Cluster-scoped resources it uses to build Kong configuration.
+*/}}
+{{- define "kong.kubernetesRBACClusterRules" -}}
+- apiGroups:
+  - ""
+  resources:
+  - endpoints
+  verbs:
+  - list
+  - watch
+- apiGroups:
+  - configuration.konghq.com
+  resources:
+  - kongclusterplugins
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - configuration.konghq.com
+  resources:
+  - kongclusterplugins/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
+  - gateway.networking.k8s.io
+  resources:
+  - gatewayclasses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - gateway.networking.k8s.io
+  resources:
+  - gatewayclasses/status
+  verbs:
+  - get
+  - update
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingressclasses
+  verbs:
+  - get
+  - list
+  - watch
 {{- end -}}
 
 {{- define "kong.ingressVersion" -}}
