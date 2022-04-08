@@ -34,7 +34,7 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- end -}}
 
 {{- define "kong.metaLabels" -}}
-app.kubernetes.io/name: {{ template "kong.name" . }}
+app.kubernetes.io/name: {{- .Chart.Name | trunc 63 | trimSuffix "-" -}}
 helm.sh/chart: {{ template "kong.chart" . }}
 app.kubernetes.io/instance: "{{ .Release.Name }}"
 app.kubernetes.io/managed-by: "{{ .Release.Service }}"
