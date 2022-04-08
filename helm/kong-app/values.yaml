@@ -637,14 +637,14 @@ topologySpreadConstraints: |-
     whenUnsatisfiable: ScheduleAnyway
     labelSelector:
       matchLabels:
-        app.kubernetes.io/name: {{ template "kong.name" . }}
+        app.kubernetes.io/name: {{- .Chart.Name | trunc 63 | trimSuffix "-" -}}
         application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
   - maxSkew: 1
     topologyKey: kubernetes.io/hostname
     whenUnsatisfiable: ScheduleAnyway
     labelSelector:
       matchLabels:
-        app.kubernetes.io/name: {{ template "kong.name" . }}
+        app.kubernetes.io/name: {{- .Chart.Name | trunc 63 | trimSuffix "-" -}}
         application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
 
 # Tolerations for pod assignment
