@@ -580,7 +580,7 @@ postgresql:
     tag: 13.6.0-debian-10-r52
   service:
     ports:
-      postgresql: "5432"
+      postgresql: 5432
 
 # -----------------------------------------------------------------------------
 # Miscellaneous parameters
