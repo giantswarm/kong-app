@@ -34,3 +34,6 @@ admin:
 podDisruptionBudget:
   enabled: true
   maxUnavailable: 50%
+
+postgresql:
+  enabled: true
