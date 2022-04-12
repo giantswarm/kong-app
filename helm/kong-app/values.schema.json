@@ -45,6 +45,9 @@
                         },
                         "path": {
                             "type": "string"
+                        },
+                        "pathType": {
+                            "type": "string"
                         }
                     }
                 },
@@ -122,6 +125,9 @@
         "autoscaling": {
             "type": "object",
             "properties": {
+                "behavior": {
+                    "type": "object"
+                },
                 "enabled": {
                     "type": "boolean"
                 },
@@ -785,6 +791,9 @@
                         },
                         "path": {
                             "type": "string"
+                        },
+                        "pathType": {
+                            "type": "string"
                         }
                     }
                 },
@@ -984,6 +993,9 @@
                         },
                         "path": {
                             "type": "string"
+                        },
+                        "pathType": {
+                            "type": "string"
                         }
                     }
                 },
@@ -1058,6 +1070,9 @@
                         },
                         "path": {
                             "type": "string"
+                        },
+                        "pathType": {
+                            "type": "string"
                         }
                     }
                 },
@@ -1092,8 +1107,46 @@
         "postgresql": {
             "type": "object",
             "properties": {
+                "auth": {
+                    "type": "object",
+                    "properties": {
+                        "database": {
+                            "type": "string"
+                        },
+                        "username": {
+                            "type": "string"
+                        }
+                    }
+                },
                 "enabled": {
                     "type": "boolean"
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "registry": {
+                            "type": "string"
+                        },
+                        "repository": {
+                            "type": "string"
+                        },
+                        "tag": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "service": {
+                    "type": "object",
+                    "properties": {
+                        "ports": {
+                            "type": "object",
+                            "properties": {
+                                "postgresql": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1145,6 +1198,9 @@
                             "type": ["null", "string"]
                         },
                         "path": {
+                            "type": "string"
+                        },
+                        "pathType": {
                             "type": "string"
                         }
                     }
