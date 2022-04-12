@@ -12,6 +12,10 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{/*
+Value used for app.kubernetes.io/name label on resources.
+Needs to be stable as Giant Swarm is using it for monitoring.
+*/}}
 {{- define "kong.app-kubernetes-io-name" -}}
 {{- .Chart.Name | trunc 63 | trimSuffix "-" | quote -}}
 {{- end -}}
