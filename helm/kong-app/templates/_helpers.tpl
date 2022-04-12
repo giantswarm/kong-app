@@ -42,7 +42,7 @@ Needs to be stable as Giant Swarm is using it for monitoring.
 {{- end -}}
 
 {{- define "kong.metaLabels" -}}
-app.kubernetes.io/name: {{ template "kong.chart-name" . | quote }}
+app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
 helm.sh/chart: {{ template "kong.chart" . }}
 app.kubernetes.io/instance: "{{ .Release.Name }}"
 app.kubernetes.io/managed-by: "{{ .Release.Service }}"
@@ -61,7 +61,7 @@ application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . 
 
 {{- define "kong.CRDLabels" -}}
 app: "{{ template "kong.name" . }}"
-app.kubernetes.io/name: {{ template "kong.chart-name" . | quote }}
+app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
 app.kubernetes.io/instance: "{{ template "kong.name" . }}"
 app.kubernetes.io/managed-by: "{{ .Release.Service }}"
 helm.sh/chart: "{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}"
@@ -69,7 +69,7 @@ application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantsw
 {{- end -}}
 
 {{- define "kong.selectorLabels" -}}
-app.kubernetes.io/name: {{ template "kong.chart-name" . | quote }}
+app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
 app.kubernetes.io/component: app
 app.kubernetes.io/instance: "{{ .Release.Name }}"
 {{- end -}}
