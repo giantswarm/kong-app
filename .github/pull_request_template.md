@@ -16,12 +16,12 @@ This PR...
 
 ## Checklist
 
-- [ ] Automated test are working
+- [ ] Automated test are working (for chart changes)
 - [ ] Changelog entry has been added
 
 ### Manual tests on workload clusters
 
-Execute these tests to make sure your existing deployments with custom values still work.
+For plain installations (default values) and database mode (deploy `tests/manual/postgres.yaml`, then install with `tests/manual/values-database.yaml`), execute these tests. If you have additional configuration, make sure your existing deployments with custom values still work.
 
 - [ ] Upgrade from previous version works
 - [ ] Existing Ingress resources are reconciled correctly (change domain, see if its available)
