@@ -105,10 +105,10 @@ extraLabels: {}
 image:
   registry: quay.io
   repository: giantswarm/kong
-  tag: "2.8.0"
+  tag: "2.8.1"
   # Kong Enterprise
   # repository: kong/kong-gateway
-  # tag: "2.8"
+  # tag: "2.8.1.0-alpine"
 
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
