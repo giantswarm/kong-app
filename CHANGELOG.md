@@ -10,6 +10,9 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Updates
 
 - Align with upstream chart version [2e89647](https://github.com/Kong/charts/tree/2e89647d86ec7c8fa2a2a1697a325e6679b18d08) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.7.0...2e89647))
+- Update kong/kubernetes-ingress-controller to [2.3.1](https://github.com/Kong/kubernetes-ingress-controller/releases/tag/v2.3.1)
+- Update kong/kong to [2.8.1](https://github.com/Kong/kong/blob/2.8.1/CHANGELOG.md#281). This fixes OpenSSL [CVE-2022-0778](https://nvd.nist.gov/vuln/detail/CVE-2022-0778).
+- Execute enterprise tests with container image version 2.8.1.0-alpine
 
 ## [2.8.0] - 2022-03-28
 
