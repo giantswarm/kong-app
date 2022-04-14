@@ -6,7 +6,7 @@
 an open-source Ingress Controller for Kubernetes that offers API management capabilities
 with a plugin architecture.
 
-Giant Swarm offers a Kong Managed App which can be installed in tenant clusters.
+Giant Swarm offers a Kong Managed App which can be installed in workload clusters.
 
 ## Available Versions
 
@@ -59,94 +59,54 @@ Ingress Controller
 for more detailed explanation and usage.
 
 ### DBLess Kong
-The [official documentation](https://docs.konghq.com/1.4.x/db-less-and-declarative-config/)
-explains how DBLess Kong works and the possible limitations. To use this method
-of operation with this App, you will need to include the following you your
-values YAML:
-
-Using an existing ConfigMap
----------------------------
-```YAML
-env:
-  database: "off"
-ingressController:
-  enabled: false
-dblessConfig:
-  configMap: nameOfExistingConfigMap
-```
-
-Inline configuration
---------------------
-```YAML
-env:
-  database: "off"
-ingressController:
-  enabled: false
-dblessConfig:
-  config:
-    _format_version: "1.1"
-    services:
-      - name: example.com
-        url: http://example.com
-        routes:
-        - name: example
-          paths:
-          - "/example"
-```
+The [official documentation](https://docs.konghq.com/gateway/2.8.x/reference/db-less-and-declarative-config/#main)
+explains how DBLess Kong works and its limitations. To use this method
+of operation with this App, no special configuration is required.
 
 ### Using your own Database
 Kong supports two databases:
 
-- PostgreSQL: 9.5 and above.
-- Cassandra: 2.2 and above.
-
-This section will focus on PostgreSQL, however the same process can be equally
-applied to Cassandra.
+- PostgreSQL: 9.5 up to 13.
 
 Example database configuration:
 ```YAML
 ingressController:
   enabled: false
 env:
-  database: "postgress" # can be "off" or "cassandra"
+  database: "postgres" # can be "off" or "postgres"
   pg_host: 127.0.0.1
   pg_port: 12345
   pg_user: postgres
   pg_password: # This can also be a string value, but not recommended
     valueFrom:
-           secretKeyRef:
-              key: kong
-              name: postgres
+      secretKeyRef:
+        name: postgres
+        key: kong
 ```
-You can use any valid database configuration option inside `env`. This is also
-how Cassandra can be configured.
 
 _note_: If `pg_port` is not set then it will default to `5432`
 
 #### Installing a database alongside the App
 For testing purposes, it is possible to install a PostgreSQL server alongside
-the App. To do this:
+the App. To do this, you'll need to specify the following app configuration:
 
 ```YAML
 postgresql:
   enabled: true
-  postgresqlUsername: kong
-  postgresqlDatabase: kong
-  service:
-    port: 5432
 ```
-(There is no need to add PostgreSQL configuration data to `env`)
+(There is no need to add PostgreSQL configuration data to `env`, a default user
+and password will be used.)
 
-Please note: This configuration should only really be used for testing and it
-not something we can support
+Please note: This configuration should only be used for testing and is not officially
+supported by Giant Swarm.
 
 ### Using Kong Ingress Controller with a Database
-When using Kong Ingress Controller, their shouldn't be a need to use a Database.
-However in some cases (for example, plugin support) a data store is
+When using Kong Ingress Controller, there shouldn't be a need to use a database.
+However in some cases (for example, plugin support) a database is
 required. In these situations, it is possible to use a mixture of Kong Ingress
 Controller and a database.
 
-Like in the case of using a database, Giant Swarm do not support the database and
+Like in the case of using a database, Giant Swarm does not support the database and
 can only provide best efforts support with this configuration.
 
 To configure, please see ['Using your own Database'](#using-your-own-database).
@@ -162,23 +122,18 @@ Note:
 (Taken from https://github.com/Kong/kubernetes-ingress-controller/blob/master/docs/faq.md#is-it-possible-to-create-consumers-using-the-admin-api)
 
 ### Kong Ingress Controller CRDs
-If you wish to use the Kong Ingress Controller and use Helm 2, please be aware
-that by default the CRDs will not be installed. If you wish to add them at
-install time, please set the following:
 
-  - In values file
-    ```
-    ingressController:
-      installCRDs: true
-    ```
-  - On command line
-    ```
-    --set ingressController.installCRDs=true
-    ```
+When installed through the Giant Swarm App platform, CRD installation is taken care of
+automatically.
 
-This is not required for Helm 3, as CRDs will be installed automatically.
+In case you don't want to install the CRDs automatically, specify
 
-## Known Issues
+```
+crds:
+  install: false
+```
+
+in your user configuration.
 
 ## Credit
 
