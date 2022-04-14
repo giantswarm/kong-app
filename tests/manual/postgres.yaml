@@ -1,0 +1,181 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+  namespace: postgres
+spec:
+  ports:
+  - name: postgres
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: postgres
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+  namespace: postgres
+rules:
+- apiGroups:
+  - policy
+  resources:
+  - podsecuritypolicies
+  resourceNames:
+  - postgres
+  verbs:
+  - use
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+  namespace: postgres
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: postgres
+subjects:
+- kind: ServiceAccount
+  name: postgres
+  namespace: postgres
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app: postgres
+  name: postgres
+  namespace: postgres
+---
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  fsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 70
+        max: 70
+  hostIPC: false
+  hostNetwork: false
+  hostPID: false
+  privileged: false
+  readOnlyRootFilesystem: false
+  runAsGroup:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 70
+        max: 70
+  runAsUser:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 70
+        max: 70
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: 'MustRunAs'
+    ranges:
+      - min: 70
+        max: 70
+  volumes:
+  - 'configMap'
+  - 'secret'
+  - 'emptyDir'
+  - 'hostPath'
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: postgres
+  labels:
+    app: postgres
+spec:
+  serviceName: postgres
+  selector:
+    matchLabels:
+      app: postgres
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  podManagementPolicy: OrderedReady
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      serviceAccountName: postgres
+      volumes:
+      - name: postgres-data
+        emptyDir: {}
+      containers:
+      - name: postgres
+        # 13 because 14 does not work yet
+        # https://github.com/Kong/kong/issues/8259
+        image: docker.io/library/postgres:13.5-alpine
+        ports:
+          - containerPort: 5432
+            protocol: TCP
+        env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: kongkong
+        - name: POSTGRES_DB
+          value: kong
+        volumeMounts:
+        - mountPath: /var/lib/postgresql
+          name: postgres-data
+        startupProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 15
+          successThreshold: 1
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - -e
+            - exec pg_isready -U postgres -d kong -h 127.0.0.1 -p 5432
+        readinessProbe:
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 6
+          successThreshold: 1
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - -e
+            - exec pg_isready -U postgres -d kong -h 127.0.0.1 -p 5432
+        livenessProbe:
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 6
+          successThreshold: 1
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - -e
+            - exec pg_isready -U postgres -d kong -h 127.0.0.1 -p 5432
