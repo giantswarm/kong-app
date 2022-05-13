@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Updates
+
+- Enable PodDisruptionBudget to require at least one pod running.
+
 ## [2.9.0] - 2022-04-14
 
 ### Updates
