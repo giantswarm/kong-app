@@ -80,47 +80,7 @@
             }
         },
         "affinity": {
-            "type": "object",
-            "properties": {
-                "nodeAffinity": {
-                    "type": "object",
-                    "properties": {
-                        "requiredDuringSchedulingIgnoredDuringExecution": {
-                            "type": "object",
-                            "properties": {
-                                "nodeSelectorTerms": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "matchExpressions": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "key": {
-                                                            "type": "string"
-                                                        },
-                                                        "operator": {
-                                                            "type": "string"
-                                                        },
-                                                        "values": {
-                                                            "type": "array",
-                                                            "items": {
-                                                                "type": "string"
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            "type": "string"
         },
         "autoscaling": {
             "type": "object",
