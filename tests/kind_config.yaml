@@ -13,3 +13,15 @@ nodes:
     hostPort: 8080
     listenAddress: "127.0.0.1"
     protocol: TCP
+- role: worker
+  kubeadmConfigPatches:
+  - |
+    kind: InitConfiguration
+    nodeRegistration:
+      kubeletExtraArgs:
+        node-labels: "ingress-ready=true"
+  extraPortMappings:
+  - containerPort: 32080
+    hostPort: 8081
+    listenAddress: "127.0.0.1"
+    protocol: TCP
