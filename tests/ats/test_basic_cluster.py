@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 deployment_name = "kong-app-kong-app"
 namespace_name = "kong"
 
-timeout: int = 360
+timeout: int = 560
 
 
 @pytest.mark.smoke
@@ -63,7 +63,7 @@ def ic_deployment(request, kube_cluster: Cluster) -> List[pykube.Deployment]:
 
     kube_cluster.kubectl(
         "rollout status --watch statefulset/postgres",
-        timeout="60s",
+        timeout="90s",
         output_format="",
         namespace="postgres",
     )
