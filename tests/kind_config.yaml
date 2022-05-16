@@ -2,6 +2,7 @@ kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
 - role: control-plane
+  image: quay.io/giantswarm/kind-node-image:kong-2.9.0
   kubeadmConfigPatches:
   - |
     kind: InitConfiguration
@@ -14,6 +15,7 @@ nodes:
     listenAddress: "127.0.0.1"
     protocol: TCP
 - role: worker
+  image: quay.io/giantswarm/kind-node-image:kong-2.9.0
   kubeadmConfigPatches:
   - |
     kind: InitConfiguration
