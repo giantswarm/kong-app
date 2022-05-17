@@ -91,7 +91,7 @@ def wait_for_ic_deployment(kube_cluster: Cluster) -> List[pykube.Deployment]:
 @pytest.mark.flaky(reruns=5, reruns_delay=10)
 def test_pods_available(kube_cluster: Cluster, ic_deployment: List[pykube.Deployment]):
     for s in ic_deployment:
-        assert int(s.obj["status"]["readyReplicas"]) > 0
+        assert int(s.obj["status"]["readyReplicas"]) == int(s.obj["spec"]["replicas"])
 
 
 def try_ingress():
@@ -155,7 +155,7 @@ def test_ingress_creation(
     )
 
     # is it even available?
-    assert try_ingress()
+    # assert try_ingress()
 
     # test some plugins
     # we're not testing every plugin
