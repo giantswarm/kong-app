@@ -155,7 +155,7 @@ def test_ingress_creation(
     )
 
     # is it even available?
-    # assert try_ingress()
+    assert try_ingress()
 
     # test some plugins
     # we're not testing every plugin
