@@ -279,7 +279,7 @@ spec:
         {{- end }} {{/* End of Kong container spec */}}
     {{- if .Values.affinity }}
       affinity:
-{{ toYaml .Values.affinity | indent 8 }}
+{{ tpl .Values.affinity . | indent 8 }}
     {{- end }}
     {{- if .Values.topologySpreadConstraints }}
       topologySpreadConstraints:

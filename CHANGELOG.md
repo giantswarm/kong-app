@@ -7,6 +7,12 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Updates
+
+- Enable PodDisruptionBudget to require at least one pod running.
+- Increase default replica count to two.
+- Change default affinity to prevent scheduling on the same node.
+
 ## [2.9.0] - 2022-04-14
 
 ### Updates
