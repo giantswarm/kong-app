@@ -12,8 +12,19 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Enable PodDisruptionBudget to require at least one pod running.
 - Increase default replica count to two.
 - Change default affinity to prevent scheduling on the same node.
+- Align with upstream chart version [2.8.2](https://github.com/Kong/charts/releases/tag/kong-2.8.2) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.7.0...kong-2.8.2))
 
 ## [2.9.0] - 2022-04-14
+
+This release contains a breaking change introduced by a change to the `spec.controller` value of the `IngressClass` installed by this Helm chart.
+
+Before upgrading to this version, you'll need to manually delete the `IngressClass` managed by this Helm chart.
+
+```
+kubectl delete ingressclass <class name, "kong" by default>
+```
+
+More information in the [upstream "Upgrade considerations" documentation](https://github.com/Kong/charts/blob/main/charts/kong/UPGRADE.md#ingressclass-controller-name-change-requires-manual-delete).
 
 ### Updates
 

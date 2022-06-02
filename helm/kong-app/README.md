@@ -228,8 +228,10 @@ Kong can be configured via two methods:
 split release technique is generally applicable to any deployment with
 different types of Kong nodes. Separating Admin API and proxy nodes is one of
 the more common use cases for splitting across multiple releases, but you can
-also split releases for hybrid mode CP/DP nodes, split proxy and Developer
-Portal nodes, etc.*
+also split releases for split proxy and Developer Portal nodes, multiple groups
+of proxy nodes with separate listen configurations for network segmentation, etc.
+However, it does not apply to hybrid mode, as only the control plane release
+interacts with the database.*
 
 Users may wish to split their Kong deployment into multiple instances that only
 run some of Kong's services (i.e. you run `helm install` once for every
@@ -306,6 +308,9 @@ values.yaml specifics for each.
 
 Cluster certificates are not generated automatically. You must [create a
 certificate and key pair](#certificates) for intra-cluster communication.
+
+When upgrading the Kong version, you must [upgrade the control plane release
+first and then upgrade the data plane release](https://docs.konghq.com/gateway/latest/plan-and-deploy/hybrid-mode/#version-compatibility).
 
 #### Certificates
 
@@ -735,7 +740,7 @@ kong:
 | topologySpreadConstraints          | Control how Pods are spread across cluster among failure-domains. We suggest to review the `values.yaml` and [documentation](https://docs.giantswarm.io/advanced/high-availability/multi-az/) |  see `values.yaml`  |
 | nodeSelector                       | Node labels for pod assignment                                                        | `{}`                |
 | deploymentAnnotations              | Annotations to add to deployment                                                      |  see `values.yaml`  |
-| podAnnotations                     | Annotations to add to each pod                                                        | `{}`                |
+| podAnnotations                     | Annotations to add to each pod                                                        |  see `values.yaml`  |
 | podLabels                          | Labels to add to each pod                                                             | `{}`                |
 | resources                          | Pod resource requests & limits                                                        | `{}`                |
 | tolerations                        | List of node taints to tolerate                                                       | `[]`                |
@@ -770,6 +775,20 @@ containerSecurityContext: # run as root to bind to lower ports
   runAsGroup: 0
   runAsNonRoot: false
   runAsUser: 0
+```
+
+**Note:** The default `podAnnotations` values disable inbound proxying for Kuma 
+and Istio. This is appropriate when using Kong as a gateway for external 
+traffic inbound into the cluster.
+
+If you want to use Kong as an internal proxy within the cluster network, you 
+should enable inbound the inbound mesh proxies:
+
+```yaml
+# Enable inbound mesh proxying for Kuma and Istio
+podAnnotations:
+  kuma.io/gateway: disabled
+  traffic.sidecar.istio.io/includeInboundPorts: "*"
 ```
 
 #### The `env` section
