@@ -11,11 +11,6 @@ nodes:
     nodeRegistration:
       kubeletExtraArgs:
         node-labels: "ingress-ready=true"
-  extraPortMappings:
-  - containerPort: 32080
-    hostPort: 8080
-    listenAddress: "127.0.0.1"
-    protocol: TCP
 - role: worker
   image: quay.io/giantswarm/kind-node-image:kong-2.9.0
   kubeadmConfigPatches:
@@ -24,8 +19,3 @@ nodes:
     nodeRegistration:
       kubeletExtraArgs:
         node-labels: "ingress-ready=true"
-  extraPortMappings:
-  - containerPort: 32080
-    hostPort: 8081
-    listenAddress: "127.0.0.1"
-    protocol: TCP

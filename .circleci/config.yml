@@ -20,6 +20,7 @@ workflows:
 
       - architect/run-tests-with-ats:
           name: execute chart tests
+          resource_class: large
           filters:
             # Do not trigger the job on merge to master.
             branches:
@@ -42,7 +43,8 @@ workflows:
 
       - architect/run-tests-with-ats:
           name: execute enterprise tests
-          additional_app-test-suite_flags: "--app-tests-app-config-file=tests/test-values-enterprise.yaml --skip-steps=upgrade"
+          resource_class: large
+          additional_app-test-suite_flags: "--app-tests-app-config-file=tests/test-values-enterprise.yaml"
           filters:
             # Do not trigger the job on merge to master.
             branches:

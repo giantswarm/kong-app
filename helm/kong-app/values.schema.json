@@ -141,6 +141,29 @@
                 "enabled": {
                     "type": "boolean"
                 },
+                "ingress": {
+                    "type": "object",
+                    "properties": {
+                        "annotations": {
+                            "type": "object"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "hostname": {
+                            "type": ["null", "string"]
+                        },
+                        "ingressClassName": {
+                            "type": ["null", "string"]
+                        },
+                        "path": {
+                            "type": "string"
+                        },
+                        "pathType": {
+                            "type": "string"
+                        }
+                    }
+                },
                 "labels": {
                     "type": "object"
                 },
@@ -174,6 +197,29 @@
                 },
                 "enabled": {
                     "type": "boolean"
+                },
+                "ingress": {
+                    "type": "object",
+                    "properties": {
+                        "annotations": {
+                            "type": "object"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "hostname": {
+                            "type": ["null", "string"]
+                        },
+                        "ingressClassName": {
+                            "type": ["null", "string"]
+                        },
+                        "path": {
+                            "type": "string"
+                        },
+                        "pathType": {
+                            "type": "string"
+                        }
+                    }
                 },
                 "labels": {
                     "type": "object"
@@ -827,6 +873,12 @@
             "properties": {
                 "enabled": {
                     "type": "boolean"
+                },
+                "maxUnavailable": {
+                    "type": "string"
+                },
+                "minAvailable": {
+                    "type": "string"
                 }
             }
         },
@@ -1131,9 +1183,6 @@
                         "enabled": {
                             "type": "boolean"
                         },
-                        "nodePort": {
-                            "type": "integer"
-                        },
                         "parameters": {
                             "type": "array"
                         },
@@ -1360,7 +1409,7 @@
                     "type": "object"
                 },
                 "stream": {
-                    "type": "object"
+                    "type": "array"
                 },
                 "type": {
                     "type": "string"
