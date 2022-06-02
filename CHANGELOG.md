@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [2.10.0] - 2022-06-02
+
 ### Updates
 
 - Enable PodDisruptionBudget to require at least one pod running.
@@ -471,7 +473,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.9.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.10.0...HEAD
+[2.10.0]: https://github.com/giantswarm/kong-app/compare/v2.9.0...v2.10.0
 [2.9.0]: https://github.com/giantswarm/kong-app/compare/v2.8.0...v2.9.0
 [2.8.0]: https://github.com/giantswarm/kong-app/compare/v2.7.2...v2.8.0
 [2.7.2]: https://github.com/giantswarm/kong-app/compare/v2.7.1...v2.7.2
