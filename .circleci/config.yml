@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  architect: giantswarm/architect@4.21.0
+  architect: giantswarm/architect@4.23.0
 
 workflows:
   version: 2
@@ -8,6 +8,7 @@ workflows:
     jobs:
       - architect/push-to-app-catalog:
           name: "push-to-giantswarm-app-catalog"
+          context: "architect"
           app_catalog: "giantswarm-catalog"
           app_catalog_test: "giantswarm-test-catalog"
           chart: "kong-app"
