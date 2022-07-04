@@ -694,6 +694,9 @@
                         }
                     }
                 },
+                "terminationGracePeriodSeconds": {
+                    "type": "integer"
+                },
                 "watchNamespaces": {
                     "type": "array"
                 }

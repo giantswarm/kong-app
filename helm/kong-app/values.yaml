@@ -500,7 +500,7 @@ ingressController:
 
   admissionWebhook:
     enabled: false
-    failurePolicy: Ignore
+    failurePolicy: Fail
     port: 8080
     certificate:
       provided: false
