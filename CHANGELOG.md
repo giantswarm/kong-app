@@ -11,6 +11,11 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Align with upstream chart version [2.10.2](https://github.com/Kong/charts/releases/tag/kong-2.10.2) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.8.2...kong-2.10.2))
 - Update kong/kubernetes-ingress-controller to [2.4.2](https://github.com/Kong/kubernetes-ingress-controller/releases/tag/v2.4.2)
+- Update kubectl container image to 1.24.2 in CRD install job.
+
+### Fixes
+
+- Make sure all container images use the same container registry.
 
 ## [2.10.0] - 2022-06-02
 
