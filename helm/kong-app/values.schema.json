@@ -323,9 +323,20 @@
                         }
                     }
                 },
+                "prefixDir": {
+                    "type": "object",
+                    "properties": {
+                        "sizeLimit": {
+                            "type": "string"
+                        }
+                    }
+                },
                 "serviceAccount": {
                     "type": "object",
                     "properties": {
+                        "automountServiceAccountToken": {
+                            "type": "boolean"
+                        },
                         "create": {
                             "type": "boolean"
                         }
@@ -336,6 +347,14 @@
                     "properties": {
                         "enabled": {
                             "type": "boolean"
+                        }
+                    }
+                },
+                "tmpDir": {
+                    "type": "object",
+                    "properties": {
+                        "sizeLimit": {
+                            "type": "string"
                         }
                     }
                 }
@@ -693,9 +712,6 @@
                             "type": "integer"
                         }
                     }
-                },
-                "terminationGracePeriodSeconds": {
-                    "type": "integer"
                 },
                 "watchNamespaces": {
                     "type": "array"
