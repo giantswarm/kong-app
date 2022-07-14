@@ -7,6 +7,14 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Updates
+
+- Update kubectl container image to 1.24.2 in CRD install job.
+
+### Fixes
+
+- Make sure all container images use the same container registry.
+
 ## [2.10.0] - 2022-06-02
 
 ### Updates
