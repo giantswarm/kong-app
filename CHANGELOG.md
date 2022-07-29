@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [2.10.1] - 2022-07-29
+
 ### Updates
 
 - Update kubectl container image to 1.24.2 in CRD install job.
@@ -481,7 +483,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.10.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.10.1...HEAD
+[2.10.1]: https://github.com/giantswarm/kong-app/compare/v2.10.0...v2.10.1
 [2.10.0]: https://github.com/giantswarm/kong-app/compare/v2.9.0...v2.10.0
 [2.9.0]: https://github.com/giantswarm/kong-app/compare/v2.8.0...v2.9.0
 [2.8.0]: https://github.com/giantswarm/kong-app/compare/v2.7.2...v2.8.0
