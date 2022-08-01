@@ -4,20 +4,20 @@ engine: gotpl
 home: https://github.com/giantswarm/kong-app
 icon: https://s.giantswarm.io/app-icons/kong/1/light.svg
 maintainers:
-- name: hbagdi
-  email: harry@konghq.com
-- name: rainest
-  email: traines@konghq.com
+  - name: hbagdi
+    email: harry@konghq.com
+  - name: rainest
+    email: traines@konghq.com
 name: kong-app
 sources:
-- https://konghq.com/
-version: 2.10.0
+  - https://konghq.com/
+version: 2.10.1
 appVersion: "2.8.1"
 annotations:
   application.giantswarm.io/team: team-cabbage
 kubeVersion: ">=1.20.0-0"
 dependencies:
-- name: postgresql
-  version: 11.1.15
-  repository: https://charts.bitnami.com/bitnami
-  condition: postgresql.enabled
+  - name: postgresql
+    version: 11.1.15
+    repository: https://charts.bitnami.com/bitnami
+    condition: postgresql.enabled
