@@ -59,7 +59,7 @@ upper-cased before setting the environment variable.
 The default installation of the App will use Kong Ingress Controller. This
 method uses CRDs to configure various aspects of Kong. Please refer to Kong
 Ingress Controller
-[documentation](https://github.com/Kong/kubernetes-ingress-controller/tree/master/docs)
+[documentation](https://github.com/Kong/kubernetes-ingress-controller#documentation)
 for more detailed explanation and usage.
 
 ### DBLess Kong
