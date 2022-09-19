@@ -132,6 +132,94 @@
                 }
             }
         },
+        "certificates": {
+            "type": "object",
+            "properties": {
+                "admin": {
+                    "type": "object",
+                    "properties": {
+                        "clusterIssuer": {
+                            "type": "string"
+                        },
+                        "commonName": {
+                            "type": "string"
+                        },
+                        "dnsNames": {
+                            "type": "array"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "issuer": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "cluster": {
+                    "type": "object",
+                    "properties": {
+                        "clusterIssuer": {
+                            "type": "string"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "issuer": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "clusterIssuer": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "issuer": {
+                    "type": "string"
+                },
+                "portal": {
+                    "type": "object",
+                    "properties": {
+                        "clusterIssuer": {
+                            "type": "string"
+                        },
+                        "commonName": {
+                            "type": "string"
+                        },
+                        "dnsNames": {
+                            "type": "array"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "issuer": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "proxy": {
+                    "type": "object",
+                    "properties": {
+                        "clusterIssuer": {
+                            "type": "string"
+                        },
+                        "commonName": {
+                            "type": "string"
+                        },
+                        "dnsNames": {
+                            "type": "array"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "issuer": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "cluster": {
             "type": "object",
             "properties": {
@@ -188,6 +276,9 @@
                     "type": "string"
                 }
             }
+        },
+        "clusterCaSecretName": {
+            "type": "string"
         },
         "clustertelemetry": {
             "type": "object",
@@ -488,6 +579,9 @@
                 },
                 "proxy_error_log": {
                     "type": "string"
+                },
+                "router_flavor": {
+                    "type": "string"
                 }
             }
         },
@@ -496,6 +590,9 @@
         },
         "extraLabels": {
             "type": "object"
+        },
+        "extraObjects": {
+            "type": "array"
         },
         "extraSecrets": {
             "type": "array"

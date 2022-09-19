@@ -7,6 +7,11 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Updates
+
+- Align with upstream chart version [2.13.0](https://github.com/Kong/charts/releases/tag/kong-2.13.0) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.11.0...kong-2.13.0)). Please note this release does not contain kong 3.0.0 yet.
+- Update kong/kubernetes-ingress-controller to [2.6.0](https://github.com/Kong/kubernetes-ingress-controller/releases/tag/v2.6.0)
+
 ## [2.11.0] - 2022-08-03
 
 ### Updates
