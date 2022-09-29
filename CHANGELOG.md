@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Updates
+
+- Update kong/kubernetes-ingress-controller to [2.7.0](https://github.com/Kong/kubernetes-ingress-controller/releases/tag/v2.7.0)
+
 ## [2.12.0] - 2022-09-20
 
 ### Added
