@@ -2,7 +2,7 @@
 
 # kong-app chart
 
-[Kong for Kubernetes](https://github.com/Kong/kubernetes-ingress-controller) is
+[*Kong for Kubernetes*](https://github.com/Kong/kubernetes-ingress-controller) is
 an open-source Ingress Controller for Kubernetes that offers API management capabilities
 with a plugin architecture.
 
@@ -36,47 +36,56 @@ Giant Swarm offers a Kong Managed App which can be installed in workload cluster
 For older versions, please refer to the [changelog](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md)
 
 ## Configuration
-There are 3 ways that Kong can be configured in Kubernetes:
 
-1. Using a Database (PostgreSQL or Cassandra)
-1. Kong Kubernetes Ingress Controller (with CRDs)
-1. DBless (no databases and static Configuration file)
+A basic installation of *Kong for Kubernetes* will work out of the box without any custom values.
 
-The recommended and supported way is to use Ingress Controller (which works
-alongside DBless).
+In case you want to supply a set of custom configuration options, only include configuation you want to change. **DO NOT** copy the whole `values.yaml` file.
 
-This app does not by default provide a database and if a database is required,
-then you will need to BYOD (Bring Your Own Database). For testing purposes, it
-is possible launch postgres alongside this App (described below).
-
-For detailed configuration options, please refer to the [configuration list](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/README.md#configuration)
+For detailed explanations of configuration options, please refer to the [list of configuration options](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/README.md#configuration) and
 also the [`values.yaml` file](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/values.yaml)
 
 Any key value put under the `env` section translates to environment variables
 used to control Kong's configuration. Every key is prefixed with KONG_ and
 upper-cased before setting the environment variable.
 
-### Kong Ingress Controller (Recommended)
-The default installation of the App will use Kong Ingress Controller. This
-method uses CRDs to configure various aspects of Kong. Please refer to Kong
-Ingress Controller
-[documentation](https://github.com/Kong/kubernetes-ingress-controller#documentation)
-for more detailed explanation and usage.
+This app does not by default provide a database and if a database is required,
+then you will need to BYOD (Bring Your Own Database). For testing purposes, it
+is possible launch postgres alongside this App (described below).
 
-### DBLess Kong
-The [official documentation](https://docs.konghq.com/gateway/2.8.x/reference/db-less-and-declarative-config/#main)
-explains how DBLess Kong works and its limitations. To use this method
-of operation with this App, no special configuration is required.
+The default installation of the App will use Kong Ingress Controller.
+The recommended way to configure plugins, consumers and services when using *Kong for Kubernetes* is by utilizing [Kong annotations](https://docs.konghq.com/kubernetes-ingress-controller/latest/references/annotations/) and [Kong custom resources](https://docs.konghq.com/kubernetes-ingress-controller/latest/concepts/custom-resources/#main).
+
+### Kong Enterprise
+
+In case you want to use Kong enterprise, a valid enterprise license Secret is required in the namespace next to your kong deployment.
+
+Install the app with at least the following custom configuration:
+
+```
+image:
+  repository: giantswarm/kong-gateway
+  tag: "2.8.1.4-alpine" # use the tag from the release matrix on from the README.md file
+
+enterprise:
+  enabled: true
+  license_secret: "kong-enterprise-license"
+```
+
+Then create the Secret with name `kong-enterprise-license` in namespace `kong-app` from a license file named `kong-enterprise-license.json`:
+
+```
+kubectl create secret generic kong-enterprise-license \
+  --namespace kong-app \
+  --from-file=license=./kong-enterprise-license.json
+```
 
 ### Using your own Database
-Kong supports two databases:
 
-- PostgreSQL: 9.5 up to 13.
+Kong supports PostgreSQL version 9.5 up to 13.
 
 Example database configuration:
+
 ```YAML
-ingressController:
-  enabled: false
 env:
   database: "postgres" # can be "off" or "postgres"
   pg_host: 127.0.0.1
@@ -92,6 +101,7 @@ env:
 _note_: If `pg_port` is not set then it will default to `5432`
 
 #### Installing a database alongside the App
+
 For testing purposes, it is possible to install a PostgreSQL server alongside
 the App. To do this, you'll need to specify the following app configuration:
 
@@ -106,10 +116,12 @@ Please note: This configuration should only be used for testing and is not offic
 supported by Giant Swarm.
 
 ### Using Kong Ingress Controller with a Database
-When using Kong Ingress Controller, there shouldn't be a need to use a database.
-However in some cases (for example, plugin support) a database is
-required. In these situations, it is possible to use a mixture of Kong Ingress
-Controller and a database.
+
+When using Kong Ingress Controller, a database is not required.
+However in some cases (for example, plugin support, Kong developer portal) a database is
+required. The Kong Ingress Controller does not communicate with the database directly.
+Instead, it uses the Admin API of the proxy container which then persists configuration either
+in memory or in the configured database.
 
 Like in the case of using a database, Giant Swarm does not support the database and
 can only provide best efforts support with this configuration.
@@ -124,7 +136,7 @@ Note:
 > manages inside Kong's database and only manages the entities that it creates.
 > This means that if consumers and credentials are created dynamically,
 > they won't be deleted by the Ingress Controller.
-(Taken from https://github.com/Kong/kubernetes-ingress-controller/blob/master/docs/faq.md#is-it-possible-to-create-consumers-using-the-admin-api)
+(Taken from https://docs.konghq.com/kubernetes-ingress-controller/latest/faq/#is-it-possible-to-create-consumers-using-the-admin-api)
 
 ### Kong Ingress Controller CRDs
 
