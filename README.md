@@ -64,7 +64,7 @@ Install the app with at least the following custom configuration:
 ```
 image:
   repository: giantswarm/kong-gateway
-  tag: "2.8.1.4-alpine" # use the tag from the release matrix on from the README.md file
+  tag: "2.8.2.0-alpine" # use the tag from the release matrix on from the README.md file
 
 enterprise:
   enabled: true
