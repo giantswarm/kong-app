@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [2.13.0] - 2022-10-25
+
 This version drops support for kubernetes versions below 1.22.0.
 
 ### Updates
@@ -507,7 +509,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.12.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.13.0...HEAD
+[2.13.0]: https://github.com/giantswarm/kong-app/compare/v2.12.0...v2.13.0
 [2.12.0]: https://github.com/giantswarm/kong-app/compare/v2.11.0...v2.12.0
 [2.11.0]: https://github.com/giantswarm/kong-app/compare/v2.10.1...v2.11.0
 [2.10.1]: https://github.com/giantswarm/kong-app/compare/v2.10.0...v2.10.1
