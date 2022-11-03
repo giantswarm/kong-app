@@ -799,6 +799,7 @@ topologySpreadConstraints: |-
     labelSelector:
       matchLabels:
         app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
         application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
   - maxSkew: 1
     topologyKey: kubernetes.io/hostname
@@ -806,6 +807,7 @@ topologySpreadConstraints: |-
     labelSelector:
       matchLabels:
         app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
         application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
 
 # Tolerations for pod assignment
