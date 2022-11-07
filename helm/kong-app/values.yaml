@@ -606,7 +606,7 @@ postgresql:
     username: kong
     database: kong
   image:
-    registry: &image_registry
+    registry: *image_registry
     repository: giantswarm/postgresql-bitnami
     # use postgres < 14 until is https://github.com/Kong/kong/issues/8533 resolved and released
     # enterprise (kong-gateway) supports postgres 14
