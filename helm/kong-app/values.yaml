@@ -117,7 +117,7 @@ extraLabels: {}
 
 # Specify Kong's Docker image and repository details here
 image:
-  registry: quay.io
+  registry: &image_registry quay.io
   repository: giantswarm/kong
   tag: "2.8.1"
   # Kong Enterprise
@@ -606,7 +606,7 @@ postgresql:
     username: kong
     database: kong
   image:
-    registry: quay.io
+    registry: &image_registry
     repository: giantswarm/postgresql-bitnami
     # use postgres < 14 until is https://github.com/Kong/kong/issues/8533 resolved and released
     # enterprise (kong-gateway) supports postgres 14
