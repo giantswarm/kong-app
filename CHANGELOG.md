@@ -14,6 +14,8 @@ This release upgrades kong to release [3.0.1](https://github.com/Kong/kong/blob/
 - Align with upstream chart version [2e89647](https://github.com/Kong/charts/tree/2e89647d86ec7c8fa2a2a1697a325e6679b18d08) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.7.0...2e89647))
 - Update kong/kong to [3.0.1](https://github.com/Kong/kong/blob/3.0.1/CHANGELOG.md#300). Please read [Breaking changes](https://github.com/Kong/kong/blob/3.0.1/CHANGELOG.md#breaking-changes) notes.
 - Execute enterprise tests with container image version 3.0.1.0-alpine
+- Run all containers with kong user id 100
+- Enable read-only file system for all kong containers
 
 ## [2.13.0] - 2022-10-25
 
