@@ -119,10 +119,10 @@ extraLabels: {}
 image:
   registry: quay.io
   repository: giantswarm/kong
-  tag: "2.8.1"
+  tag: "3.0.1"
   # Kong Enterprise
   # repository: kong/kong-gateway
-  # tag: "2.8.2.0-alpine"
+  # tag: "3.0.1.0-alpine"
 
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
@@ -839,9 +839,9 @@ autoscaling:
   minReplicas: 2
   maxReplicas: 5
   behavior: {}
-  ## targetCPUUtilizationPercentage only used if the cluster doesn't support autoscaling/v2beta
+  ## targetCPUUtilizationPercentage only used if the cluster doesn't support autoscaling/v2 or autoscaling/v2beta
   targetCPUUtilizationPercentage:
-  ## Otherwise for clusters that do support autoscaling/v2beta, use metrics
+  ## Otherwise for clusters that do support autoscaling/v2 or autoscaling/v2beta, use metrics
   metrics:
     - type: Resource
       resource:

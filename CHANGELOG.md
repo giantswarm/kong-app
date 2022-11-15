@@ -7,6 +7,14 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+This release upgrades kong to release [3.0.1](https://github.com/Kong/kong/blob/3.0.1/CHANGELOG.md#301) which contains breaking changes. Please consider reading the upstream [Breaking changes](https://github.com/Kong/kong/blob/3.0.1/CHANGELOG.md#breaking-changes) documentation before upgrading. Users of the kong enterprise should read the [Known limitations](https://docs.konghq.com/gateway/changelog/#known-limitations) and [Breaking changes and deprecations]https://docs.konghq.com/gateway/changelog/#breaking-changes-and-deprecations) sections of the kong enterprise changelog.
+
+### Updates
+
+- Align with upstream chart version [2e89647](https://github.com/Kong/charts/tree/2e89647d86ec7c8fa2a2a1697a325e6679b18d08) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.7.0...2e89647))
+- Update kong/kong to [3.0.1](https://github.com/Kong/kong/blob/3.0.1/CHANGELOG.md#300). Please read [Breaking changes](https://github.com/Kong/kong/blob/3.0.1/CHANGELOG.md#breaking-changes) notes.
+- Execute enterprise tests with container image version 3.0.1.0-alpine
+
 ## [2.13.0] - 2022-10-25
 
 This version drops support for kubernetes versions below 1.22.0.

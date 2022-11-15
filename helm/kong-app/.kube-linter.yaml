@@ -1,14 +1,6 @@
 checks:
   exclude:
-  - "unset-cpu-requirements"
   - "no-read-only-root-fs"
-  - "unset-memory-requirements"
   - "run-as-non-root"
-  - "default-service-account"
-  - "required-annotation-email"
-  - "required-label-owner"
-  - "default-service-account"
-  - "no-liveness-probe"
-  - "no-readiness-probe"
-  - "exposed-services"
-  - "dangling-service"
+  - "unset-cpu-requirements"
+  - "unset-memory-requirements"
