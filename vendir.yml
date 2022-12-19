@@ -1,0 +1,21 @@
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+- path: vendor
+  contents:
+  - path: kong
+    git:
+      url: https://github.com/giantswarm/kong-charts-upstream
+      ref: main
+    includePaths:
+    - charts/kong/**/*
+- path: helm/kong-app/templates
+  contents:
+  - path: .
+    directory:
+      path: vendor/kong/charts/kong/templates
+- path: helm/kong-app/crds
+  contents:
+  - path: .
+    directory:
+      path: vendor/kong/charts/kong/crds

@@ -3,3 +3,8 @@ kong-app-*.tgz
 # app-build/test-suite artifacts
 build
 test_results_*.xml
+
+# vendir
+vendor
+
+helm/kong-app/charts
