@@ -16,21 +16,9 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{/*
-Value used for app.kubernetes.io/name label on resources.
-Needs to be stable as Giant Swarm is using it for monitoring.
-*/}}
-{{- define "kong.chart-name" -}}
-{{- .Chart.Name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
 {{- define "kong.fullname" -}}
 {{- $name := default .Chart.Name .Values.nameOverride -}}
 {{- default (printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-") .Values.fullnameOverride -}}
-{{- end -}}
-
-{{- define "kong.name.crdInstall" -}}
-{{- printf "%s-%s" ( include "kong.name" . ) "crd-install" | replace "+" "_" | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "kong.chart" -}}
@@ -58,29 +46,10 @@ application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . 
 {{- end }}
 {{- end -}}
 
-{{- define "kong.CRDInstallAnnotations" -}}
-"helm.sh/hook": "pre-install,pre-upgrade"
-"helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
-{{- end -}}
-
-{{- define "kong.CRDLabels" -}}
-app: "{{ template "kong.name" . }}"
-app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
-app.kubernetes.io/instance: "{{ template "kong.name" . }}"
-app.kubernetes.io/managed-by: "{{ .Release.Service }}"
-helm.sh/chart: "{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}"
-application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
-{{- end -}}
-
 {{- define "kong.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
+app.kubernetes.io/name: {{ template "kong.name" . }}
 app.kubernetes.io/component: app
 app.kubernetes.io/instance: "{{ .Release.Name }}"
-{{- end -}}
-
-{{/* Create a label which can be used to select any orphaned crd-install hook resources */}}
-{{- define "kong.CRDInstallSelector" -}}
-{{- printf "%s" "crd-install-hook" -}}
 {{- end -}}
 
 {{- define "kong.postgresql.fullname" -}}
@@ -207,7 +176,6 @@ spec:
   - name: kong-{{ .serviceName }}
     port: {{ .http.servicePort }}
     targetPort: {{ .http.containerPort }}
-    appProtocol: http
   {{- if (and (or (eq .type "LoadBalancer") (eq .type "NodePort")) (not (empty .http.nodePort))) }}
     nodePort: {{ .http.nodePort }}
   {{- end }}
@@ -218,7 +186,6 @@ spec:
   - name: kong-{{ .serviceName }}-tls
     port: {{ .tls.servicePort }}
     targetPort: {{ .tls.overrideServiceTargetPort | default .tls.containerPort }}
-    appProtocol: https
   {{- if (and (or (eq .type "LoadBalancer") (eq .type "NodePort")) (not (empty .tls.nodePort))) }}
     nodePort: {{ .tls.nodePort }}
   {{- end }}
@@ -463,10 +430,10 @@ The name of the service used for the ingress controller's validation webhook
 
 {{- define "kong.volumes" -}}
 - name: {{ template "kong.fullname" . }}-prefix-dir
-  emptyDir: 
+  emptyDir:
     sizeLimit: {{ .Values.deployment.prefixDir.sizeLimit }}
 - name: {{ template "kong.fullname" . }}-tmp
-  emptyDir: 
+  emptyDir:
     sizeLimit: {{ .Values.deployment.tmpDir.sizeLimit }}
 {{- if and ( .Capabilities.APIVersions.Has "cert-manager.io/v1" ) .Values.certificates.enabled -}}
 {{- if .Values.certificates.cluster.enabled }}
@@ -647,11 +614,7 @@ The name of the service used for the ingress controller's validation webhook
 
 {{- define "kong.wait-for-db" -}}
 - name: wait-for-db
-{{- if .Values.image.registry }}
-  image: {{ .Values.image.registry }}/{{ include "kong.getRepoTag" .Values.image }}
-{{- else }}
   image: {{ include "kong.getRepoTag" .Values.image }}
-{{- end }}
   imagePullPolicy: {{ .Values.image.pullPolicy }}
   securityContext:
   {{ toYaml .Values.containerSecurityContext | nindent 4 }}
@@ -709,11 +672,7 @@ The name of the service used for the ingress controller's validation webhook
         apiVersion: v1
         fieldPath: metadata.namespace
 {{- include "kong.ingressController.env" .  | indent 2 }}
-{{- if .Values.image.registry }}
-  image: {{ .Values.image.registry }}/{{ include "kong.getRepoTag" .Values.ingressController.image }}
-{{- else }}
   image: {{ include "kong.getRepoTag" .Values.ingressController.image }}
-{{- end }}
   imagePullPolicy: {{ .Values.image.pullPolicy }}
 {{/* disableReadiness is a hidden setting to drop this block entirely for use with a debugger
      Helm value interpretation doesn't let you replace the default HTTP checks with any other
@@ -1018,18 +977,10 @@ Environment variables are sorted alphabetically
 
 {{- define "kong.wait-for-postgres" -}}
 - name: wait-for-postgres
-{{- if (.Values.image.registry) }}
-{{- if (or .Values.waitImage.unifiedRepoTag .Values.waitImage.repository) }}
-  image: {{ .Values.image.registry }}/{{ include "kong.getRepoTag" .Values.waitImage }}
-{{- else }} {{/* default to the Kong image */}}
-  image: {{ .Values.image.registry }}/{{ include "kong.getRepoTag" .Values.image }}
-{{- end }}
-{{- else }}
 {{- if (or .Values.waitImage.unifiedRepoTag .Values.waitImage.repository) }}
   image: {{ include "kong.getRepoTag" .Values.waitImage }}
 {{- else }} {{/* default to the Kong image */}}
   image: {{ include "kong.getRepoTag" .Values.image }}
-{{- end }}
 {{- end }}
   imagePullPolicy: {{ .Values.waitImage.pullPolicy }}
   env:
@@ -1247,7 +1198,7 @@ resource roles into their separate templates.
   - get
   - patch
   - update
-{{- if (.Capabilities.APIVersions.Has "gateway.networking.k8s.io/v1alpha2") }}
+{{- if or (.Capabilities.APIVersions.Has "gateway.networking.k8s.io/v1alpha2") (.Capabilities.APIVersions.Has "gateway.networking.k8s.io/v1beta1") }}
 - apiGroups:
   - gateway.networking.k8s.io
   resources:
@@ -1397,7 +1348,7 @@ Kubernetes Cluster-scoped resources it uses to build Kong configuration.
   - get
   - patch
   - update
-{{- if (.Capabilities.APIVersions.Has "gateway.networking.k8s.io/v1alpha2") }}
+{{- if or (.Capabilities.APIVersions.Has "gateway.networking.k8s.io/v1alpha2") (.Capabilities.APIVersions.Has "gateway.networking.k8s.io/v1beta1") }}
 - apiGroups:
   - gateway.networking.k8s.io
   resources:

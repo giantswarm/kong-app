@@ -56,6 +56,28 @@ is possible launch postgres alongside this App (described below).
 The default installation of the App will use Kong Ingress Controller.
 The recommended way to configure plugins, consumers and services when using *Kong for Kubernetes* is by utilizing [Kong annotations](https://docs.konghq.com/kubernetes-ingress-controller/latest/references/annotations/) and [Kong custom resources](https://docs.konghq.com/kubernetes-ingress-controller/latest/concepts/custom-resources/#main).
 
+
+### Container image registry
+
+You can change the container image registry by setting the following values in your `values.yaml` file
+
+```yaml
+image:
+  registry: &registry docker.io
+ingressController:
+  image:
+    registry: *registry
+
+# In case you've enabled the postgresql sub-chart
+# postgresql:
+#   image:
+#     registry: *registry
+
+# In case you've changed the default waitImage
+# waitImage:
+#   registry: *registry
+```
+
 ### Kong Enterprise
 
 In case you want to use Kong enterprise, a valid enterprise license Secret is required in the namespace next to your kong deployment.

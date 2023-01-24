@@ -32,3 +32,5 @@
 ---
 {{- end }}
 {{- end }}
+
+{{ include "kubectlApplyJob.job" . }}
