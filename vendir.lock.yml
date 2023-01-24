@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Merge branch 'upstream-main'
-      sha: 5cef3d1cb2f6fca02b0967d4b80d6bb8b7be4f09
+      commitTitle: Add metrics services file
+      sha: a16b18997efc2600234286b7784fcf010cf99c9c
       tags:
-      - kong-2.14.0-36-g5cef3d1
+      - kong-2.15.1-38-ga16b189
     path: kong
   path: vendor
 - contents:

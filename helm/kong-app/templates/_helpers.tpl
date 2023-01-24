@@ -25,22 +25,12 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{- define "kong.imagesHash" -}}
-{{- if .Values.image.registry }}
-{{- printf "%s-%s-%s" .Values.image.registry (include "kong.getRepoTag" .Values.image) (include "kong.getRepoTag" .Values.ingressController.image) | sha256sum | trunc 63 -}}
-{{- else }}
-{{- printf "%s-%s" (include "kong.getRepoTag" .Values.image) (include "kong.getRepoTag" .Values.ingressController.image) | sha256sum | trunc 63 -}}
-{{- end -}}
-{{- end -}}
-
 {{- define "kong.metaLabels" -}}
-app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
+app.kubernetes.io/name: {{ template "kong.name" . }}
 helm.sh/chart: {{ template "kong.chart" . }}
 app.kubernetes.io/instance: "{{ .Release.Name }}"
 app.kubernetes.io/managed-by: "{{ .Release.Service }}"
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
-application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
 {{- range $key, $value := .Values.extraLabels }}
 {{ $key }}: {{ $value | quote }}
 {{- end }}
@@ -430,10 +420,10 @@ The name of the service used for the ingress controller's validation webhook
 
 {{- define "kong.volumes" -}}
 - name: {{ template "kong.fullname" . }}-prefix-dir
-  emptyDir:
+  emptyDir: 
     sizeLimit: {{ .Values.deployment.prefixDir.sizeLimit }}
 - name: {{ template "kong.fullname" . }}-tmp
-  emptyDir:
+  emptyDir: 
     sizeLimit: {{ .Values.deployment.tmpDir.sizeLimit }}
 {{- if and ( .Capabilities.APIVersions.Has "cert-manager.io/v1" ) .Values.certificates.enabled -}}
 {{- if .Values.certificates.cluster.enabled }}
@@ -485,14 +475,23 @@ The name of the service used for the ingress controller's validation webhook
     secretName: {{ .name }}
 {{- end }}
 {{- end }}
+
 {{- if (and (not .Values.ingressController.enabled) (eq .Values.env.database "off")) }}
+{{- $dblessSourceCount := (add (.Values.dblessConfig.configMap | len | min 1) (.Values.dblessConfig.secret | len | min 1) (.Values.dblessConfig.config | len | min 1)) -}}
+{{- if gt $dblessSourceCount 1 -}}
+    {{- fail "Ambiguous configuration: only one of of .Values.dblessConfig.configMap, .Values.dblessConfig.secret, and .Values.dblessConfig.config can be set." -}}
 - name: kong-custom-dbless-config-volume
+  {{- if .Values.dblessConfig.configMap }}
   configMap:
-    {{- if .Values.dblessConfig.configMap }}
     name: {{ .Values.dblessConfig.configMap }}
-    {{- else }}
+  {{- else if .Values.dblessConfig.secret }}
+  secret:
+    secretName: {{ .Values.dblessConfig.secret }}
+  {{- else }}
+  configMap:
     name: {{ template "kong.dblessConfig.fullname" . }}
-    {{- end }}
+  {{- end }}
+{{- end }}
 {{- end }}
 {{- if .Values.ingressController.admissionWebhook.enabled }}
 - name: webhook-cert
@@ -551,6 +550,8 @@ The name of the service used for the ingress controller's validation webhook
 {{- end }}
 {{- end }}
 {{- end }}
+{{- $dblessSourceCount := (add (.Values.dblessConfig.configMap | len | min 1) (.Values.dblessConfig.secret | len | min 1) (.Values.dblessConfig.config | len | min 1)) -}}
+{{- if gt $dblessSourceCount 1 -}}
 {{- if (and (not .Values.ingressController.enabled) (eq .Values.env.database "off")) }}
 - name: kong-custom-dbless-config-volume
   mountPath: /kong_dbless/
@@ -558,6 +559,7 @@ The name of the service used for the ingress controller's validation webhook
 {{- range .Values.secretVolumes }}
 - name:  {{ . }}
   mountPath: /etc/secrets/{{ . }}
+{{- end }}
 {{- end }}
 {{- range .Values.plugins.configMaps }}
 {{- $mountPath := printf "/opt/kong/plugins/%s" .pluginName }}
@@ -910,7 +912,10 @@ the template that it itself is using form the above sections.
 {{- end }}
 
 {{- if (and (not .Values.ingressController.enabled) (eq .Values.env.database "off")) }}
+{{- $dblessSourceCount := (add (.Values.dblessConfig.configMap | len | min 1) (.Values.dblessConfig.secret | len | min 1) (.Values.dblessConfig.config | len | min 1)) -}}
+{{- if gt $dblessSourceCount 1 -}}
   {{- $_ := set $autoEnv "KONG_DECLARATIVE_CONFIG" "/kong_dbless/kong.yml" -}}
+{{- end }}
 {{- end }}
 
 {{- $_ := set $autoEnv "KONG_PLUGINS" (include "kong.plugins" .) -}}

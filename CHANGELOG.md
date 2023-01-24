@@ -10,7 +10,6 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Increase default requests/limits to 1 cpu and 2G memory
 - Remove startupProbe from kong ingress controller. [More information](https://github.com/Kong/charts/pull/527#issuecomment-1014782921)
-- Revert affinity and topologySpreadConstraints to upstream types. It is no longer possible to use stringified values
 
 This release upgrades kong to release [3.0.1](https://github.com/Kong/kong/blob/3.0.1/CHANGELOG.md#301) which contains breaking changes. Please consider reading the upstream [Breaking changes](https://github.com/Kong/kong/blob/3.0.1/CHANGELOG.md#breaking-changes) documentation before upgrading. Users of the kong enterprise should read the [Known limitations](https://docs.konghq.com/gateway/changelog/#known-limitations) and [Breaking changes and deprecations]https://docs.konghq.com/gateway/changelog/#breaking-changes-and-deprecations) sections of the kong enterprise changelog.
 
