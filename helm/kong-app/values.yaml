@@ -745,11 +745,57 @@ terminationGracePeriodSeconds: 30
 
 # Affinity for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-# affinity: {}
-
+affinity: |-
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 100
+      podAffinityTerm:
+        labelSelector:
+          matchExpressions:
+          - key: app.kubernetes.io/name
+            operator: In
+            values:
+            - {{ include "kong.chart-name" . | quote }}
+          - key: app.kubernetes.io/instance
+            operator: In
+            values:
+            - {{ .Release.Name | quote }}
+        topologyKey: kubernetes.io/hostname
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/role
+          operator: NotIn
+          values:
+          - master
+      - matchExpressions:
+        - key: node-role.kubernetes.io/master
+          operator: DoesNotExist
+      - matchExpressions:
+        - key: node-role.kubernetes.io/control-plane
+          operator: DoesNotExist
 # Topology spread constraints for pod assignment (requires Kubernetes >= 1.19)
 # Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
-# topologySpreadConstraints: []
+# Important: We strongly suggest you review these settings before applying onto your clusters.
+# Document https://docs.giantswarm.io/advanced/high-availability/multi-az/ gives more insight.
+topologySpreadConstraints: |-
+  - maxSkew: 1
+    topologyKey: topology.kubernetes.io/zone
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+        application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+        application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
 
 # Tolerations for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/

@@ -79,6 +79,9 @@
                 }
             }
         },
+        "affinity": {
+            "type": "string"
+        },
         "autoscaling": {
             "type": "object",
             "properties": {
@@ -1419,6 +1422,9 @@
         },
         "tolerations": {
             "type": "array"
+        },
+        "topologySpreadConstraints": {
+            "type": "string"
         },
         "udpProxy": {
             "type": "object",
