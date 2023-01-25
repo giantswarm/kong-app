@@ -471,7 +471,7 @@ ingressController:
   enabled: true
   image:
     registry: *registry
-    repository: giantswarm/kubernetes-ingress-controller
+    repository: giantswarm/kong-ingress-controller
     tag: "2.8.1"
     # Optionally set a semantic version for version-gated features. This can normally
     # be left unset. You only need to set this if your tag is not a semver string,
