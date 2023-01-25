@@ -697,11 +697,11 @@ updateStrategy: {}
 # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
 resources:
   limits:
-   cpu: 1
-   memory: 2G
+    cpu: 1
+    memory: 2G
   requests:
-   cpu: 1
-   memory: 2G
+    cpu: 1
+    memory: 2G
 
 # readinessProbe for Kong pods
 readinessProbe:
