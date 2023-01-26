@@ -775,6 +775,7 @@ affinity: |-
       - matchExpressions:
         - key: node-role.kubernetes.io/control-plane
           operator: DoesNotExist
+
 # Topology spread constraints for pod assignment (requires Kubernetes >= 1.19)
 # Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
 # Important: We strongly suggest you review these settings before applying onto your clusters.
@@ -1153,6 +1154,8 @@ extraObjects: []
 #     per_consumer: false
 #   plugin: prometheus
 
+# Values for subchart kubectl-apply-job
+# for installing CRDs
 kubectlApplyJob:
   files:
   - crds/custom-resource-definitions.yaml
