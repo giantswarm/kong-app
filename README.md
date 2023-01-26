@@ -12,7 +12,7 @@ Giant Swarm offers a Kong Managed App which can be installed in workload cluster
 
 | Giant Swarm Chart Release | Upstream Chart Release | Kong Version | Kong IC Version | Kong-Gateway Enterprise container tag |
 | --- | --- | --- | --- | --- |
-| Unreleased | [4fc3696](https://github.com/Kong/charts/compare/kong-2.13.1...4fc3696) | [3.0.1](https://github.com/Kong/kong/blob/3.0.1/CHANGELOG.md#301) | [2.7.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#270) | 3.0.1.0-alpine |
+| Unreleased | [36f5684](https://github.com/Kong/charts/compare/kong-2.13.0...36f5684) | [3.1.1](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#311) | [2.8.1](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#281) | 3.1.1.2-debian |
 | [v2.13.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#2130---2022-10-25) | [2.13.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#2130) | [2.8.1](https://github.com/Kong/kong/blob/2.8.1/CHANGELOG.md#281) | [2.7.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#270) | 2.8.2.0-alpine |
 | [v2.12.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#2120---2022-09-20) | [2.13.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#2130) | [2.8.1](https://github.com/Kong/kong/blob/2.8.1/CHANGELOG.md#281) | [2.6.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#260) | 2.8.1.4-alpine |
 | [v2.11.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#2110---2022-08-03) | [2.11.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#2110) | [2.8.1](https://github.com/Kong/kong/blob/2.8.1/CHANGELOG.md#281) | [2.5.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#250) | 2.8.1.2-alpine |
@@ -56,7 +56,6 @@ is possible launch postgres alongside this App (described below).
 The default installation of the App will use Kong Ingress Controller.
 The recommended way to configure plugins, consumers and services when using *Kong for Kubernetes* is by utilizing [Kong annotations](https://docs.konghq.com/kubernetes-ingress-controller/latest/references/annotations/) and [Kong custom resources](https://docs.konghq.com/kubernetes-ingress-controller/latest/concepts/custom-resources/#main).
 
-
 ### Container image registry
 
 You can change the container image registry by setting the following values in your `values.yaml` file
@@ -87,7 +86,7 @@ Install the app with at least the following custom configuration:
 ```
 image:
   repository: giantswarm/kong-gateway
-  tag: "2.8.2.0-alpine" # use the tag from the release matrix on from the README.md file
+  tag: "3.1.1.2-debian" # use the tag from the release matrix on from the README.md file
 
 enterprise:
   enabled: true
@@ -104,7 +103,7 @@ kubectl create secret generic kong-enterprise-license \
 
 ### Using your own Database
 
-Kong supports PostgreSQL version 9.5 up to 13.
+Kong supports PostgreSQL version 9.5 up to 15.
 
 Example database configuration:
 
@@ -165,15 +164,6 @@ Note:
 
 When installed through the Giant Swarm App platform, CRD installation is taken care of
 automatically.
-
-In case you don't want to install the CRDs automatically, specify
-
-```
-crds:
-  install: false
-```
-
-in your user configuration.
 
 ## Credit
 
