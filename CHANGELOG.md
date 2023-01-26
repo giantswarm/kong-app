@@ -11,8 +11,8 @@ This release upgrades kong to release [3.1.1](https://github.com/Kong/kong/blob/
 
 ### Updates
 
-- Align with upstream chart version [36f5684](https://github.com/Kong/charts/tree/36f5684b356e0259ecf8f8e27622390c38bedbc1) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.13.0...36f5684))
-- Update kong/kong to [3.1.1](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#311). Please read [Breaking changes](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#breaking-changes) notes.
+- Align with upstream chart version [2.15.3](https://github.com/Kong/charts/releases/tag/kong-2.15.3) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.13.0...2.15.3))
+- Update kong/kong to [3.1.1](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#311). Please read [Breaking changes](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#breaking-changes) notes
 - Execute enterprise tests with kong-gateway container image version 3.1.1.2-debian
 - Update kong ingress controller to [2.8.1](https://github.com/Kong/kong/blob/2.8.1/CHANGELOG.md#281)
 
