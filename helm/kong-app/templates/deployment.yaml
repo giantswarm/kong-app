@@ -313,6 +313,6 @@ spec:
           projected:
             sources:
             - serviceAccountToken:
-                path: serviceaccount
+                path: token
       {{- end }}
 {{- end }}
