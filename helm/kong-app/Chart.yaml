@@ -17,8 +17,3 @@ appVersion: "3.0.1"
 annotations:
   application.giantswarm.io/team: team-cabbage
 kubeVersion: ">=1.22.0-0"
-dependencies:
-  - name: postgresql
-    version: 11.1.15
-    repository: https://charts.bitnami.com/bitnami
-    condition: postgresql.enabled
