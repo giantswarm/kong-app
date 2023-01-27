@@ -736,7 +736,7 @@ The name of the service used for the ingress controller's validation webhook
 {{- end }}
 {{- if (and (not .Values.deployment.serviceAccount.automountServiceAccountToken) (or .Values.deployment.serviceAccount.create .Values.deployment.serviceAccount.name)) }}
   - name: {{ template "kong.serviceAccountTokenName" . }}
-    mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+    mountPath: /var/run/secrets/kubernetes.io
     readOnly: true
 {{- end }}
   {{- include "kong.userDefinedVolumeMounts" .Values.ingressController | nindent 2 }}

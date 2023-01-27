@@ -310,14 +310,9 @@ spec:
       {{- include "kong.userDefinedVolumes" . | nindent 8 -}}
       {{- if (and (not .Values.deployment.serviceAccount.automountServiceAccountToken) (or .Values.deployment.serviceAccount.create .Values.deployment.serviceAccount.name)) }}
         - name: {{ template "kong.serviceAccountTokenName" . }}
-          secret:
-            secretName: {{ template "kong.serviceAccountTokenName" . }}
-            items:
-            - key: token
-              path: token
-            - key: ca.crt
-              path: ca.crt
-            - key: namespace
-              path: namespace
+          projected:
+            sources:
+            - serviceAccountToken:
+                path: serviceaccount
       {{- end }}
 {{- end }}
