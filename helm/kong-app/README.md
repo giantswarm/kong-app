@@ -160,11 +160,11 @@ When deploying Kong in DB-less mode(`env.database: "off"`)
 and without the Ingress Controller(`ingressController.enabled: false`),
 you have to provide a [declarative configuration](https://docs.konghq.com/gateway-oss/latest/db-less-and-declarative-config/#the-declarative-configuration-format) for Kong to run.
 You can provide an existing ConfigMap
-(`dblessConfig.configMap`) or place the whole configuration into
-`values.yaml` (`dblessConfig.config`)
-parameter. See the example configuration in the default values.yaml
-for more details. You can use `--set-file dblessConfig.config=/path/to/declarative-config.yaml`
-in Helm commands to substitute in a complete declarative config file.
+(`dblessConfig.configMap`) or Secret (`dblessConfig.secret`) or place the whole
+configuration into `values.yaml` (`dblessConfig.config`) parameter. See the
+example configuration in the default values.yaml for more details. You can use
+`--set-file dblessConfig.config=/path/to/declarative-config.yaml` in Helm
+commands to substitute in a complete declarative config file.
 
 Note that externally supplied ConfigMaps are not hashed or tracked in deployment annotations.
 Subsequent ConfigMap updates will require user-initiated new deployment rollouts
@@ -618,7 +618,7 @@ directory.
 #### Kong Service Parameters
 
 The various `SVC.*` parameters below are common to the various Kong services
-(the admin API, proxy, Kong Manger, the Developer Portal, and the Developer
+(the admin API, proxy, Kong Manager, the Developer Portal, and the Developer
 Portal API) and define their listener configuration, K8S Service properties,
 and K8S Ingress properties. Defaults are listed only if consistent across the
 individual services: see values.yaml for their individual default values.
@@ -752,6 +752,7 @@ kong:
 | ---------------------------------- | ------------------------------------------------------------------------------------- | ------------------- |
 | namespace                          | Namespace to deploy chart resources                                                   |                     |
 | deployment.kong.enabled            | Enable or disable deploying Kong                                                      | `true`              |
+| deployment.minReadySeconds         | Minimum number of seconds for which newly created pods should be ready without any of its container crashing, for it to be considered available. |                     |
 | deployment.initContainers          | Create initContainers. Please go to Kubernetes doc for the spec of the initContainers |                     |
 | deployment.daemonset               | Use a DaemonSet instead of a Deployment                                               | `false`             |
 | deployment.hostNetwork             | Enable hostNetwork, which binds to the ports to the host                              | `false`             |
@@ -773,8 +774,8 @@ kong:
 | livenessProbe                      | Kong liveness probe                                                                   |                     |
 | lifecycle                          | Proxy container lifecycle hooks                                                       | see `values.yaml`   |
 | terminationGracePeriodSeconds      | Sets the [termination grace period](https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#hook-handler-execution) for Deployment pods | 30                  |
-| affinity                           | Node/pod affinities                                                                   |  see `values.yaml`  |
-| topologySpreadConstraints          | Control how Pods are spread across cluster among failure-domains. We suggest to review the `values.yaml` and [documentation](https://docs.giantswarm.io/advanced/high-availability/multi-az/) |  see `values.yaml`  |
+| affinity                           | Node/pod affinities                                                                   |                     |
+| topologySpreadConstraints          | Control how Pods are spread across cluster among failure-domains                      |                     |
 | nodeSelector                       | Node labels for pod assignment                                                        | `{}`                |
 | deploymentAnnotations              | Annotations to add to deployment                                                      |  see `values.yaml`  |
 | podAnnotations                     | Annotations to add to each pod                                                        |  see `values.yaml`  |

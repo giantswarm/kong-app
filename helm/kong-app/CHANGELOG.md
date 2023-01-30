@@ -2,13 +2,67 @@
 
 ## Unreleased
 
+
+## 2.15.3
+
+### Fixed
+
+* Changed `ingressController.readinessProbe` to use `/readyz` to prevent pods from becoming ready and serving 404s prior to the `ingress-controller` first syncing config to the `proxy` [#716](https://github.com/Kong/charts/pull/716).
+* Fixed incorrect `if` block order in volume mount templates.
+
+## 2.15.2
+
+### Fixed
+
+* Do not attempt to mount DB-less config if none provided by chart.
+
+## 2.15.1
+
+### Fixed
+
+* Remove unnecessary failure condition from [#695](https://github.com/Kong/charts/pull/695).
+
+## 2.15.0
+
 ### Improvements
 
+* Add the `dblessConfig.secret` key to the values file, allowing the user to
+  supply a Secret for their dbless config file.
+  [#695](https://github.com/Kong/charts/pull/695)
+* Add support for version `v1beta1` of the Gateway API when generating RBAC rules.
+* Add support for version `v1beta1` of the Gateway API when generating RBAC rules.
+  ([#706](https://github.com/Kong/charts/pull/706))
+* Prevent supplying duplicate plugin inclusion to `KONG_PLUGINS` env variable.
+  ([#711](https://github.com/Kong/charts/pull/711))
+
+### Fixed
+
+* Removed appProtocol to fix AKS load balancer
+  ([#705](https://github.com/Kong/charts/pull/705))
+* Fix lookup for CA certificate secret for admission webhook.
+  ([#704](https://github.com/Kong/charts/pull/704))
+
+## 2.14.0
+
+Note: KIC 2.8 does include several updates to CRDs, but only for documentation and validation.
+You can [upgrade CRDs](https://github.com/Kong/charts/blob/main/charts/kong/UPGRADE.md#updates-to-crds),
+but doing so is not required.
+
+### Improvements
+
+* Default Kong and KIC versions bumped to 3.1 and 2.8.
 * UDP proxy (udpProxy) assumes the UDP protocol by default for stream entries (udpProxy.stream). 
   This can be still overridden to TCP by specifying the protocol explicitly, but it is not recommended to do so.
   [#682](https://github.com/Kong/charts/pull/682)
 * Supported `autoscaling/v2` API
   ([#679](https://github.com/Kong/charts/pull/679))
+* Add support for specifying the minium number of seconds for which newly created pods should be ready without
+  any of its container crashing, for it to be considered available. (`deployment.minReadySeconds`)
+  ([#688](https://github.com/Kong/charts/pull/688))
+* Increased the default memory requests and limits for the Kong pod to 2G
+  ([#690](https://github.com/Kong/charts/pull/690))
+* Add a rule for `KongIngress` to the ValidatingWebhookConfiguration.
+  ([#702](https://github.com/Kong/charts/pull/702))
 
 ### Fixed
 
@@ -203,6 +257,11 @@ detect whether you use the legacy CRD installation method automatically.
 * Added support for non `KONG_` prefixed custom environment variables
   ([#530](https://github.com/Kong/charts/pull/530))
 * Updated to latest CRDs from upstream.
+
+### Fixed
+
+* Removed CREATE from ValidatingWebhookConfiguration objectSelector for Secrets to align with changes in Kong/kubernetes-ingress-controller.
+  ([#542](https://github.com/Kong/charts/pull/542))
 
 ## 2.6.5
 

@@ -1,6 +1,16 @@
+{{/*
+Before trying to contribute this file to upstream, please read below.
+This file contains Giant Swarm specific Services for monitoring not present
+in the original upstream chart.
+*/}}
+
 {{- if and .Values.deployment.kong.enabled }}
 {{- if and .Values.status.enabled (or .Values.status.http.enabled .Values.status.tls.enabled) -}}
-{{- $serviceConfig := dict -}}
+{{- $tls := dict "enabled" false "servicePort" .Values.status.tls.containerPort "containerPort" "status" -}}
+{{- $http := dict "enabled" true "servicePort" .Values.status.http.containerPort "containerPort" "status" -}}
+{{- $annotationPort := .Values.status.http.enabled | ternary .Values.status.http.containerPort .Values.status.tls.containerPort  }}
+{{- $annotations := dict "giantswarm.io/monitoring" "true" "giantswarm.io/monitoring-app-label" "kong-app" "giantswarm.io/monitoring-port" $annotationPort -}}
+{{- $serviceConfig := dict "annotations" $annotations "http" $http "tls" $tls "type" "ClusterIP" -}}
 {{- $serviceConfig := merge $serviceConfig .Values.status -}}
 {{- $_ := set $serviceConfig "fullName" (include "kong.fullname" .) -}}
 {{- $_ := set $serviceConfig "namespace" (include "kong.namespace" .) -}}

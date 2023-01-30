@@ -7,13 +7,20 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
-This release upgrades kong to release [3.0.1](https://github.com/Kong/kong/blob/3.0.1/CHANGELOG.md#301) which contains breaking changes. Please consider reading the upstream [Breaking changes](https://github.com/Kong/kong/blob/3.0.1/CHANGELOG.md#breaking-changes) documentation before upgrading. Users of the kong enterprise should read the [Known limitations](https://docs.konghq.com/gateway/changelog/#known-limitations) and [Breaking changes and deprecations]https://docs.konghq.com/gateway/changelog/#breaking-changes-and-deprecations) sections of the kong enterprise changelog.
+This release upgrades kong to release [3.1.1](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#311) which contains breaking changes. Please consider reading the upstream [Breaking changes](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#breaking-changes) documentation before upgrading. Users of the kong enterprise should read the [Kong Gateway changelogs of releases 3.0.0.0 onwards](https://docs.konghq.com/gateway/changelog/#3000) up to 3.1.1.2.
 
 ### Updates
 
-- Align with upstream chart version [2e89647](https://github.com/Kong/charts/tree/2e89647d86ec7c8fa2a2a1697a325e6679b18d08) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.7.0...2e89647))
-- Update kong/kong to [3.0.1](https://github.com/Kong/kong/blob/3.0.1/CHANGELOG.md#300). Please read [Breaking changes](https://github.com/Kong/kong/blob/3.0.1/CHANGELOG.md#breaking-changes) notes.
-- Execute enterprise tests with container image version 3.0.1.0-alpine
+- Align with upstream chart version [2.15.3](https://github.com/Kong/charts/releases/tag/kong-2.15.3) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.13.0...2.15.3))
+- Update kong/kong to [3.1.1](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#311). Please read [Breaking changes](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#breaking-changes) notes
+- Execute enterprise tests with kong-gateway container image version 3.1.1.2-debian
+- Update kong ingress controller to [2.8.1](https://github.com/Kong/kong/blob/2.8.1/CHANGELOG.md#281)
+
+### Changes
+
+- **Breaking** The `minReadySeconds` value previous found at `deployment.kong.minReadySeconds` is now configured at path `deployment.minReadySeconds`.
+- Increase default requests/limits to 1 cpu and 2G memory
+- Remove startupProbe from kong ingress controller. [More information](https://github.com/Kong/charts/pull/527#issuecomment-1014782921)
 
 ## [2.13.0] - 2022-10-25
 

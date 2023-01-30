@@ -1,0 +1,19 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: Merge branch 'upstream-main'
+      sha: ff826ffd5b3927895412f2802a37f414b47c5fdb
+      tags:
+      - kong-2.15.3-39-gff826ff
+    path: kong
+  path: vendor
+- contents:
+  - directory: {}
+    path: .
+  path: helm/kong-app/templates
+- contents:
+  - directory: {}
+    path: .
+  path: helm/kong-app/crds
+kind: LockConfig

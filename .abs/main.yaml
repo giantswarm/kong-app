@@ -5,3 +5,5 @@ destination: ./build
 # CI overwrites this, check .circleci/config.yaml
 catalog-base-url: https://giantswarm.github.io/giantswarm-catalog/
 ct-config: ./.circleci/ct-config.yaml
+# until we support custom template helper filenames
+disable-giantswarm-helm-validator: true
