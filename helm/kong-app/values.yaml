@@ -875,10 +875,14 @@ podSecurityPolicy:
 priorityClassName: ""
 
 # securityContext for Kong pods.
-securityContext: {}
+securityContext:
+  seccompProfile:
+    type: RuntimeDefault
 
 # securityContext for containers.
-containerSecurityContext: {}
+containerSecurityContext:
+  seccompProfile:
+    type: RuntimeDefault
 
 ## Optional DNS configuration for Kong pods
 # dnsPolicy: ClusterFirst
