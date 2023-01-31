@@ -896,6 +896,8 @@ priorityClassName: ""
 securityContext:
   readOnlyRootFilesystem: true
   runAsNonRoot: true
+  runAsUser: 65534  # nobody
+  runAsGroup: 65534  # nobody
   seccompProfile:
     type: RuntimeDefault
 
@@ -903,6 +905,8 @@ securityContext:
 containerSecurityContext:
   readOnlyRootFilesystem: true
   runAsNonRoot: true
+  runAsUser: 65534  # nobody
+  runAsGroup: 65534  # nobody
   seccompProfile:
     type: RuntimeDefault
 
