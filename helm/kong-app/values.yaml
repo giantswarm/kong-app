@@ -601,6 +601,13 @@ postgresql:
   service:
     ports:
       postgresql: 5432
+  primary:
+    containerSecurityContext:
+      readOnlyRootFilesystem: true
+    rbac:
+      create: true
+    psp:
+      create: true
 
 # -----------------------------------------------------------------------------
 # Configure cert-manager integration
@@ -847,18 +854,29 @@ podDisruptionBudget:
 
 podSecurityPolicy:
   enabled: true
+  annotations:
+    seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'runtime/default'
   spec:
     privileged: false
     fsGroup:
-      rule: RunAsAny
+      rule: MustRunAs
+      ranges:
+        - min: 1
+          max: 65533
     runAsUser:
-      rule: RunAsAny
+      rule: MustRunAsNonRoot
     runAsGroup:
-      rule: RunAsAny
+      rule: MustRunAs
+      ranges:
+        - min: 1
+          max: 65533
     seLinux:
       rule: RunAsAny
     supplementalGroups:
-      rule: RunAsAny
+      rule: MustRunAs
+      ranges:
+        - min: 1
+          max: 65533
     volumes:
       - 'configMap'
       - 'secret'
@@ -876,11 +894,15 @@ priorityClassName: ""
 
 # securityContext for Kong pods.
 securityContext:
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
   seccompProfile:
     type: RuntimeDefault
 
 # securityContext for containers.
 containerSecurityContext:
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
   seccompProfile:
     type: RuntimeDefault
 
@@ -1163,3 +1185,8 @@ extraObjects: []
 kubectlApplyJob:
   files:
   - crds/custom-resource-definitions.yaml
+  podSecurityPolicy:
+    annotations:
+      seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'runtime/default'
+  securityContext:
+    seccompProfileType: RuntimeDefault
