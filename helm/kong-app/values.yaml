@@ -602,12 +602,12 @@ postgresql:
     ports:
       postgresql: 5432
   primary:
-    containerSecurityContext:
-      readOnlyRootFilesystem: true
-    rbac:
-      create: true
-    psp:
-      create: true
+    annotations:
+      "ignore-check.kube-linter.io/no-read-only-root-fs": "writable fs is required"
+  rbac:
+    create: true
+  psp:
+    create: true
 
 # -----------------------------------------------------------------------------
 # Configure cert-manager integration
