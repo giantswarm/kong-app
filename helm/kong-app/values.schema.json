@@ -606,7 +606,7 @@
                     "type": "object",
                     "properties": {
                         "kong_admin_tls_skip_verify": {
-                            "type": "boolean"
+                            "type": "string"
                         }
                     }
                 },
@@ -1207,7 +1207,7 @@
                             "type": "object",
                             "properties": {
                                 "postgresql": {
-                                    "type": "integer"
+                                    "type": "string"
                                 }
                             }
                         }
