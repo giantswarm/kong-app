@@ -1,5 +1,6 @@
 # CI test for testing dbless deployment without ingress controllers
 # - disable ingress controller
+# - no static config
 ingressController:
   enabled: false
 # - disable DB for kong
@@ -31,13 +32,3 @@ deployment:
   userDefinedVolumeMounts:
   - name: "tmpdir"
     mountPath: "/opt/tmp"
-dblessConfig:
-  config: |
-    _format_version: "1.1"
-    services:
-      - name: example.com
-        url: http://example.com
-        routes:
-        - name: example
-          paths:
-          - "/example"
