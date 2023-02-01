@@ -7,13 +7,13 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
-This release upgrades kong to release [3.1.1](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#311) which contains breaking changes. Please consider reading the upstream [Breaking changes](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#breaking-changes) documentation before upgrading. Users of the kong enterprise should read the [Kong Gateway changelogs of releases 3.0.0.0 onwards](https://docs.konghq.com/gateway/changelog/#3000) up to 3.1.1.2.
+This release upgrades kong to release [3.1.1](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#311) which contains breaking changes. Please consider reading the upstream [Breaking changes](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#breaking-changes) documentation before upgrading. Users of the kong enterprise should read the [Kong Gateway changelogs of releases 3.0.0.0 onwards](https://docs.konghq.com/gateway/changelog/#3000) up to 3.1.1.3.
 
 ### Updates
 
 - Align with upstream chart version [2.15.3](https://github.com/Kong/charts/releases/tag/kong-2.15.3) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.13.0...2.15.3))
 - Update kong/kong to [3.1.1](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#311). Please read [Breaking changes](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#breaking-changes) notes
-- Execute enterprise tests with kong-gateway container image version 3.1.1.2-debian
+- Execute enterprise tests with kong-gateway container image version 3.1.1.3-debian
 - Update kong ingress controller to [2.8.1](https://github.com/Kong/kong/blob/2.8.1/CHANGELOG.md#281)
 
 ### Changes
