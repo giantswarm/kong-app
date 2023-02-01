@@ -7,6 +7,14 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changes
+
+- Add instance label to default topologySpreadConstraints label selector
+- Update kong/kubernetes-ingress-controller to [2.8.1](https://github.com/Kong/kubernetes-ingress-controller/releases/tag/v2.8.1).
+- Suggest using giantswarm/kong-gateway:2.8.2.3-debian as enterprise container image.
+- Use `/readyz` path for ingress controller readiness check.
+- Update kubernetes api token secret with projected volume. This should fix problems with empty or expired ServiceAccount tokens.
+
 ## [2.13.0] - 2022-10-25
 
 This version drops support for kubernetes versions below 1.22.0.
