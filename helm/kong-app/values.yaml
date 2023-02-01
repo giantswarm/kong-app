@@ -495,7 +495,7 @@ ingressController:
     # The controller disables TLS verification by default because Kong
     # generates self-signed certificates by default. Set this to false once you
     # have installed CA-signed certificates.
-    kong_admin_tls_skip_verify: true
+    kong_admin_tls_skip_verify: "true"
     # If using Kong Enterprise with RBAC enabled, uncomment the section below
     # and specify the secret/key containing your admin token.
     # kong_admin_token:
@@ -597,10 +597,12 @@ postgresql:
   image:
     registry: *registry
     repository: giantswarm/postgresql-bitnami
-    tag: 15.1.0-debian-11-r20
+    # use postgres < 14 until is https://github.com/Kong/kong/issues/8533 resolved and released
+    # enterprise (kong-gateway) supports postgres 14
+    tag: 13.6.0-debian-10-r52
   service:
     ports:
-      postgresql: 5432
+      postgresql: "5432"
 
 # -----------------------------------------------------------------------------
 # Configure cert-manager integration
@@ -847,6 +849,8 @@ podDisruptionBudget:
 
 podSecurityPolicy:
   enabled: true
+  labels: {}
+  annotations: {}
   spec:
     privileged: false
     fsGroup:
@@ -863,6 +867,7 @@ podSecurityPolicy:
       - 'configMap'
       - 'secret'
       - 'emptyDir'
+      - 'projected'
     allowPrivilegeEscalation: false
     hostNetwork: false
     hostIPC: false
