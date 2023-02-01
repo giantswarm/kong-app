@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [2.14.0] - 2023-02-01
+
 ### Changes
 
 - Add instance label to default topologySpreadConstraints label selector
@@ -517,7 +519,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.13.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.14.0...HEAD
+[2.14.0]: https://github.com/giantswarm/kong-app/compare/v2.13.0...v2.14.0
 [2.13.0]: https://github.com/giantswarm/kong-app/compare/v2.12.0...v2.13.0
 [2.12.0]: https://github.com/giantswarm/kong-app/compare/v2.11.0...v2.12.0
 [2.11.0]: https://github.com/giantswarm/kong-app/compare/v2.10.1...v2.11.0
