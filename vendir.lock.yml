@@ -5,7 +5,7 @@ directories:
       commitTitle: Merge branch 'upstream-main'
       sha: 37050edabaabaa3337d81887b713973e390b2b5a
       tags:
-      - kong-2.15.3-56-g37050ed
+      - kong-2.16.0-45-g37050ed
     path: kong
   path: vendor
 - contents:
