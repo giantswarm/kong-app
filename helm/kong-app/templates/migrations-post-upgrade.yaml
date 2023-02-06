@@ -12,7 +12,7 @@ metadata:
     app.kubernetes.io/component: post-upgrade-migrations
   annotations:
     helm.sh/hook: "post-upgrade"
-    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded,hook-failed"
+    helm.sh/hook-delete-policy: "before-hook-creation"
   {{- range $key, $value := .Values.migrations.jobAnnotations }}
     {{ $key }}: {{ $value | quote }}
   {{- end }}
@@ -62,7 +62,7 @@ spec:
         image: {{ include "kong.getRepoTag" .Values.image }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         securityContext:
-        {{ toYaml .Values.containerSecurityContext | nindent 10 }}
+        {{ toYaml .Values.containerSecurityContext | nindent 10 }} 
         env:
         {{- include "kong.no_daemon_env" . | nindent 8 }}
         args: [ "kong", "migrations", "finish" ]
