@@ -901,8 +901,8 @@ securityContext:
   runAsNonRoot: true
   runAsUser: 65534  # nobody
   runAsGroup: 65534  # nobody
-  # seccompProfile:
-  #   type: RuntimeDefault
+  seccompProfile:
+    type: RuntimeDefault
 
 # securityContext for containers.
 containerSecurityContext:
@@ -910,8 +910,8 @@ containerSecurityContext:
   runAsNonRoot: true
   runAsUser: 65534  # nobody
   runAsGroup: 65534  # nobody
-  # seccompProfile:
-  #   type: RuntimeDefault
+  seccompProfile:
+    type: RuntimeDefault
 
 ## Optional DNS configuration for Kong pods
 # dnsPolicy: ClusterFirst
