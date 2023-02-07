@@ -16,6 +16,14 @@ metadata:
   {{- range $key, $value := .Values.migrations.jobAnnotations }}
     {{ $key }}: {{ $value | quote }}
   {{- end }}
+    debug: |-
+      # {{ printf "%s-psp" ( include "kong.serviceAccountName" . ) }}
+      # {{ .Values.containerSecurityContext }}
+      # {{ $psp := lookup "policy/v1beta1" "PodSecurityPolicy" "" (printf "%s-psp" ( include "kong.serviceAccountName" . )) }}
+      # {{ if $psp }}
+      # {{ (hasKey $psp.metadata.annotations "seccomp.security.alpha.kubernetes.io/allowedProfileNames") }}
+      # {{ $psp }}
+      # {{ end }}
 spec:
   backoffLimit: {{ .Values.migrations.backoffLimit }}
   template:

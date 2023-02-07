@@ -57,7 +57,7 @@ THIS IS OKAY!
 {{- define "kong.preUpgradeMigrationsSecurityContext" -}}
 {{- $context := .Values.securityContext -}}
 {{- if and (hasKey $context "seccompProfile") .Values.podSecurityPolicy.enabled -}}
-{{- $psp := lookup "policy/v1beta1" "PodSecurityPolicy" "" (printf "%s-psp" ( include "kong.serviceAccountName" . )) }}
+{{- $psp := lookup "policy/v1beta1" "PodSecurityPolicy" "" (printf "%s-psp" ( include "kong.serviceAccountName" . )) -}}
 {{- if $psp -}}
 {{- if not (hasKey $psp.metadata.annotations "seccomp.security.alpha.kubernetes.io/allowedProfileNames") -}}
 {{- $context := omit $context "seccompProfile" -}}
@@ -75,7 +75,7 @@ THIS IS OKAY!
 {{- define "kong.preUpgradeMigrationsContainerSecurityContext" -}}
 {{- $context := .Values.containerSecurityContext -}}
 {{- if and (hasKey $context "seccompProfile") .Values.podSecurityPolicy.enabled -}}
-{{- $psp := lookup "policy/v1beta1" "PodSecurityPolicy" "" (printf "%s-psp" ( include "kong.serviceAccountName" . )) }}
+{{- $psp := lookup "policy/v1beta1" "PodSecurityPolicy" "" (printf "%s-psp" ( include "kong.serviceAccountName" . )) -}}
 {{- if $psp -}}
 {{- if not (hasKey $psp.metadata.annotations "seccomp.security.alpha.kubernetes.io/allowedProfileNames") -}}
 {{- $context := omit $context "seccompProfile" -}}
