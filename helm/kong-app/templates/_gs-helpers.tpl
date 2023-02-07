@@ -60,7 +60,7 @@ THIS IS OKAY!
 {{- $psp := lookup "policy/v1beta1" "PodSecurityPolicy" "" (printf "%s-psp" ( include "kong.serviceAccountName" . )) -}}
 {{- if $psp -}}
 {{- if not (hasKey $psp.metadata.annotations "seccomp.security.alpha.kubernetes.io/allowedProfileNames") -}}
-{{- $context := omit $context "seccompProfile" -}}
+{{- $context = omit $context "seccompProfile" -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
@@ -78,7 +78,7 @@ THIS IS OKAY!
 {{- $psp := lookup "policy/v1beta1" "PodSecurityPolicy" "" (printf "%s-psp" ( include "kong.serviceAccountName" . )) -}}
 {{- if $psp -}}
 {{- if not (hasKey $psp.metadata.annotations "seccomp.security.alpha.kubernetes.io/allowedProfileNames") -}}
-{{- $context := omit $context "seccompProfile" -}}
+{{- $context = omit $context "seccompProfile" -}}
 {{- end -}}
 {{- end -}}
 {{- end -}}
