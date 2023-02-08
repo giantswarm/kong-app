@@ -1,0 +1,11 @@
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+plugin: acl
+metadata:
+  name: standard-consumer-acl
+  annotations:
+    kubernetes.io/ingress.class: kong
+config:
+  allow:
+  - standard-consumer-acl-group

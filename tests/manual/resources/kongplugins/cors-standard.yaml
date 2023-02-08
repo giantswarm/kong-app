@@ -1,0 +1,43 @@
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+plugin: cors
+metadata:
+  name: cors-standard
+  annotations:
+    kubernetes.io/ingress.class: kong
+config:
+  origins:
+    - "*"
+  methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+    - OPTIONS
+    - PATCH
+  headers:
+    - DNT
+    - X-CustomHeader
+    - Keep-Alive
+    - User-Agent
+    - X-Requested-With
+    - If-Modified-Since
+    - Cache-Control
+    - Content-Type
+    - Authorization
+    - Pragma
+    - h-menu-id
+    - h-request-id
+    - x-source
+    - x-client-device-id
+    - x-client-ip
+    - Content-disposition
+  exposed_headers:
+    - Authorization
+    - Pragma
+    - h-menu-id
+    - h-request-id
+    - x-source
+    - x-client-device-id
+    - x-client-ip

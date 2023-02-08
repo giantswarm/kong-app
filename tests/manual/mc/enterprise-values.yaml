@@ -1,0 +1,56 @@
+env:
+  anonymous_reports: "off"
+  headers: "off"
+  nginx_http_log_format: json_log escape=json '{"message":{"remote_addr":"$remote_addr","remote_user":"$remote_user","host":"$http_host","request":"$request","req_method":"$request_method","req_time":"$request_time","status":"$status","size":"$body_bytes_sent","user_agent":"$http_user_agent","cookie":"$http_cookie","uri":"$uri","http_referer":"$http_referer","upstream_status":"$upstream_status","upstream_addr":"$upstream_addr","upstream_connect_time":"$upstream_connect_time","upstream_header_time":"$upstream_header_time","upstream_response_time":"$upstream_response_time","x-api-key":"$http_x_api_key","api-key":"$http_api_key","x-forwarded-for":"$http_x_forwarded_for","true-client-ip":"$http_true_client_ip","upstream_cache_status":"$upstream_cache_status"},"@timestamp":"$time_iso8601","labels":{"env":"stg"},"service":{"name":"Kong"},"level":"info"}'
+  nginx_http_lua_shared_dict: kong_proxy_cache 5m
+  nginx_worker_processes: "1"
+  database: postgres
+  proxy-connect-timeout: "10"
+  proxy-read-timeout: "10"
+  proxy-write-timeout: "10"
+  proxy_next_upstream: "off"
+  proxy_next_upstream_tries: "1"
+  admin_gui_url: "https://changeme.gigantic.io"
+  pg_database: kong
+  pg_host: postgres-0.postgres.postgres.svc.cluster.local
+  pg_password: kongkong
+  pg_user: postgres
+  password:
+    valueFrom:
+      secretKeyRef:
+        key: "password"
+        name: "kong-enterprise-superuser-password"
+
+ingressController:
+  ingressClass: kong
+  admissionWebhook:
+    enabled: true
+  env:
+    anonymous_reports: "false"
+    kong_admin_token:
+      valueFrom:
+        secretKeyRef:
+          key: "password"
+          name: "kong-enterprise-superuser-password"
+
+
+admin:
+  enabled: true
+  # tls:
+  #   # Until https://github.com/Kong/kong/pull/8690 is not released, don't specify http2
+  #   parameters: []
+
+podDisruptionBudget:
+  enabled: true
+  maxUnavailable: 50%
+
+image:
+  repository: giantswarm/kong-gateway
+  tag: '2.8.1.0-alpine'
+
+enterprise:
+  enabled: true
+  license_secret: kong-enterprise-license
+  rbac:
+    admin_gui_auth: "basic-auth"
+    enabled: true

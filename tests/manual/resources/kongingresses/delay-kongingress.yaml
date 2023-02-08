@@ -1,0 +1,11 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongIngress
+metadata:
+  name: delay-kongingress
+  annotations:
+    kubernetes.io/ingress.class: kong
+proxy:
+  connect_timeout: 5000
+  retries: 5
+  read_timeout: 5000
+  write_timeout: 5000

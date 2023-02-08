@@ -1,0 +1,25 @@
+#---
+#apiVersion: networking.k8s.io/v1
+#kind: Ingress
+#metadata:
+#  name: api-restriction-ingress
+#  annotations:
+#    kubernetes.io/ingress.class: kong
+#    konghq.com/plugins: api-restriction-standard
+#    konghq.com/methods: GET
+#    konghq.com/preserve-host: 'true'
+#    konghq.com/strip-path: 'true'
+#spec:
+#  ingressClassName: kong
+#  rules:
+#    - host: kong-domain.kong
+#      http:
+#        paths:
+#          - pathType: Prefix
+#            path: /echo/api-restriction-test
+#            backend:
+#              service:
+#                name: kongetest
+#                port:
+#                  number: 8080
+#

@@ -1,0 +1,55 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: kong-test
+
+buildMetadata: [managedByLabel]
+commonLabels:
+  testing: kong-test
+
+resources:
+- namespace/kong-test.yaml
+- secrets/basicauth-consumer-acl.yaml
+- secrets/basicauth-consumer-secret.yaml
+- secrets/standard-consumer-acl.yaml
+- secrets/standard-consumer-secret.yaml
+
+- kongplugins/basicauth-consumer-acl.yaml
+- kongplugins/basic-auth-standard.yaml
+# - kongplugins/cache-mem.yaml
+- kongplugins/cors-negative.yaml
+- kongplugins/cors-standard.yaml
+- kongplugins/ip-restriction-standard.yaml
+- kongplugins/key-auth-secret-standard.yaml
+- kongplugins/key-auth-standard.yaml
+- kongplugins/oidc-aad.yaml
+- kongplugins/oidc-standard.yaml
+# - kongplugins/rate-limiting-cluster.yaml
+# - kongplugins/rate-limiting-memory.yaml
+# - kongplugins/rate-limiting-redis.yaml
+- kongplugins/request-size-limit-standard.yaml
+- kongplugins/request-transformer-standard.yaml
+- kongplugins/standard-consumer-acl.yaml
+
+- services/echo.yaml
+- deployments/echo.yaml
+
+- ingresses/aclbasicauth-ingress.yaml
+- ingresses/aclkeyauth-ingress.yaml
+- ingresses/api-restriction-ingress.yaml
+# - ingresses/cache-ingress.yaml
+- ingresses/cors-ingress.yaml
+- ingresses/cors-negative-ingress.yaml
+- ingresses/keyauth-ingress.yaml
+- ingresses/keyauthsecret-ingress.yaml
+- ingresses/no-plugins.yaml
+# - ingresses/rate-limit-cluster-ingress.yaml
+# - ingresses/rate-limit-memory-ingress.yaml
+# - ingresses/rate-limit-redis-ingress.yaml
+- ingresses/request-size-limiting-ingres.yaml
+- ingresses/request-transformer-ingress.yaml
+
+- kongingresses/delay-kongingress.yaml
+
+- kongconsumers/basicauth-consumer.yaml
+- kongconsumers/standard-consumer.yaml
