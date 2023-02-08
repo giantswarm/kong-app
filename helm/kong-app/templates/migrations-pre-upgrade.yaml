@@ -19,12 +19,14 @@ metadata:
     debug: |-
       # {{ printf "%s-psp" ( include "kong.serviceAccountName" . ) }}
       # {{ .Values.containerSecurityContext }}
-      # {{ hasKey .Values.containerSecurityContext "seccompProfile" }}
+      # {{ (hasKey .Values.containerSecurityContext "seccompProfile") }}
       # {{ $psp := lookup "policy/v1beta1" "PodSecurityPolicy" "" (printf "%s-psp" ( include "kong.serviceAccountName" . )) }}
       # {{ if $psp }}
       # {{ (hasKey $psp.metadata.annotations "seccomp.security.alpha.kubernetes.io/allowedProfileNames") }}
       # {{ $psp }}
       # {{ end }}
+    ding: |
+      {{ include "kong.preUpgradeMigrationsContainerSecurityContext" . | nindent 6 }}
 
 spec:
   backoffLimit: {{ .Values.migrations.backoffLimit }}
