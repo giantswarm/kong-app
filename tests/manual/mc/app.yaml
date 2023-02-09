@@ -1,0 +1,18 @@
+apiVersion: application.giantswarm.io/v1alpha1
+kind: App
+metadata:
+  labels:
+    app.kubernetes.io/name: kong-app
+  name: kong-app
+  namespace: d9gr8
+spec:
+  catalog: giantswarm
+  kubeConfig:
+    inCluster: false
+  name: kong-app
+  namespace: kong-app
+  userConfig:
+    configMap:
+      name: kong-app-userconfig
+      namespace: d9gr8
+  version: 2.12.0

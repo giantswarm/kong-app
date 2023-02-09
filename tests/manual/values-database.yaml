@@ -1,6 +1,0 @@
-env:
-  database: postgres
-  pg_database: kong
-  pg_host: postgres-0.postgres.postgres.svc.cluster.local
-  pg_password: kongkong
-  pg_user: postgres
