@@ -1,0 +1,23 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: noplugins-ingress
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/methods: GET
+    konghq.com/preserve-host: 'true'
+    konghq.com/strip-path: 'true'
+spec:
+  ingressClassName: kong
+  rules:
+    - host: kong-domain.kong
+      http:
+        paths:
+          - pathType: Prefix
+            path: /echo/noplugins-test
+            backend:
+              service:
+                name: kongetest
+                port:
+                  number: 8080

@@ -1,0 +1,29 @@
+# ---
+# apiVersion: configuration.konghq.com/v1
+# kind: KongPlugin
+# plugin: rate-limiting
+# metadata:
+#   name: rate-limiting-memory
+#   annotations:
+#     kubernetes.io/ingress.class: kong
+# config:
+#   second: 1
+#   hour: 2
+#   policy: local
+
+
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: rate-limiting-memory
+  annotations:
+    kubernetes.io/ingress.class: kong
+config:
+  second: 1
+  hour: 3
+  policy: local
+  fault_tolerant: true
+  hide_client_headers: false
+  redis_ssl: false
+  redis_ssl_verify: false
+plugin: rate-limiting

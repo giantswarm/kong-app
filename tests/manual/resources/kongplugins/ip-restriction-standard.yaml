@@ -1,0 +1,11 @@
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+plugin: ip-restriction
+metadata:
+  name: ip-restriction-standard
+  annotations:
+    kubernetes.io/ingress.class: kong
+config:
+  deny:
+  - 54.13.21.1
+  - 143.1.0.0/24

@@ -1,0 +1,24 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: request-size-limit-ingress
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: request-size-limit-1m
+    konghq.com/methods: POST
+    konghq.com/preserve-host: 'true'
+    konghq.com/strip-path: 'true'
+spec:
+  ingressClassName: kong
+  rules:
+    - host: kong-domain.kong
+      http:
+        paths:
+          - pathType: Prefix
+            path: /echo/request-size-limit-1m-test
+            backend:
+              service:
+                name: kongetest
+                port:
+                  number: 8080

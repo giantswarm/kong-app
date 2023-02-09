@@ -1,0 +1,12 @@
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: standard-consumer
+  annotations:
+    kubernetes.io/ingress.class: kong
+    # konghq.com/plugins: rate-limiting-memory
+username: standard-consumer
+credentials:
+- standard-consumer-secret
+- standard-consumer-acl

@@ -1,0 +1,14 @@
+#---
+#apiVersion: configuration.konghq.com/v1
+#kind: KongPlugin
+#plugin: oidc
+#metadata:
+#  name: oidc-standard
+#  annotations:
+#    kubernetes.io/ingress.class: kong
+#config:
+#  bearer_only: "yes"
+#  client_id: xxx
+#  client_secret: xxx
+#  discovery: http://azure/.well-known/openid-configuration
+#  introspection_endpoint: http://azure/openid-connect/token/introspect
