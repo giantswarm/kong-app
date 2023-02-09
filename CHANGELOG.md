@@ -11,16 +11,27 @@ This release upgrades kong to release [3.1.1](https://github.com/Kong/kong/blob/
 
 ### Updates
 
-- Align with upstream chart version [2.15.3](https://github.com/Kong/charts/releases/tag/kong-2.15.3) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.13.0...2.15.3))
+- Align with upstream chart version [2.16.2](https://github.com/Kong/charts/releases/tag/kong-2.16.2) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.13.0...kong-2.16.2))
 - Update kong/kong to [3.1.1](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#311). Please read [Breaking changes](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#breaking-changes) notes
 - Execute enterprise tests with kong-gateway container image version 3.1.1.3-debian
 - Update kong ingress controller to [2.8.1](https://github.com/Kong/kong/blob/2.8.1/CHANGELOG.md#281)
+- Update custom resource definitions to those used by kong ingress controller [2.8.1]
 
 ### Changes
 
 - **Breaking** The `minReadySeconds` value previous found at `deployment.kong.minReadySeconds` is now configured at path `deployment.minReadySeconds`.
 - Increase default requests/limits to 1 cpu and 2G memory
 - Remove startupProbe from kong ingress controller. [More information](https://github.com/Kong/charts/pull/527#issuecomment-1014782921)
+
+## [2.14.0] - 2023-02-01
+
+### Changes
+
+- Add instance label to default topologySpreadConstraints label selector
+- Update kong/kubernetes-ingress-controller to [2.8.1](https://github.com/Kong/kubernetes-ingress-controller/releases/tag/v2.8.1).
+- Suggest using giantswarm/kong-gateway:2.8.2.3-debian as enterprise container image.
+- Use `/readyz` path for ingress controller readiness check.
+- Update kubernetes api token secret with projected volume. This should fix problems with empty or expired ServiceAccount tokens.
 
 ## [2.13.0] - 2022-10-25
 
@@ -524,8 +535,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.13.0...HEAD
-[2.13.0]: https://github.com/giantswarm/kong-app/compare/v2.12.0...v2.13.0
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.14.0...HEAD
+[2.14.0]: https://github.com/giantswarm/kong-app/compare/v2.13.0...v2.14.0
 [2.12.0]: https://github.com/giantswarm/kong-app/compare/v2.11.0...v2.12.0
 [2.11.0]: https://github.com/giantswarm/kong-app/compare/v2.10.1...v2.11.0
 [2.10.1]: https://github.com/giantswarm/kong-app/compare/v2.10.0...v2.10.1
