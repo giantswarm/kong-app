@@ -603,12 +603,7 @@
                     "type": "boolean"
                 },
                 "env": {
-                    "type": "object",
-                    "properties": {
-                        "kong_admin_tls_skip_verify": {
-                            "type": "string"
-                        }
-                    }
+                    "type": "object"
                 },
                 "image": {
                     "type": "object",
