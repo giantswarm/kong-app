@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [3.0.0] - 2023-02-09
+
 This release upgrades kong to release [3.1.1](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#311) which contains breaking changes. Please consider reading the upstream [Breaking changes](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#breaking-changes) documentation before upgrading. Users of the kong enterprise should read the [Kong Gateway changelogs of releases 3.0.0.0 onwards](https://docs.konghq.com/gateway/changelog/#3000) up to 3.1.1.3.
 
 ### Updates
@@ -535,7 +537,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v2.14.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/giantswarm/kong-app/compare/v2.14.0...v3.0.0
 [2.14.0]: https://github.com/giantswarm/kong-app/compare/v2.13.0...v2.14.0
 [2.12.0]: https://github.com/giantswarm/kong-app/compare/v2.11.0...v2.12.0
 [2.11.0]: https://github.com/giantswarm/kong-app/compare/v2.10.1...v2.11.0
