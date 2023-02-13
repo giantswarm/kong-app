@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+If you are upgrading from chart version lower than 3.0.0, it is neccessary to perform an intermediate upgrade to chart version 3.0.0 as this version contains a required migration process for enabling the use of seccompProfiles.
+
 ### Changes
 
 - Align with upstream chart version [2.16.3](https://github.com/Kong/charts/releases/tag/kong-2.16.3) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.16.2...kong-2.16.3))
