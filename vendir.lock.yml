@@ -3,17 +3,13 @@ directories:
 - contents:
   - git:
       commitTitle: Merge branch 'upstream-main'
-      sha: 9c910f199fd80c37895109b8e4798b8fa9331d2e
+      sha: 25e6a1db482f1858ec1f0a533a0e0318c0be7b98
       tags:
-      - kong-2.16.2-46-g9c910f1
+      - kong-2.16.4-48-g25e6a1d
     path: kong
   path: vendor
 - contents:
   - directory: {}
     path: .
-  path: helm/kong-app/templates
-- contents:
-  - directory: {}
-    path: .
-  path: helm/kong-app/crds
+  path: helm/kong-app
 kind: LockConfig

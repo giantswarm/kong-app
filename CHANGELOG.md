@@ -7,6 +7,17 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+If you are upgrading from chart version lower than 3.0.0, it is neccessary to perform an intermediate upgrade to chart version 3.0.0 as this version contains a required migration process for enabling the use of seccompProfiles.
+
+### Changes
+
+- Align with upstream chart version [2.16.4](https://github.com/Kong/charts/releases/tag/kong-2.16.4) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.16.2...kong-2.16.4))
+  - Fix template issue preventing custom dblessconfig volume from being mounted.
+    [#741](https://github.com/Kong/charts/pull/741)
+  - HorizontalPodAutoscaler's API version is detected properly.
+    [#744](https://github.com/Kong/charts/pull/744)
+- Change default `PodDisruptionBudget` to move from `maxUnavailable: 1` to `maxUnavailable: 25%` for better scaling
+
 ## [3.0.0] - 2023-02-09
 
 This release upgrades kong to release [3.1.1](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#311) which contains breaking changes. Please consider reading the upstream [Breaking changes](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#breaking-changes) documentation before upgrading. Users of the kong enterprise should read the [Kong Gateway changelogs of releases 3.0.0.0 onwards](https://docs.konghq.com/gateway/changelog/#3000) up to 3.1.1.3.

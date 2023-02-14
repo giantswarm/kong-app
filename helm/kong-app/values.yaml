@@ -851,7 +851,7 @@ autoscaling:
 podDisruptionBudget:
   enabled: true
   # Uncomment only one of the following when enabled is set to true
-  maxUnavailable: "1"
+  maxUnavailable: "25%"
   # minAvailable: "50%"
 
 podSecurityPolicy:

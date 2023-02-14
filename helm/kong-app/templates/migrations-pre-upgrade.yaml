@@ -62,7 +62,7 @@ spec:
         image: {{ include "kong.getRepoTag" .Values.image }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         securityContext:
-        {{- include "kong.preUpgradeMigrationsContainerSecurityContext" . | nindent 10 }}
+        {{ toYaml .Values.containerSecurityContext | nindent 10 }}
         env:
         {{- include "kong.no_daemon_env" . | nindent 8 }}
         args: [ "kong", "migrations", "up" ]
@@ -72,7 +72,7 @@ spec:
         resources:
         {{- toYaml .Values.migrations.resources| nindent 10 }}
       securityContext:
-      {{- include "kong.preUpgradeMigrationsSecurityContext" . | nindent 8 }}
+      {{- include "kong.podsecuritycontext" . | nindent 8 }}
       {{- if .Values.nodeSelector }}
       nodeSelector:
       {{- toYaml .Values.nodeSelector | nindent 8 }}
