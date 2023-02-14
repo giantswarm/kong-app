@@ -11,9 +11,11 @@ If you are upgrading from chart version lower than 3.0.0, it is neccessary to pe
 
 ### Changes
 
-- Align with upstream chart version [2.16.3](https://github.com/Kong/charts/releases/tag/kong-2.16.3) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.16.2...kong-2.16.3))
+- Align with upstream chart version [2.16.4](https://github.com/Kong/charts/releases/tag/kong-2.16.4) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.16.2...kong-2.16.4))
   - Fix template issue preventing custom dblessconfig volume from being mounted.
     [#741](https://github.com/Kong/charts/pull/741)
+  - HorizontalPodAutoscaler's API version is detected properly.
+    [#744](https://github.com/Kong/charts/pull/744)
 
 ## [3.0.0] - 2023-02-09
 
