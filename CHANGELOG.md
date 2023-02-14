@@ -16,6 +16,7 @@ If you are upgrading from chart version lower than 3.0.0, it is neccessary to pe
     [#741](https://github.com/Kong/charts/pull/741)
   - HorizontalPodAutoscaler's API version is detected properly.
     [#744](https://github.com/Kong/charts/pull/744)
+- Change default `PodDisruptionBudget` to move from `maxUnavailable: 1` to `maxUnavailable: 25%` for better scaling
 
 ## [3.0.0] - 2023-02-09
 
