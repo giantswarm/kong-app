@@ -11,9 +11,5 @@ directories:
 - contents:
   - directory: {}
     path: .
-  path: helm/kong-app/templates
-- contents:
-  - directory: {}
-    path: .
-  path: helm/kong-app/crds
+  path: helm/kong-app
 kind: LockConfig

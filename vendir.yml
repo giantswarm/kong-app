@@ -9,13 +9,21 @@ directories:
       ref: main
     includePaths:
     - charts/kong/**/*
-- path: helm/kong-app/templates
+- path: helm/kong-app
   contents:
   - path: .
     directory:
-      path: vendor/kong/charts/kong/templates
-- path: helm/kong-app/crds
-  contents:
-  - path: .
-    directory:
-      path: vendor/kong/charts/kong/crds
+      path: vendor/kong/charts/kong
+    includePaths:
+    - templates/**/*
+    - crds/**/*
+    - ci/**/*
+    - example-values/**/*
+    - "*.md"
+    ignorePaths:
+    - values.schema.json
+    - values.yaml
+    - .helmignore
+    - .kube-linter.yaml
+    - Chart.lock
+    - Chart.yaml
