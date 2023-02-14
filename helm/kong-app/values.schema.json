@@ -1202,7 +1202,7 @@
                             "type": "object",
                             "properties": {
                                 "postgresql": {
-                                    "type": "string"
+                                    "type": ["string", "integer"]
                                 }
                             }
                         }
