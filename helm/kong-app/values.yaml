@@ -809,6 +809,8 @@ topologySpreadConstraints: |-
 
 # Tolerations for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+# dong ding
+# ring ring
 tolerations: []
 
 # Node labels for pod assignment
