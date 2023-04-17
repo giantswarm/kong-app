@@ -7,6 +7,15 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+If you are upgrading from chart version lower than 3.0.0, it is neccessary to perform an intermediate upgrade to chart version 3.0.0 as this version contains a required migration process for enabling the use of seccompProfiles.
+
+### Changes
+
+- Align with upstream chart version [2.19.0](https://github.com/Kong/charts/releases/tag/kong-2.16.4) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.16.4...kong-2.19.0))
+- Update kong to [3.2.2](https://github.com/Kong/kong/blob/3.2.2/CHANGELOG.md#322)
+- Update kong ingress controller to [2.9.2](https://github.com/Kong/kubernetes-ingress-controller/blob/v2.9.2/CHANGELOG.md#292)
+- Execute enterprise tests with kong-gateway container image version [3.2.2.1-debian](https://docs.konghq.com/gateway/changelog/#3221)
+
 ## [3.0.1] - 2023-02-14
 
 If you are upgrading from chart version lower than 3.0.0, it is neccessary to perform an intermediate upgrade to chart version 3.0.0 as this version contains a required migration process for enabling the use of seccompProfiles.

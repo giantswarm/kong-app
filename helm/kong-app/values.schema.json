@@ -54,9 +54,23 @@
                 "labels": {
                     "type": "object"
                 },
+                "loadBalancerClass": {
+                    "type": ["null", "string"]
+                },
                 "tls": {
                     "type": "object",
                     "properties": {
+                        "client": {
+                            "type": "object",
+                            "properties": {
+                                "caBundle": {
+                                    "type": "string"
+                                },
+                                "secretName": {
+                                    "type": "string"
+                                }
+                            }
+                        },
                         "containerPort": {
                             "type": "integer"
                         },
@@ -255,6 +269,9 @@
                 "labels": {
                     "type": "object"
                 },
+                "loadBalancerClass": {
+                    "type": ["null", "string"]
+                },
                 "tls": {
                     "type": "object",
                     "properties": {
@@ -315,6 +332,9 @@
                 "labels": {
                     "type": "object"
                 },
+                "loadBalancerClass": {
+                    "type": ["null", "string"]
+                },
                 "tls": {
                     "type": "object",
                     "properties": {
@@ -338,7 +358,29 @@
             }
         },
         "containerSecurityContext": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "readOnlyRootFilesystem": {
+                    "type": "boolean"
+                },
+                "runAsGroup": {
+                    "type": "integer"
+                },
+                "runAsNonRoot": {
+                    "type": "boolean"
+                },
+                "runAsUser": {
+                    "type": "integer"
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         },
         "dblessConfig": {
             "type": "object",
@@ -574,6 +616,33 @@
         "ingressController": {
             "type": "object",
             "properties": {
+                "adminApi": {
+                    "type": "object",
+                    "properties": {
+                        "tls": {
+                            "type": "object",
+                            "properties": {
+                                "client": {
+                                    "type": "object",
+                                    "properties": {
+                                        "caSecretName": {
+                                            "type": "string"
+                                        },
+                                        "certProvided": {
+                                            "type": "boolean"
+                                        },
+                                        "enabled": {
+                                            "type": "boolean"
+                                        },
+                                        "secretName": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "admissionWebhook": {
                     "type": "object",
                     "properties": {
@@ -593,6 +662,14 @@
                         },
                         "port": {
                             "type": "integer"
+                        },
+                        "service": {
+                            "type": "object",
+                            "properties": {
+                                "labels": {
+                                    "type": "object"
+                                }
+                            }
                         }
                     }
                 },
@@ -603,7 +680,31 @@
                     "type": "boolean"
                 },
                 "env": {
-                    "type": "object"
+                    "type": "object",
+                    "properties": {
+                        "kong_admin_tls_skip_verify": {
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "gatewayDiscovery": {
+                    "type": "object",
+                    "properties": {
+                        "adminApiService": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "namespace": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        }
+                    }
                 },
                 "image": {
                     "type": "object",
@@ -627,6 +728,23 @@
                 },
                 "ingressClassAnnotations": {
                     "type": "object"
+                },
+                "konnect": {
+                    "type": "object",
+                    "properties": {
+                        "apiHostname": {
+                            "type": "string"
+                        },
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "runtimeGroupID": {
+                            "type": "string"
+                        },
+                        "tlsClientCertSecretName": {
+                            "type": "string"
+                        }
+                    }
                 },
                 "livenessProbe": {
                     "type": "object",
@@ -744,6 +862,27 @@
                     "items": {
                         "type": "string"
                     }
+                },
+                "podSecurityPolicy": {
+                    "type": "object",
+                    "properties": {
+                        "annotations": {
+                            "type": "object",
+                            "properties": {
+                                "seccomp.security.alpha.kubernetes.io/allowedProfileNames": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "securityContext": {
+                    "type": "object",
+                    "properties": {
+                        "seccompProfileType": {
+                            "type": "string"
+                        }
+                    }
                 }
             }
         },
@@ -854,6 +993,9 @@
                 "labels": {
                     "type": "object"
                 },
+                "loadBalancerClass": {
+                    "type": ["null", "string"]
+                },
                 "tls": {
                     "type": "object",
                     "properties": {
@@ -936,8 +1078,19 @@
         "podSecurityPolicy": {
             "type": "object",
             "properties": {
+                "annotations": {
+                    "type": "object",
+                    "properties": {
+                        "seccomp.security.alpha.kubernetes.io/allowedProfileNames": {
+                            "type": "string"
+                        }
+                    }
+                },
                 "enabled": {
                     "type": "boolean"
+                },
+                "labels": {
+                    "type": "object"
                 },
                 "spec": {
                     "type": "object",
@@ -948,6 +1101,20 @@
                         "fsGroup": {
                             "type": "object",
                             "properties": {
+                                "ranges": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "max": {
+                                                "type": "integer"
+                                            },
+                                            "min": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                },
                                 "rule": {
                                     "type": "string"
                                 }
@@ -971,6 +1138,20 @@
                         "runAsGroup": {
                             "type": "object",
                             "properties": {
+                                "ranges": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "max": {
+                                                "type": "integer"
+                                            },
+                                            "min": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                },
                                 "rule": {
                                     "type": "string"
                                 }
@@ -995,6 +1176,20 @@
                         "supplementalGroups": {
                             "type": "object",
                             "properties": {
+                                "ranges": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "max": {
+                                                "type": "integer"
+                                            },
+                                            "min": {
+                                                "type": "integer"
+                                            }
+                                        }
+                                    }
+                                },
                                 "rule": {
                                     "type": "string"
                                 }
@@ -1061,6 +1256,9 @@
                 },
                 "labels": {
                     "type": "object"
+                },
+                "loadBalancerClass": {
+                    "type": ["null", "string"]
                 },
                 "tls": {
                     "type": "object",
@@ -1139,6 +1337,9 @@
                 "labels": {
                     "type": "object"
                 },
+                "loadBalancerClass": {
+                    "type": ["null", "string"]
+                },
                 "tls": {
                     "type": "object",
                     "properties": {
@@ -1192,6 +1393,35 @@
                         },
                         "tag": {
                             "type": "string"
+                        }
+                    }
+                },
+                "primary": {
+                    "type": "object",
+                    "properties": {
+                        "annotations": {
+                            "type": "object",
+                            "properties": {
+                                "ignore-check.kube-linter.io/no-read-only-root-fs": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "psp": {
+                    "type": "object",
+                    "properties": {
+                        "create": {
+                            "type": "boolean"
+                        }
+                    }
+                },
+                "rbac": {
+                    "type": "object",
+                    "properties": {
+                        "create": {
+                            "type": "boolean"
                         }
                     }
                 },
@@ -1269,6 +1499,12 @@
                             "type": "string"
                         }
                     }
+                },
+                "loadBalancerClass": {
+                    "type": ["null", "string"]
+                },
+                "nameOverride": {
+                    "type": "string"
                 },
                 "stream": {
                     "type": "array"
@@ -1366,7 +1602,26 @@
             "type": "array"
         },
         "securityContext": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "runAsGroup": {
+                    "type": "integer"
+                },
+                "runAsNonRoot": {
+                    "type": "boolean"
+                },
+                "runAsUser": {
+                    "type": "integer"
+                },
+                "seccompProfile": {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
         },
         "serviceMonitor": {
             "type": "object",
@@ -1432,6 +1687,9 @@
                 },
                 "labels": {
                     "type": "object"
+                },
+                "loadBalancerClass": {
+                    "type": ["null", "string"]
                 },
                 "stream": {
                     "type": "array"

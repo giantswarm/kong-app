@@ -12,7 +12,7 @@ Giant Swarm offers a Kong Managed App which can be installed in workload cluster
 
 | Giant Swarm Chart Release | Upstream Chart Release | Kong Version | Kong IC Version | Kong-Gateway Enterprise container tag |
 | --- | --- | --- | --- | --- |
-| Unreleased | [2.16.4](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#2164) | [3.1.1](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#311) | [2.8.1](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#281) | 3.1.1.3-debian |
+| Unreleased | [2.19.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#2190) | [3.2.2](https://github.com/Kong/kong/blob/3.2.2/CHANGELOG.md#322) | [2.9.2](https://github.com/Kong/kubernetes-ingress-controller/blob/v2.9.2/CHANGELOG.md#292) | 3.2.2.1-debian |
 | [v3.0.1](https://github.com/giantswarm/kong-app/blob/main/CHANGELOG.md#301---2023-02-14) | [2.16.4](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#2164) | [3.1.1](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#311) | [2.8.1](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#281) | 3.1.1.3-debian |
 | [v3.0.0](https://github.com/giantswarm/kong-app/blob/main/CHANGELOG.md#300---2023-02-09) | [2.16.2](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#2162) | [3.1.1](https://github.com/Kong/kong/blob/3.1.1/CHANGELOG.md#311) | [2.8.1](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#281) | 3.1.1.3-debian |
 | [v2.14.0](https://github.com/giantswarm/kong-app/blob/main/CHANGELOG.md#2140---2023-02-01) | [2.13.0](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#2130) | [2.8.1](https://github.com/Kong/kong/blob/2.8.1/CHANGELOG.md#281) | [2.8.1](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#270) | 2.8.2.3-debian |
@@ -89,7 +89,7 @@ Install the app with at least the following custom configuration:
 ```
 image:
   repository: giantswarm/kong-gateway
-  tag: "3.1.1.2-debian" # use the tag from the release matrix on from the README.md file
+  tag: "3.2.2.1-debian" # use the tag from the release matrix on from the README.md file
 
 enterprise:
   enabled: true
