@@ -3,7 +3,7 @@ dependencies:
   repository: https://charts.bitnami.com/bitnami
   version: 11.9.13
 - name: kubectl-apply-job
-  repository: https://giantswarm.github.io/giantswarm-playground-catalog
-  version: 0.2.2
-digest: sha256:b177f22beb949a567f3b1ea515e842626ae9aa5b87f4fa688436620c5488f179
-generated: "2023-02-03T12:33:40.546532527+01:00"
+  repository: https://giantswarm.github.io/giantswarm-playground-test-catalog
+  version: 0.2.2-6528fb016e4414b5d9147b8ec9954300793ce12f
+digest: sha256:bec8f24a1155b8bed0e94a3d2387ba29268c48f82eebb4ae13b92bf21d98894c
+generated: "2023-04-19T13:07:55.762489117+02:00"
