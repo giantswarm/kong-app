@@ -15,6 +15,7 @@ If you are upgrading from chart version lower than 3.0.0, it is neccessary to pe
 - Update kong to [3.2.2](https://github.com/Kong/kong/blob/3.2.2/CHANGELOG.md#322)
 - Update kong ingress controller to [2.9.3](https://github.com/Kong/kubernetes-ingress-controller/blob/v2.9.3/CHANGELOG.md#293)
 - Execute enterprise tests with kong-gateway container image version [3.2.2.1-debian](https://docs.konghq.com/gateway/changelog/#3221)
+- Update kubectl-apply-job to 0.3.1 for compatibility with Giant Swarm release v19
 
 ## [3.0.1] - 2023-02-14
 
