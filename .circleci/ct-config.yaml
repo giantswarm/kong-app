@@ -2,3 +2,4 @@
 chart-repos:
   - bitnami=https://charts.bitnami.com/bitnami
   - giantswarm-playground-catalog=https://giantswarm.github.io/giantswarm-playground-catalog
+  - giantswarm-playground-test-catalog=https://giantswarm.github.io/giantswarm-playground-test-catalog
