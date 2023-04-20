@@ -1,0 +1,23 @@
+namespace:
+- kind: App
+  version: v1alpha1
+  path: spec/userConfig/configMap/namespace
+  create: false
+- kind: App
+  version: v1alpha1
+  path: spec/extraConfigs/namespace
+  create: false
+
+nameReference:
+- kind: ConfigMap
+  version: v1
+  fieldSpecs:
+  - kind: App
+    version: v1alpha1
+    path: spec/userConfig/configMap/name
+- kind: ConfigMap
+  version: v1
+  fieldSpecs:
+  - kind: App
+    version: v1alpha1
+    path: spec/extraConfigs/name

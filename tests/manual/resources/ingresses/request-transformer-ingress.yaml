@@ -4,7 +4,7 @@ kind: Ingress
 metadata:
   name: request-transformer-ingress
   annotations:
-    kubernetes.io/ingress.class: kong
+
     konghq.com/plugins: request-transformer-standard
     konghq.com/methods: GET
     konghq.com/preserve-host: 'true'

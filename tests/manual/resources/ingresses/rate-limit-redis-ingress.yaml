@@ -4,7 +4,7 @@ kind: Ingress
 metadata:
   name: ratelimit-redis-ingress
   annotations:
-    kubernetes.io/ingress.class: kong
+
     konghq.com/plugins: rate-limiting-redis
     konghq.com/methods: GET
     konghq.com/preserve-host: 'true'

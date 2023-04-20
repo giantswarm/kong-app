@@ -46,7 +46,7 @@ podDisruptionBudget:
 
 image:
   repository: giantswarm/kong-gateway
-  tag: '2.8.1.0-alpine'
+  tag: '2.8.2.3-debian'
 
 enterprise:
   enabled: true
