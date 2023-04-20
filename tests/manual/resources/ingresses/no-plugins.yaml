@@ -4,7 +4,7 @@ kind: Ingress
 metadata:
   name: noplugins-ingress
   annotations:
-    kubernetes.io/ingress.class: kong
+
     konghq.com/methods: GET
     konghq.com/preserve-host: 'true'
     konghq.com/strip-path: 'true'

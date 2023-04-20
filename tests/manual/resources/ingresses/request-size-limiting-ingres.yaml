@@ -4,7 +4,7 @@ kind: Ingress
 metadata:
   name: request-size-limit-ingress
   annotations:
-    kubernetes.io/ingress.class: kong
+
     konghq.com/plugins: request-size-limit-1m
     konghq.com/methods: POST
     konghq.com/preserve-host: 'true'

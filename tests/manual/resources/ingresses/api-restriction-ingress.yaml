@@ -4,7 +4,7 @@
 #metadata:
 #  name: api-restriction-ingress
 #  annotations:
-#    kubernetes.io/ingress.class: kong
+#
 #    konghq.com/plugins: api-restriction-standard
 #    konghq.com/methods: GET
 #    konghq.com/preserve-host: 'true'

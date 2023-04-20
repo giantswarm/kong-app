@@ -4,7 +4,6 @@ metadata:
   labels:
     app.kubernetes.io/name: kong-app
   name: kong-app
-  namespace: d9gr8
 spec:
   catalog: giantswarm
   kubeConfig:
@@ -14,5 +13,5 @@ spec:
   userConfig:
     configMap:
       name: kong-app-userconfig
-      namespace: d9gr8
-  version: 2.12.0
+      namespace: dummy
+  version: 3.0.1
