@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [3.1.0] - 2023-04-20
+
 If you are upgrading from chart version lower than 3.0.0, it is neccessary to perform an intermediate upgrade to chart version 3.0.0 as this version contains a required migration process for enabling the use of seccompProfiles.
 
 ### Changes
@@ -560,7 +562,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v3.0.1...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v3.1.0...HEAD
+[3.1.0]: https://github.com/giantswarm/kong-app/compare/v3.0.1...v3.1.0
 [3.0.1]: https://github.com/giantswarm/kong-app/compare/v3.0.0...v3.0.1
 [3.0.0]: https://github.com/giantswarm/kong-app/compare/v2.14.0...v3.0.0
 [2.14.0]: https://github.com/giantswarm/kong-app/compare/v2.13.0...v2.14.0
