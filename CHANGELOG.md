@@ -7,6 +7,11 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changes
+
+- Align with upstream chart version [2.20.1](https://github.com/Kong/charts/releases/tag/kong-2.20.1) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.19.1...kong-2.20.1))
+- Update kubectl-apply-job to 0.4.0
+
 ## [3.1.1] - 2023-04-24
 
 ### Changes
