@@ -23,5 +23,5 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.enabled
   - name: kubectl-apply-job
-    version: "0.3.1"
+    version: "0.4.0"
     repository: https://giantswarm.github.io/giantswarm-playground-catalog
