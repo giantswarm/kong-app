@@ -4,7 +4,6 @@ featureGates:
   SeccompDefault: true
 nodes:
 - role: control-plane
-  image: quay.io/giantswarm/kind-node-image:v1.23.4-atsv0.2.4
   kubeadmConfigPatches:
   - |
     kind: JoinConfiguration
@@ -12,7 +11,6 @@ nodes:
       kubeletExtraArgs:
         seccomp-default: "true"
 - role: worker
-  image: quay.io/giantswarm/kind-node-image:v1.23.4-atsv0.2.4
   kubeadmConfigPatches:
   - |
     kind: InitConfiguration
@@ -21,7 +19,6 @@ nodes:
         node-labels: "ingress-ready=true"
         seccomp-default: "true"
 - role: worker
-  image: quay.io/giantswarm/kind-node-image:v1.23.4-atsv0.2.4
   kubeadmConfigPatches:
   - |
     kind: InitConfiguration
