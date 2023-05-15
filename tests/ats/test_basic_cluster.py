@@ -33,23 +33,6 @@ def test_api_working(kube_cluster: Cluster) -> None:
     assert len(pykube.Node.objects(kube_cluster.kube_client)) >= 1
 
 
-@pytest.mark.smoke
-def test_cluster_info(
-    kube_cluster: Cluster,
-    cluster_type: str,
-    chart_extra_info: Dict[str, str],
-    chart_version: str,
-) -> None:
-    """Example shows how you can access additional information about the cluster the tests are running on"""
-    logger.info(f"Running on cluster type {cluster_type}")
-    for key, value in chart_extra_info.items():
-        logger.info(f"chart_extra_info '{key}': '{value}'")
-
-    logger.info(f"chart_version '{chart_version}'")
-    assert kube_cluster.kube_client is not None
-    assert cluster_type != ""
-
-
 # scope "module" means this is run only once, for the first test case requesting! It might be tricky
 # if you want to assert this multiple times
 @pytest.fixture(scope="module")

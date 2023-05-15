@@ -665,6 +665,18 @@ postgresql:
   primary:
     annotations:
       "ignore-check.kube-linter.io/no-read-only-root-fs": "writable fs is required"
+    podSecurityContext:
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+    containerSecurityContext:
+      runAsNonRoot: true
+      seccompProfile:
+        type: RuntimeDefault
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
   rbac:
     create: true
   psp:
@@ -971,6 +983,10 @@ containerSecurityContext:
   runAsGroup: 65534  # nobody
   seccompProfile:
     type: RuntimeDefault
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
 
 ## Optional DNS configuration for Kong pods
 # dnsPolicy: ClusterFirst

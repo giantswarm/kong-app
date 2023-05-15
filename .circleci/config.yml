@@ -22,11 +22,13 @@ workflows:
       - architect/run-tests-with-ats:
           name: execute chart tests
           resource_class: large
+          app-test-suite_version: "v0.3.0"
+          app-test-suite_container_tag: "0.3.0"
           filters:
             # Do not trigger the job on merge to master.
             branches:
               ignore:
-                - master
+                - main
           requires:
             - push-to-giantswarm-app-catalog
 
@@ -38,13 +40,15 @@ workflows:
             # Do not trigger the job on master branch or release tags.
             branches:
               ignore:
-                - master
+                - main
             tags:
               ignore: /^v.*/
 
       - architect/run-tests-with-ats:
           name: execute enterprise tests
           resource_class: large
+          app-test-suite_version: "v0.3.0"
+          app-test-suite_container_tag: "0.3.0"
           additional_app-test-suite_flags: "--app-tests-app-config-file=tests/test-values-enterprise.yaml"
           filters:
             # Do not trigger the job on merge to master.
