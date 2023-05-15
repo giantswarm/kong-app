@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changes
+
+- Do not enable custom Giant Swarm monitoring Service if ServiceMonitor is enabled.
+
 ## [3.2.0] - 2023-05-04
 
 ### Changes
