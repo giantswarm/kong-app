@@ -24,6 +24,7 @@ workflows:
           resource_class: large
           app-test-suite_version: "195ac3a45f78f42308ac9424fc7a5bf6696d916c"
           app-test-suite_container_tag: "0.2.9-195ac3a45f78f42308ac9424fc7a5bf6696d916c"
+          additional_app-test-suite_flags: "--kind-cluster-image=kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1"
           filters:
             # Do not trigger the job on merge to master.
             branches:
