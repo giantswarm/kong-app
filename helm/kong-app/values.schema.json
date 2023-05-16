@@ -657,6 +657,9 @@
                         "enabled": {
                             "type": "boolean"
                         },
+                        "namespaceSelector": {
+                            "type": "object"
+                        },
                         "failurePolicy": {
                             "type": "string"
                         },
