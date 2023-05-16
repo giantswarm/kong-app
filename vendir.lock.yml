@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Do not create metrics services if ServiceMonitor is enabled (#13)
-      sha: ee282af2c229ecee593bbe9aee7658a5991eeb29
+      commitTitle: Merge branch 'upstream-main'
+      sha: d2b902e8df0803127e3a2981d3c9c59ade4deb5a
       tags:
-      - kong-2.20.1-54-gee282af
+      - kong-2.20.1-59-gd2b902e
     path: kong
   path: vendor
 - contents:
