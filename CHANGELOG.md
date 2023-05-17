@@ -11,6 +11,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Do not enable custom Giant Swarm monitoring Service if ServiceMonitor is enabled.
 - Align with upstream chart version [2.21.0](https://github.com/Kong/charts/releases/tag/kong-2.21.0) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.20.1...kong-2.21.0))
+- Ignore linkerd namespace in ValidatingWebhookConfiguration.
 
 ## [3.2.0] - 2023-05-04
 

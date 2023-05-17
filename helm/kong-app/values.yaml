@@ -535,6 +535,12 @@ ingressController:
     port: 8080
     certificate:
       provided: false
+    namespaceSelector:
+      matchExpressions:
+      - key: kubernetes.io/metadata.name
+        operator: NotIn
+        values:
+        - linkerd
     # Specifiy the secretName when the certificate is provided via a TLS secret
     # secretName: ""
     # Specifiy the CA bundle of the provided certificate.
