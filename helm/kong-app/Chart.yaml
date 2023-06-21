@@ -13,7 +13,7 @@ sources:
   - https://konghq.com/
   - https://github.com/Kong/charts/tree/main/charts/kong
 version: 3.3.0
-appVersion: "3.2.2"
+appVersion: "3.3.0"
 annotations:
   application.giantswarm.io/team: team-cabbage
 kubeVersion: ">=1.22.0-0"
