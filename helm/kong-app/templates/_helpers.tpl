@@ -32,7 +32,7 @@ app.kubernetes.io/instance: "{{ .Release.Name }}"
 app.kubernetes.io/managed-by: "{{ .Release.Service }}"
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- range $key, $value := .Values.extraLabels }}
-{{ $key }}: {{ $value | quote }}
+{{ $key }}: {{ include "kong.renderTpl" (dict "value" $value "context" $) | quote }}
 {{- end }}
 {{- end -}}
 
@@ -78,13 +78,16 @@ Create Ingress resource for a Kong service
 {{- $path := .ingress.path -}}
 {{- $hostname := .ingress.hostname -}}
 {{- $pathType := .ingress.pathType -}}
-apiVersion: {{ .ingressVersion }}
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ .fullName }}-{{ .serviceName }}
   namespace: {{ .namespace }}
   labels:
   {{- .metaLabels | nindent 4 }}
+  {{- range $key, $value := .ingress.labels }}
+    {{- $key | nindent 4 }}: {{ $value | quote }}
+  {{- end }}
   {{- if .ingress.annotations }}
   annotations:
     {{- range $key, $value := .ingress.annotations }}
@@ -92,33 +95,74 @@ metadata:
     {{- end }}
   {{- end }}
 spec:
-{{- if (and (not (eq .ingressVersion "extensions/v1beta1")) .ingress.ingressClassName) }}
+{{- if .ingress.ingressClassName }}
   ingressClassName: {{ .ingress.ingressClassName }}
 {{- end }}
   rules:
-  - host: {{ $hostname | quote }}
-    http:
+  {{- if ( not (or $hostname .ingress.hosts)) }}
+  - http:
       paths:
         - backend:
-          {{- if (not (eq .ingressVersion "networking.k8s.io/v1")) }}
-            serviceName: {{ .fullName }}-{{ .serviceName }}
-            servicePort: {{ $servicePort }}
-          {{- else }}
             service:
               name: {{ .fullName }}-{{ .serviceName }}
               port:
                 number: {{ $servicePort }}
-            {{- end }}
           path: {{ $path }}
-          {{- if (not (eq .ingressVersion "extensions/v1beta1")) }}
           pathType: {{ $pathType }}
+  {{- else if $hostname }}
+  - host: {{ $hostname | quote }}
+    http:
+      paths:
+        - backend:
+            service:
+              name: {{ .fullName }}-{{ .serviceName }}
+              port:
+                number: {{ $servicePort }}
+          path: {{ $path }}
+          pathType: {{ $pathType }}
+  {{- end }}
+  {{- range .ingress.hosts }}
+  - host: {{ .host | quote }}
+    http:
+      paths:
+        {{- range .paths }}
+        - backend:
+          {{- if .backend -}}
+            {{ .backend | toYaml | nindent 12 }}
+          {{- else }}
+            service:
+              name: {{ $.fullName }}-{{ $.serviceName }}
+              port:
+                number: {{ $servicePort }}
           {{- end }}
+          {{- if (and $hostname (and (eq $path .path))) }}
+          {{- fail "duplication of specified ingress path" }}
+          {{- end }}
+          path: {{ .path }}
+          pathType: {{ .pathType }}
+        {{- end }}
+  {{- end }}
   {{- if (hasKey .ingress "tls") }}
   tls:
-  - hosts:
-    - {{ $hostname | quote }}
-    secretName: {{ .ingress.tls }}
-  {{- end -}}
+  {{- if (kindIs "string" .ingress.tls) }}
+    - hosts:
+      {{- range .ingress.hosts }}
+        - {{ .host | quote }}
+      {{- end }}
+      {{- if $hostname }}
+        - {{ $hostname | quote }}
+      {{- end }}
+      secretName: {{ .ingress.tls }}
+  {{- else if (kindIs "slice" .ingress.tls) }}
+    {{- range .ingress.tls }}
+    - hosts:
+        {{- range .hosts }}
+        - {{ . | quote }}
+        {{- end }}
+      secretName: {{ .secretName }}
+    {{- end }}
+  {{- end }}
+  {{- end }}
 {{- end -}}
 
 {{/*
@@ -326,7 +370,18 @@ Return the admin API service name for service discovery
 {{- $gatewayDiscovery := .Values.ingressController.gatewayDiscovery -}}
 {{- if $gatewayDiscovery.enabled -}}
   {{- $adminApiService := $gatewayDiscovery.adminApiService -}}
-  {{- $_ := required ".ingressController.gatewayDiscovery.adminApiService has to be provided when .Values.ingressController.gatewayDiscovery.enabled is set to true"  $adminApiService -}}
+  {{- $adminApiServiceName := $gatewayDiscovery.adminApiService.name -}}
+  {{- $generateAdminApiService := $gatewayDiscovery.generateAdminApiService -}}
+
+  {{- if and $generateAdminApiService $adminApiService.name -}}
+    {{- fail (printf ".Values.ingressController.gatewayDiscovery.adminApiService and .Values.ingressController.gatewayDiscovery.generateAdminApiService must not be provided at the same time")  -}}
+  {{- end -}}
+
+  {{- if $generateAdminApiService -}}
+    {{- $adminApiServiceName = (printf "%s-%s" .Release.Name "gateway-admin") -}}
+  {{- else }}
+    {{- $_ := required ".ingressController.gatewayDiscovery.adminApiService.name has to be provided when .Values.ingressController.gatewayDiscovery.enabled is set to true"  $adminApiServiceName -}}
+  {{- end }}
 
   {{- if (semverCompare "< 2.9.0" (include "kong.effectiveVersion" .Values.ingressController.image)) }}
   {{- fail (printf "Gateway discovery is available in controller versions 2.9 and up. Detected %s" (include "kong.effectiveVersion" .Values.ingressController.image)) }}
@@ -337,9 +392,7 @@ Return the admin API service name for service discovery
   {{- end }}
 
   {{- $namespace := $adminApiService.namespace | default ( include "kong.namespace" . ) -}}
-  {{- $name := $adminApiService.name -}}
-  {{- $_ := required ".ingressController.gatewayDiscovery.adminApiService.name has to be provided when .Values.ingressController.gatewayDiscovery.enabled is set to true"  $name -}}
-  {{- printf "%s/%s" $namespace $name -}}
+  {{- printf "%s/%s" $namespace $adminApiServiceName -}}
 {{- else -}}
   {{- fail "Can't use gateway discovery when .Values.ingressController.gatewayDiscovery.enabled is set to false." -}}
 {{- end -}}
@@ -494,10 +547,10 @@ The name of the service used for the ingress controller's validation webhook
 
 {{- define "kong.volumes" -}}
 - name: {{ template "kong.fullname" . }}-prefix-dir
-  emptyDir: 
+  emptyDir:
     sizeLimit: {{ .Values.deployment.prefixDir.sizeLimit }}
 - name: {{ template "kong.fullname" . }}-tmp
-  emptyDir: 
+  emptyDir:
     sizeLimit: {{ .Values.deployment.tmpDir.sizeLimit }}
 {{- if and ( .Capabilities.APIVersions.Has "cert-manager.io/v1" ) .Values.certificates.enabled -}}
 {{- if .Values.certificates.cluster.enabled }}
@@ -867,6 +920,8 @@ the template that it itself is using form the above sections.
 
 {{- if and ( .Capabilities.APIVersions.Has "cert-manager.io/v1" ) .Values.certificates.enabled -}}
   {{- if (and .Values.certificates.cluster.enabled .Values.cluster.enabled) -}}
+    {{- $_ := set $autoEnv "KONG_CLUSTER_MTLS" "pki" -}}
+    {{- $_ := set $autoEnv "KONG_CLUSTER_SERVER_NAME" .Values.certificates.cluster.commonName -}}
     {{- $_ := set $autoEnv "KONG_CLUSTER_CA_CERT" "/etc/cert-manager/cluster/ca.crt" -}}
     {{- $_ := set $autoEnv "KONG_CLUSTER_CERT" "/etc/cert-manager/cluster/tls.crt" -}}
     {{- $_ := set $autoEnv "KONG_CLUSTER_CERT_KEY" "/etc/cert-manager/cluster/tls.key" -}}
@@ -1142,6 +1197,7 @@ role sets used in the charts. Updating these requires separating out cluster
 resource roles into their separate templates.
 */}}
 {{- define "kong.kubernetesRBACRules" -}}
+{{- if (semverCompare "< 2.10.0" (include "kong.effectiveVersion" .Values.ingressController.image)) }}
 - apiGroups:
   - ""
   resources:
@@ -1149,14 +1205,7 @@ resource roles into their separate templates.
   verbs:
   - list
   - watch
-- apiGroups:
-  - ""
-  resources:
-  - endpoints/status
-  verbs:
-  - get
-  - patch
-  - update
+{{- end }}
 - apiGroups:
   - ""
   resources:
@@ -1186,14 +1235,6 @@ resource roles into their separate templates.
   verbs:
   - list
   - watch
-- apiGroups:
-  - ""
-  resources:
-  - secrets/status
-  verbs:
-  - get
-  - patch
-  - update
 - apiGroups:
   - ""
   resources:
@@ -1524,22 +1565,38 @@ Kubernetes Cluster-scoped resources it uses to build Kong configuration.
   - watch
 {{- end -}}
 
-{{- define "kong.ingressVersion" -}}
-{{- if (.Capabilities.APIVersions.Has "networking.k8s.io/v1/Ingress") -}}
-networking.k8s.io/v1
-{{- else if (.Capabilities.APIVersions.Has "networking.k8s.io/v1beta1/Ingress") -}}
-networking.k8s.io/v1beta1
-{{- else -}}
-extensions/v1beta1
-{{- end -}}
-{{- end -}}
-
 {{- define "kong.autoscalingVersion" -}}
-{{- if (.Capabilities.APIVersions.Has "autoscaling/v2/HorizontalPodAutoscaler") -}}
+{{- if (.Capabilities.APIVersions.Has "autoscaling/v2") -}}
 autoscaling/v2
-{{- else if (.Capabilities.APIVersions.Has "autoscaling/v2beta2/HorizontalPodAutoscaler") -}}
+{{- else if (.Capabilities.APIVersions.Has "autoscaling/v2beta2") -}}
 autoscaling/v2beta2
 {{- else -}}
 autoscaling/v1
+{{- end -}}
+{{- end -}}
+
+{{- define "kong.policyVersion" -}}
+{{- if (.Capabilities.APIVersions.Has "policy/v1beta1" ) -}}
+policy/v1beta1
+{{- else -}}
+{{- fail (printf "Cluster doesn't have policy/v1beta1 API." ) }}
+{{- end -}}
+{{- end -}}
+
+{{- define "kong.renderTpl" -}}
+    {{- if typeIs "string" .value }}
+{{- tpl .value .context }}
+    {{- else }}
+{{- tpl (.value | toYaml) .context }}
+    {{- end }}
+{{- end -}}
+
+{{- define "kong.ingressVersion" -}}
+{{- if (.Capabilities.APIVersions.Has "networking.k8s.io/v1") -}}
+networking.k8s.io/v1
+{{- else if (.Capabilities.APIVersions.Has "networking.k8s.io/v1beta1") -}}
+networking.k8s.io/v1beta1
+{{- else -}}
+extensions/v1beta1
 {{- end -}}
 {{- end -}}
