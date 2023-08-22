@@ -122,10 +122,10 @@ extraLabels: {}
 image:
   registry: &registry quay.io
   repository: giantswarm/kong
-  tag: "3.3.1"
+  tag: "3.4.0"
   # Kong Enterprise
   # repository: kong/kong-gateway
-  # tag: "3.3.1.0-debian"
+  # tag: "3.4.0.0-debian"
 
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
@@ -486,7 +486,7 @@ ingressController:
   image:
     registry: *registry
     repository: giantswarm/kong-ingress-controller
-    tag: "2.10.4"
+    tag: "2.11.0"
     # Optionally set a semantic version for version-gated features. This can normally
     # be left unset. You only need to set this if your tag is not a semver string,
     # such as when you are using a "next" tag. Set this to the effective semantic
