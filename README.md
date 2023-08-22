@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/giantswarm/kong-app.svg?style=shield)](https://circleci.com/gh/giantswarm/kong-app)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/giantswarm/kong-app/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/giantswarm/kong-app/tree/main)
 
 # kong-app chart
 
