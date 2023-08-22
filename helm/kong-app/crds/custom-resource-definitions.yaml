@@ -1,4 +1,4 @@
-# generated using: kubectl kustomize github.com/kong/kubernetes-ingress-controller/config/crd?ref=v2.10.0
+# generated using: kubectl kustomize github.com/kong/kubernetes-ingress-controller/config/crd?ref=v2.10.4
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
@@ -511,6 +511,12 @@ spec:
                       concurrency:
                         minimum: 1
                         type: integer
+                      headers:
+                        additionalProperties:
+                          items:
+                            type: string
+                          type: array
+                        type: object
                       healthy:
                         description: Healthy configures thresholds and HTTP status
                           codes to mark targets healthy for an upstream.
