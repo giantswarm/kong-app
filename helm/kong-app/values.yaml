@@ -86,7 +86,7 @@ env:
   database: "off"
   # the chart uses the traditional router (for Kong 3.x+) because the ingress
   # controller generates traditional routes. if you do not use the controller,
-  # you may set this to "traditional_compatible" or "expression" to use the new
+  # you may set this to "traditional_compatible" or "expressions" to use the new
   # DSL-based router
   router_flavor: "traditional"
   nginx_worker_processes: "2"
@@ -335,16 +335,46 @@ proxy:
     # Enable/disable exposure using ingress.
     enabled: false
     ingressClassName:
-    # Ingress hostname
-    # TLS secret name.
-    # tls: kong-proxy.example.com-tls
-    hostname:
-    # Map of ingress annotations.
+    # To specify annotations or labels for the ingress, add them to the respective
+    # "annotations" or "labels" dictionaries below.
     annotations: {}
-    # Ingress path.
+    labels: {}
+    # Ingress hostname
+    hostname:
+    # Ingress path (when used with hostname above).
     path: /
-    # Each path in an Ingress is required to have a corresponding path type. (ImplementationSpecific/Exact/Prefix)
+    # Each path in an Ingress is required to have a corresponding path type (when used with hostname above). (ImplementationSpecific/Exact/Prefix)
     pathType: ImplementationSpecific
+    # Ingress hosts. Use this instead of or in combination with hostname to specify multiple ingress host configurations
+    hosts: []
+    # - host: kong-proxy.example.com
+    #   paths:
+    #   # Ingress path.
+    #   - path: /*
+    #   # Each path in an Ingress is required to have a corresponding path type. (ImplementationSpecific/Exact/Prefix)
+    #     pathType: ImplementationSpecific
+    # - host: kong-proxy-other.example.com
+    #   paths:
+    #   # Ingress path.
+    #   - path: /other
+    #   # Each path in an Ingress is required to have a corresponding path type. (ImplementationSpecific/Exact/Prefix)
+    #     pathType: ImplementationSpecific
+    #     backend:
+    #       service:
+    #         name: kong-other-proxy
+    #         port:
+    #           number: 80
+    #
+    # TLS secret(s)
+    # tls: kong-proxy.example.com-tls
+    # Or if multiple hosts/secrets needs to be configured:
+    # tls:
+    # - secretName: kong-proxy.example.com-tls
+    #   hosts:
+    #   - kong-proxy.example.com
+    # - secretName: kong-proxy-other.example.com-tls
+    #   hosts:
+    #   - kong-proxy-other.example.com
 
   # Optionally specify a static load balancer IP.
   # loadBalancerIP:
@@ -497,6 +527,7 @@ ingressController:
 
   gatewayDiscovery:
     enabled: false
+    generateAdminApiService: false
     adminApiService:
       namespace: ""
       name: ""
@@ -608,6 +639,10 @@ ingressController:
     # Specifies a secret that contains a client TLS certificate that the controller
     # will use to authenticate against Konnect APIs.
     tlsClientCertSecretName: "konnect-client-tls"
+
+    license:
+      # Specifies whether the controller should fetch a license from Konnect and apply it to managed Gateways.
+      enabled: false
 
   adminApi:
     tls:
@@ -750,8 +785,8 @@ certificates:
     # Issuers used by the control and data plane releases must match for this certificate.
     issuer: ""
     clusterIssuer: ""
-    # commonName: "kong_cluster"
-    # dnsNames: []
+    commonName: "kong_clustering"
+    dnsNames: []
 
 # -----------------------------------------------------------------------------
 # Miscellaneous parameters
@@ -792,7 +827,7 @@ resources:
 # readinessProbe for Kong pods
 readinessProbe:
   httpGet:
-    path: "/status"
+    path: "/status/ready"
     port: status
     scheme: HTTP
   initialDelaySeconds: 5
@@ -812,6 +847,18 @@ livenessProbe:
   periodSeconds: 10
   successThreshold: 1
   failureThreshold: 3
+
+# startupProbe for Kong pods
+# startupProbe:
+#   httpGet:
+#     path: "/status"
+#     port: status
+#     scheme: HTTP
+#   initialDelaySeconds: 5
+#   timeoutSeconds: 5
+#   periodSeconds: 2
+#   successThreshold: 1
+#   failureThreshold: 40
 
 # Proxy container lifecycle hooks
 # Ref: https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/
