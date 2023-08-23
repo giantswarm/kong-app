@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Merge branch 'upstream-main'
-      sha: bde89bf8d3e1641d808c9652ac3c60e1782ae9f8
+      commitTitle: Restore old PSP capbability check behaviour
+      sha: 048a569abbca9650fe8393f7b66900a28eefa329
       tags:
-      - kong-2.26.4-58-gbde89bf
+      - kong-2.26.4-59-g048a569
     path: kong
   path: vendor
 - contents:
