@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Restore old PSP capbability check behaviour
-      sha: 048a569abbca9650fe8393f7b66900a28eefa329
+      commitTitle: Add global.podSecurityStandards.enforced PSS switch to PSP resources
+      sha: dc2584a213374c46910c4d9ee5f64b6baee16594
       tags:
-      - kong-2.26.4-59-g048a569
+      - kong-2.29.0-61-gdc2584a
     path: kong
   path: vendor
 - contents:
