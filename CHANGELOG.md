@@ -11,8 +11,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Align with upstream chart version [2.26.4](https://github.com/Kong/charts/releases/tag/kong-2.26.4) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.23.0...kong-2.26.4))
 - Update kong to [3.4.0](https://github.com/Kong/kong/blob/3.4.0/CHANGELOG.md#340)
-- Update kong ingress controller to [2.11.1](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#2111)
-- Execute enterprise tests with kong-gateway container image version [3.4.0.0-debian](https://docs.konghq.com/gateway/changelog/#3400)
+- Update kong ingress controller to [2.12.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#2120)
+- Execute enterprise tests with kong-gateway container image version [3.4.1.0-debian](https://docs.konghq.com/gateway/changelog/#3410)
 
 ## [3.4.0] - 2023-08-22
 
