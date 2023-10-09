@@ -122,7 +122,7 @@ extraLabels: {}
 image:
   registry: &registry quay.io
   repository: giantswarm/kong
-  tag: "3.4.0"
+  tag: "3.4.1"
   # Kong Enterprise
   # repository: kong/kong-gateway
   # tag: "3.4.1.0-debian"
