@@ -175,6 +175,12 @@
                         "clusterIssuer": {
                             "type": "string"
                         },
+                        "commonName": {
+                            "type": "string"
+                        },
+                        "dnsNames": {
+                            "type": "array"
+                        },
                         "enabled": {
                             "type": "boolean"
                         },
@@ -360,6 +366,20 @@
         "containerSecurityContext": {
             "type": "object",
             "properties": {
+                "allowPrivilegeEscalation": {
+                    "type": "boolean"
+                },
+                "capabilities": {
+                    "type": "object",
+                    "properties": {
+                        "drop": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
                 "readOnlyRootFilesystem": {
                     "type": "boolean"
                 },
@@ -596,9 +616,26 @@
         "extraSecrets": {
             "type": "array"
         },
+        "global": {
+            "type": "object",
+            "properties": {
+                "podSecurityStandards": {
+                    "type": "object",
+                    "properties": {
+                        "enforced": {
+                            "type": "boolean"
+                        }
+                    }
+                }
+            }
+        },
         "image": {
             "type": "object",
             "properties": {
+                "effectiveSemver": {
+                    "type": ["null", "string"]
+
+                },
                 "pullPolicy": {
                     "type": "string"
                 },
@@ -657,11 +694,33 @@
                         "enabled": {
                             "type": "boolean"
                         },
-                        "namespaceSelector": {
-                            "type": "object"
-                        },
                         "failurePolicy": {
                             "type": "string"
+                        },
+                        "namespaceSelector": {
+                            "type": "object",
+                            "properties": {
+                                "matchExpressions": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "key": {
+                                                "type": "string"
+                                            },
+                                            "operator": {
+                                                "type": "string"
+                                            },
+                                            "values": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         },
                         "port": {
                             "type": "integer"
@@ -706,6 +765,9 @@
                         },
                         "enabled": {
                             "type": "boolean"
+                        },
+                        "generateAdminApiService": {
+                            "type": "boolean"
                         }
                     }
                 },
@@ -740,6 +802,14 @@
                         },
                         "enabled": {
                             "type": "boolean"
+                        },
+                        "license": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                }
+                            }
                         },
                         "runtimeGroupID": {
                             "type": "string"
@@ -1409,6 +1479,12 @@
                                     "type": "string"
                                 }
                             }
+                        },
+                        "containerSecurityContext": {
+                            "type": "object"
+                        },
+                        "podSecurityContext": {
+                            "type": "object"
                         }
                     }
                 },
@@ -1484,8 +1560,14 @@
                         "hostname": {
                             "type": ["null", "string"]
                         },
+                        "hosts": {
+                            "type": "array"
+                        },
                         "ingressClassName": {
                             "type": ["null", "string"]
+                        },
+                        "labels": {
+                            "type": "object"
                         },
                         "path": {
                             "type": "string"

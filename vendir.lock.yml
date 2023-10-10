@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Merge branch 'upstream-main'
-      sha: 0735b0ad345356ce6a0db12044132c4da1f82555
+      commitTitle: Add global.podSecurityStandards.enforced PSS switch to PSP resources
+      sha: dc2584a213374c46910c4d9ee5f64b6baee16594
       tags:
-      - kong-2.23.0-58-g0735b0a
+      - kong-2.29.0-61-gdc2584a
     path: kong
   path: vendor
 - contents:
