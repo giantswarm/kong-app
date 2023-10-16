@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [3.5.0] - 2023-10-16
+
 This version contains fixes for HTTP/2 stream reset attacks ([CVE-2023-44487](https://nvd.nist.gov/vuln/detail/CVE-2023-44487)).
 
 ### Changes
@@ -604,7 +606,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v3.4.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v3.5.0...HEAD
+[3.5.0]: https://github.com/giantswarm/kong-app/compare/v3.4.0...v3.5.0
 [3.4.0]: https://github.com/giantswarm/kong-app/compare/v3.3.0...v3.4.0
 [3.3.0]: https://github.com/giantswarm/kong-app/compare/v3.2.0...v3.3.0
 [3.2.0]: https://github.com/giantswarm/kong-app/compare/v3.1.1...v3.2.0
