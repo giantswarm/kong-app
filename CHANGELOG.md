@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+This version contains fixes for HTTP/2 stream reset attacks ([CVE-2023-44487](https://nvd.nist.gov/vuln/detail/CVE-2023-44487)).
+
 ### Changes
 
 - Align with upstream chart version [2.29.0](https://github.com/Kong/charts/releases/tag/kong-2.29.0) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.23.0...kong-2.29.0))
