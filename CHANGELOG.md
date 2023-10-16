@@ -7,12 +7,14 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+This version contains fixes for HTTP/2 stream reset attacks ([CVE-2023-44487](https://nvd.nist.gov/vuln/detail/CVE-2023-44487)).
+
 ### Changes
 
 - Align with upstream chart version [2.29.0](https://github.com/Kong/charts/releases/tag/kong-2.29.0) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.23.0...kong-2.29.0))
-- Update kong to [3.4.1](https://github.com/Kong/kong/blob/3.4.1/CHANGELOG.md#341)
+- Update kong to [3.4.2](https://github.com/Kong/kong/blob/3.4.2/CHANGELOG.md#342)
 - Update kong ingress controller to [2.12.0](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#2120)
-- Execute enterprise tests with kong-gateway container image version [3.4.1.0-debian](https://docs.konghq.com/gateway/changelog/#3410)
+- Execute enterprise tests with kong-gateway container image version [3.4.1.1-debian](https://docs.konghq.com/gateway/changelog/#3411)
 - Add `Values.global.podSecurityStandards.enforced` flag in preparation of PSP to PSS migration
 - Prevent installation of PodDisruptionBudget with `replicaCount: 1` or `autoscaling.minReplicas: 1`
 
