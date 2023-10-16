@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Add global.podSecurityStandards.enforced PSS switch to PSP resources
-      sha: dc2584a213374c46910c4d9ee5f64b6baee16594
+      commitTitle: Change PDB installation logic to not fail
+      sha: 1e11b3c3235a3cdcce770070fbcf5fab0f7226d7
       tags:
-      - kong-2.29.0-61-gdc2584a
+      - kong-2.29.0-67-g1e11b3c
     path: kong
   path: vendor
 - contents:
