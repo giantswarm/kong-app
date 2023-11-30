@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Change PDB installation logic to not fail
-      sha: 1e11b3c3235a3cdcce770070fbcf5fab0f7226d7
+      commitTitle: Merge branch 'upstream-main'
+      sha: 34027355a7f27320534c8ed9608b29f7751737b0
       tags:
-      - kong-2.29.0-67-g1e11b3c
+      - kong-2.32.0-70-g3402735
     path: kong
   path: vendor
 - contents:
