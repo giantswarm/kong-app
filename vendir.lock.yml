@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Fix affinity template in migrations jobs
-      sha: 1fbdeadd588ed1c9be777b64539c1b8196770389
+      commitTitle: Merge branch 'upstream-main'
+      sha: 1b5d16d55b1ed63f34eb8330c13b4a050d745989
       tags:
-      - kong-2.32.0-71-g1fbdead
+      - kong-2.33.0-71-g1b5d16d
     path: kong
   path: vendor
 - contents:
