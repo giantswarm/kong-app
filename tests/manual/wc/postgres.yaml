@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: postgres
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
 ---
 apiVersion: v1
 kind: Service
@@ -19,39 +21,6 @@ spec:
   selector:
     app: postgres
 ---
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  labels:
-    app: postgres
-  name: postgres
-  namespace: postgres
-rules:
-- apiGroups:
-  - policy
-  resources:
-  - podsecuritypolicies
-  resourceNames:
-  - postgres
-  verbs:
-  - use
----
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  labels:
-    app: postgres
-  name: postgres
-  namespace: postgres
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: postgres
-subjects:
-- kind: ServiceAccount
-  name: postgres
-  namespace: postgres
----
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -59,46 +28,6 @@ metadata:
     app: postgres
   name: postgres
   namespace: postgres
----
-apiVersion: policy/v1beta1
-kind: PodSecurityPolicy
-metadata:
-  name: postgres
-  labels:
-    app: postgres
-spec:
-  fsGroup:
-    rule: 'MustRunAs'
-    ranges:
-      - min: 70
-        max: 70
-  hostIPC: false
-  hostNetwork: false
-  hostPID: false
-  privileged: false
-  readOnlyRootFilesystem: false
-  runAsGroup:
-    rule: 'MustRunAs'
-    ranges:
-      - min: 70
-        max: 70
-  runAsUser:
-    rule: 'MustRunAs'
-    ranges:
-      - min: 70
-        max: 70
-  seLinux:
-    rule: RunAsAny
-  supplementalGroups:
-    rule: 'MustRunAs'
-    ranges:
-      - min: 70
-        max: 70
-  volumes:
-  - 'configMap'
-  - 'secret'
-  - 'emptyDir'
-  - 'hostPath'
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -122,8 +51,17 @@ spec:
         app: postgres
     spec:
       serviceAccountName: postgres
+      securityContext:
+        fsGroup: 70
+        runAsGroup: 70
+        runAsNonRoot: true
+        runAsUser: 70
+        seccompProfile:
+          type: RuntimeDefault
       volumes:
       - name: postgres-data
+        emptyDir: {}
+      - name: postgres-run
         emptyDir: {}
       containers:
       - name: postgres
@@ -143,6 +81,8 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/postgresql
           name: postgres-data
+        - mountPath: /var/run/postgresql
+          name: postgres-run
         startupProbe:
           initialDelaySeconds: 5
           periodSeconds: 10
@@ -179,3 +119,14 @@ spec:
             - -c
             - -e
             - exec pg_isready -U postgres -d kong -h 127.0.0.1 -p 5432
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsGroup: 70
+          runAsNonRoot: true
+          runAsUser: 70
+          seccompProfile:
+            type: RuntimeDefault
