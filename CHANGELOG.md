@@ -10,6 +10,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Changes
 
 - Configure `gsoci.azurecr.io` as the default container image registry.
+- Update kubectl-apply-job to 0.7.0 for `gsoci.azurecr.io` container image registry.
 
 ## [3.6.1] - 2023-12-11
 

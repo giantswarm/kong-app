@@ -20,8 +20,8 @@ kubeVersion: ">=1.22.0-0"
 dependencies:
   - name: postgresql
     version: 11.9.13
-    repository: https://charts.bitnami.com/bitnami
+    repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: kubectl-apply-job
-    version: "0.6.0"
-    repository: https://giantswarm.github.io/giantswarm-playground-catalog
+    version: "0.7.0"
+    repository: oci://giantswarmpublic.azurecr.io/giantswarm-playground-catalog
