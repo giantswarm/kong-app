@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [3.6.2] - 2023-12-13
+
 ### Changes
 
 - Configure `gsoci.azurecr.io` as the default container image registry.
@@ -626,7 +628,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v3.6.1...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v3.6.2...HEAD
+[3.6.2]: https://github.com/giantswarm/kong-app/compare/v3.6.1...v3.6.2
 [3.6.1]: https://github.com/giantswarm/kong-app/compare/v3.6.0...v3.6.1
 [3.6.0]: https://github.com/giantswarm/kong-app/compare/v3.5.0...v3.6.0
 [3.5.0]: https://github.com/giantswarm/kong-app/compare/v3.4.0...v3.5.0
