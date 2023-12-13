@@ -125,7 +125,7 @@ extraLabels: {}
 
 # Specify Kong's Docker image and repository details here
 image:
-  registry: &registry quay.io
+  registry: &registry gsoci.azurecr.io
   repository: giantswarm/kong
   tag: "3.5.0"
   # Kong Enterprise
