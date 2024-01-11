@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Removed
+
+- Remove the default nodeAffinity as this is covered by taints.
+
 ## [3.6.2] - 2023-12-13
 
 ### Changes
