@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changes
+
+- Update kong ingress controller to [3.0.2](https://github.com/Kong/kubernetes-ingress-controller/blob/v3.0.2/CHANGELOG.md#302)
+
 ### Fixed
 
 - Remove the default nodeAffinity as it had old restricted labels conflicting with `karpenter` restrictions. The functionality should be covered wtih control plane taints.
