@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Remove the default nodeAffinity as it had old restricted labels conflicting with `karpenter` restrictions. The functionality should be covered wtih control plane taints.
+
 ## [3.6.2] - 2023-12-13
 
 ### Changes
