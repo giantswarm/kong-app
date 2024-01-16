@@ -23,7 +23,6 @@ env:
   nginx_http_gzip: "on"
   nginx_http_gzip_min_length: "1000"
   nginx_http_large_client_header_buffers: 4 16k
-    10m
   nginx_proxy_gzip_proxied: any
   nginx_proxy_gzip_types: '*'
   ngnix_proxy_gzip: "on"
