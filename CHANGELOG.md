@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [3.7.0] - 2024-01-16
+
 ### Changes
 
 - Update kong ingress controller to [3.0.2](https://github.com/Kong/kubernetes-ingress-controller/blob/v3.0.2/CHANGELOG.md#302)
@@ -638,7 +640,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v3.6.2...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v3.7.0...HEAD
+[3.7.0]: https://github.com/giantswarm/kong-app/compare/v3.6.2...v3.7.0
 [3.6.2]: https://github.com/giantswarm/kong-app/compare/v3.6.1...v3.6.2
 [3.6.1]: https://github.com/giantswarm/kong-app/compare/v3.6.0...v3.6.1
 [3.6.0]: https://github.com/giantswarm/kong-app/compare/v3.5.0...v3.6.0
