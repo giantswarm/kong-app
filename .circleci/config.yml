@@ -22,7 +22,16 @@ workflows:
       - architect/run-tests-with-ats:
           name: execute chart tests
           filters:
-            # Do not trigger the job on merge to master.
+            branches:
+              ignore:
+                - main
+          requires:
+            - push-to-giantswarm-app-catalog
+
+      - architect/run-tests-with-ats:
+          name: execute chart tests (1.25)
+          additional_app-test-suite_flags: "--kind-cluster-image=kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1"
+          filters:
             branches:
               ignore:
                 - main
@@ -34,7 +43,6 @@ workflows:
           name: hold enterprise tests
           type: approval
           filters:
-            # Do not trigger the job on master branch or release tags.
             branches:
               ignore:
                 - main
@@ -42,13 +50,23 @@ workflows:
               ignore: /^v.*/
 
       - architect/run-tests-with-ats:
-          name: execute enterprise tests
+          name: execute enterprise tests (1.25)
           additional_app-test-suite_flags: "--app-tests-app-config-file=tests/test-values-enterprise.yaml"
           filters:
-            # Do not trigger the job on merge to master.
             branches:
               ignore:
                 - master
+          requires:
+            - hold enterprise tests
+            - push-to-giantswarm-app-catalog
+
+      - architect/run-tests-with-ats:
+          name: execute enterprise tests
+          additional_app-test-suite_flags: "--app-tests-app-config-file=tests/test-values-enterprise.yaml --kind-cluster-image=kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1"
+          filters:
+            branches:
+              ignore:
+                - main
           requires:
             - hold enterprise tests
             - push-to-giantswarm-app-catalog

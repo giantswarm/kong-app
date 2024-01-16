@@ -130,7 +130,7 @@ image:
   tag: "3.5.0"
   # Kong Enterprise
   # repository: kong/kong-gateway
-  # tag: "3.5.0.1-debian"
+  # tag: "3.5.0.2-debian"
 
   # Specify a semver version if your image tag is not one (e.g. "nightly")
   effectiveSemver:
