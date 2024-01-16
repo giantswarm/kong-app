@@ -3,9 +3,9 @@ directories:
 - contents:
   - git:
       commitTitle: Merge branch 'upstream-main'
-      sha: 8698c4742d4c2b6ffe6e909c2041493b8ee3fc30
+      sha: a562aec19f584fe2b871cf38caf6cd21a00b879d
       tags:
-      - kong-2.33.1-69-g8698c47
+      - kong-2.33.3-71-ga562aec
     path: kong
   path: vendor
 - contents:
