@@ -20,3 +20,9 @@
 .idea/
 *.tmproj
 OWNERS
+ci
+example-values
+.kube-linter.yaml
+.helmignore
+*.back
+templates/tests
