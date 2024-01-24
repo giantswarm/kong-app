@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changes
+
+- Disable anonymous reports in kong default values for proxy and ingress controller.
+
 ## [3.7.0] - 2024-01-16
 
 ### Changes
