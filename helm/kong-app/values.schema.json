@@ -425,6 +425,9 @@
                 "hostNetwork": {
                     "type": "boolean"
                 },
+                "hostname": {
+                    "type": "string"
+                },
                 "kong": {
                     "type": "object",
                     "properties": {
@@ -578,6 +581,9 @@
                 "admin_gui_error_log": {
                     "type": "string"
                 },
+                "anonymous_reports": {
+                    "type": "string"
+                },
                 "database": {
                     "type": "string"
                 },
@@ -603,6 +609,9 @@
                     "type": "string"
                 }
             }
+        },
+        "envFrom": {
+            "type": "array"
         },
         "extraConfigMaps": {
             "type": "array"
@@ -744,10 +753,16 @@
                 "env": {
                     "type": "object",
                     "properties": {
+                        "anonymous_reports": {
+                            "type": "string"
+                        },
                         "kong_admin_tls_skip_verify": {
                             "type": "boolean"
                         }
                     }
+                },
+                "envFrom": {
+                    "type": "array"
                 },
                 "gatewayDiscovery": {
                     "type": "object",
