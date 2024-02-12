@@ -11,6 +11,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Disable anonymous reports in kong default values for proxy and ingress controller.
 - Align with upstream chart version [2.35.1](https://github.com/Kong/charts/releases/tag/kong-2.35.1) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.33.3...kong-2.35.1))
+  - Kong listens now use both IPv4 and IPv6 addresses. [kong/charts#986](https://github.com/Kong/charts/pull/986)
 
 ## [3.7.0] - 2024-01-16
 
