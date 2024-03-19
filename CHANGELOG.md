@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Add Vertical Pod Autoscaler resource. It is disabled by default.
+
 ### Changes
 
 - Disable anonymous reports in kong default values for proxy and ingress controller.
