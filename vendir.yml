@@ -6,7 +6,7 @@ directories:
   - path: kong
     git:
       url: https://github.com/giantswarm/kong-charts-upstream
-      ref: main
+      ref: add-vpa
     includePaths:
     - charts/kong/**/*
 - path: helm/kong-app

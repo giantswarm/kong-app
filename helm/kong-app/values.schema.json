@@ -1802,6 +1802,14 @@
         "updateStrategy": {
             "type": "object"
         },
+        "verticalPodAutoscaler": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                }
+            }
+        },
         "waitImage": {
             "type": "object",
             "properties": {
