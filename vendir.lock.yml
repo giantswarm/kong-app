@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'feat: Add VerticalPodAutoscaler...'
-      sha: 540d938bd75f529a47738510906eb04e1e07f892
+      commitTitle: Include more containers and make minAllowed configurable...
+      sha: 53d86090954e009c25525f1df1f5ace5325297cd
       tags:
-      - kong-2.35.1-72-g540d938
+      - kong-2.35.1-73-g53d8609
     path: kong
   path: vendor
 - contents:
