@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: Merge branch 'upstream-main'
-      sha: d1956ee6a8f6495520a61962b2ef938df4066de3
+      commitTitle: 'feat: Add VerticalPodAutoscaler...'
+      sha: d53a0ba40bb4582f226f810000986fd75bd69aa7
       tags:
-      - kong-2.35.1-71-gd1956ee
+      - kong-2.35.1-72-gd53a0ba
     path: kong
   path: vendor
 - contents:
