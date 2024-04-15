@@ -135,7 +135,7 @@ image:
   tag: "3.6.1"
   # Kong Enterprise
   # repository: kong/kong-gateway
-  # tag: "3.5"
+  # tag: "3.6.1.2"
 
   # Specify a semver version if your image tag is not one (e.g. "nightly")
   effectiveSemver:
@@ -952,9 +952,7 @@ tolerations: []
 nodeSelector: {}
 
 # Annotation to be added to Kong pods
-podAnnotations:
-  kuma.io/gateway: enabled
-  traffic.sidecar.istio.io/includeInboundPorts: ""
+podAnnotations: {}
 
 # Labels to be added to Kong pods
 podLabels: {}
