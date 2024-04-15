@@ -13,6 +13,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Update kong gateway to [3.6.1](https://github.com/Kong/kong/blob/release/3.6.1/changelog/3.6.1/3.6.1.md)
 - Update kong ingress controller to [3.1.3](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#313)
 - Updated handling of `session_conf_secret` to accommodate Kong 3.6 - [Ref](https://docs.konghq.com/gateway/3.6.x/kong-manager/auth/oidc/migrate/)
+
 ## [3.8.0] - 2024-03-27
 
 ### Added
