@@ -53,4 +53,5 @@ enterprise:
   license_secret: kong-enterprise-license
   rbac:
     admin_gui_auth: "basic-auth"
+    session_conf_secret: kong-session-config
     enabled: true
