@@ -31,9 +31,19 @@ For older versions, please refer to the [changelog](https://github.com/giantswar
 
 ## Configuration
 
-A basic installation of *Kong for Kubernetes* will work out of the box without any custom values.
+This Chart is configured to deploy *Kong Enterprise*. For instructions on how to deploy Kong Enterprise please read [Kong Enterprise](#kong-enterprise)
 
-In case you want to supply a set of custom configuration options, only include configuation you want to change. **DO NOT** copy the whole `values.yaml` file.
+A basic installation of *Kong for Kubernetes* will require some custom values.
+
+```yaml
+image:
+  repository: giantswarm/kong
+  tag: "3.6.1"
+enterprise:
+  enabled: false
+```
+
+When supplying a set of custom configuration options, only include configuation you want to change. **DO NOT** copy the whole `values.yaml` file.
 
 For detailed explanations of configuration options, please refer to the [list of configuration options](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/README.md#configuration) and
 also the [`values.yaml` file](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/values.yaml)
@@ -77,12 +87,7 @@ In case you want to use Kong enterprise, a valid enterprise license Secret is re
 Install the app with at least the following custom configuration:
 
 ```
-image:
-  repository: giantswarm/kong-gateway
-  tag: "3.2.2.1-debian" # use the tag from the release matrix on from the README.md file
-
 enterprise:
-  enabled: true
   license_secret: "kong-enterprise-license"
 ```
 
