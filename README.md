@@ -82,18 +82,12 @@ ingressController:
 
 ### Kong Enterprise
 
-In case you want to use Kong enterprise, a valid enterprise license Secret is required in the namespace next to your kong deployment.
+Kong enterprise requires a valid enterprise license Secret to be present in the target namespace for kong.
 
-Install the app with at least the following custom configuration:
+Save the license key to a plain text file named `kong-enterprise-license.json`.
+Then create the Secret with name `kong-enterprise-license` in namespace `kong-app` by running the following command:
 
-```
-enterprise:
-  license_secret: "kong-enterprise-license"
-```
-
-Then create the Secret with name `kong-enterprise-license` in namespace `kong-app` from a license file named `kong-enterprise-license.json`:
-
-```
+```bash
 kubectl create secret generic kong-enterprise-license \
   --namespace kong-app \
   --from-file=license=./kong-enterprise-license.json
