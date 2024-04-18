@@ -135,7 +135,7 @@ image:
   tag: "3.6.1"
   # Kong Enterprise
   # repository: kong/kong-gateway
-  # tag: "3.6.1.2-debian"
+  # tag: "3.6.1.3-debian"
 
   # Specify a semver version if your image tag is not one (e.g. "nightly")
   effectiveSemver:
