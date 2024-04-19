@@ -33,19 +33,6 @@ For older versions, please refer to the [changelog](https://github.com/giantswar
 
 This Chart is configured to deploy *Kong Enterprise*. For instructions on how to deploy Kong Enterprise please read [Kong Enterprise](#kong-enterprise)
 
-
-### Kong OSS
-
-A basic installation of *Kong for Kubernetes* will require some custom values.
-
-```yaml
-image:
-  repository: giantswarm/kong
-  tag: "3.6.1"
-enterprise:
-  enabled: false
-```
-
 When supplying a set of custom configuration options, only include configuation you want to change. **DO NOT** copy the whole `values.yaml` file.
 
 For detailed explanations of configuration options, please refer to the [list of configuration options](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/README.md#configuration) and
@@ -61,6 +48,18 @@ is possible launch postgres alongside this App (described below).
 
 The default installation of the App will use Kong Ingress Controller.
 The recommended way to configure plugins, consumers and services when using *Kong for Kubernetes* is by utilizing [Kong annotations](https://docs.konghq.com/kubernetes-ingress-controller/latest/references/annotations/) and [Kong custom resources](https://docs.konghq.com/kubernetes-ingress-controller/latest/concepts/custom-resources/#main).
+
+### Kong OSS
+
+A basic installation of *Kong for Kubernetes* will require some custom values.
+
+```yaml
+image:
+  repository: giantswarm/kong
+  tag: "3.6.1"
+enterprise:
+  enabled: false
+```
 
 ### Container image registry
 
