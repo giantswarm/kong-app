@@ -46,11 +46,12 @@ podDisruptionBudget:
 
 image:
   repository: giantswarm/kong-gateway
-  tag: '3.4.1.1-debian'
+  tag: '3.6.1.3-debian'
 
 enterprise:
   enabled: true
   license_secret: kong-enterprise-license
   rbac:
     admin_gui_auth: "basic-auth"
+    session_conf_secret: kong-session-config
     enabled: true

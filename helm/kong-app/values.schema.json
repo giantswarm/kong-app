@@ -1612,6 +1612,9 @@
                 "tls": {
                     "type": "object",
                     "properties": {
+                        "appProtocol": {
+                            "type": "string"
+                        },
                         "containerPort": {
                             "type": "integer"
                         },
@@ -1828,6 +1831,9 @@
                             "type": "object",
                             "properties": {
                                 "cpu": {
+                                    "type": "string"
+                                },
+                                "memory": {
                                     "type": "string"
                                 }
                             }

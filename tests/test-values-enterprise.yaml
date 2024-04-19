@@ -61,7 +61,7 @@ postgresql:
 
 image:
   repository: giantswarm/kong-gateway
-  tag: "3.5.0.3-debian"
+  tag: "3.6.1.2-debian"
 
 enterprise:
   enabled: true
