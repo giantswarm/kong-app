@@ -131,11 +131,11 @@ extraLabels: {}
 # Specify Kong's Docker image and repository details here
 image:
   registry: &registry gsoci.azurecr.io
-  repository: giantswarm/kong
-  tag: "3.6.1"
+  # repository: giantswarm/kong
+  # tag: "3.6.1"
   # Kong Enterprise
-  # repository: kong/kong-gateway
-  # tag: "3.6.1.3-debian"
+  repository: giantswarm/kong-gateway
+  tag: "3.6.1.3-debian"
 
   # Specify a semver version if your image tag is not one (e.g. "nightly")
   effectiveSemver:
@@ -1104,12 +1104,12 @@ serviceMonitor:
 # RBAC and SMTP configuration have additional options that must all be set together
 # Other settings should be added to the "env" settings below
 enterprise:
-  enabled: false
+  enabled: true
   # Kong Enterprise license secret name
   # This secret must contain a single 'license' key, containing your base64-encoded license data
   # The license secret is required to unlock all Enterprise features. If you omit it,
   # Kong will run in free mode, with some Enterprise features disabled.
-  # license_secret: kong-enterprise-license
+  license_secret: kong-enterprise-license
   vitals:
     enabled: true
   portal:
