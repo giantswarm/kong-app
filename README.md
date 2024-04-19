@@ -31,7 +31,7 @@ For older versions, please refer to the [changelog](https://github.com/giantswar
 
 ## Configuration
 
-This Chart is configured to deploy *Kong Enterprise*. For instructions on how to deploy Kong Enterprise please read [Kong Enterprise](#kong-enterprise)
+This Chart is configured to deploy *Kong Enterprise*. For instructions on how to deploy Kong Enterprise please read [Kong Enterprise](#kong-enterprise).
 
 When supplying a set of custom configuration options, only include configuation you want to change. **DO NOT** copy the whole `values.yaml` file.
 
