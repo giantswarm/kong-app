@@ -11,7 +11,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Align with upstream chart commit [07ddc3d](https://github.com/Kong/charts/commit/07ddc3d3ac28f6313d705e5339520d2cdf22e725) (ahead of release [2.38.0](https://github.com/Kong/charts/releases/tag/kong-2.38.0)) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.35.1...07ddc3d))
 - Updated handling of `session_conf_secret` to accommodate Kong 3.6 - [Ref](https://docs.konghq.com/gateway/3.6.x/kong-manager/auth/oidc/migrate/)
-- Configure Chart for Kong Gateway Enterprise deployment by default.
+- Configure Chart for Kong Gateway Enterprise deployment by default. Please check the README.md to see how to run kong OSS.
 - Update README.md to reflect default deployment Changes.
 
 ## [3.8.0] - 2024-03-27
