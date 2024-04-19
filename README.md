@@ -31,9 +31,9 @@ For older versions, please refer to the [changelog](https://github.com/giantswar
 
 ## Configuration
 
-A basic installation of *Kong for Kubernetes* will work out of the box without any custom values.
+This Chart is configured to deploy *Kong Enterprise*. For instructions on how to deploy Kong Enterprise please read [Kong Enterprise](#kong-enterprise).
 
-In case you want to supply a set of custom configuration options, only include configuation you want to change. **DO NOT** copy the whole `values.yaml` file.
+When supplying a set of custom configuration options, only include configuation you want to change. **DO NOT** copy the whole `values.yaml` file.
 
 For detailed explanations of configuration options, please refer to the [list of configuration options](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/README.md#configuration) and
 also the [`values.yaml` file](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/values.yaml)
@@ -48,6 +48,18 @@ is possible launch postgres alongside this App (described below).
 
 The default installation of the App will use Kong Ingress Controller.
 The recommended way to configure plugins, consumers and services when using *Kong for Kubernetes* is by utilizing [Kong annotations](https://docs.konghq.com/kubernetes-ingress-controller/latest/references/annotations/) and [Kong custom resources](https://docs.konghq.com/kubernetes-ingress-controller/latest/concepts/custom-resources/#main).
+
+### Kong OSS
+
+A basic installation of *Kong for Kubernetes* will require some custom values.
+
+```yaml
+image:
+  repository: giantswarm/kong
+  tag: "3.6.1"
+enterprise:
+  enabled: false
+```
 
 ### Container image registry
 
@@ -72,23 +84,12 @@ ingressController:
 
 ### Kong Enterprise
 
-In case you want to use Kong enterprise, a valid enterprise license Secret is required in the namespace next to your kong deployment.
+Kong enterprise requires a valid enterprise license Secret to be present in the target namespace for kong.
 
-Install the app with at least the following custom configuration:
+Save the license key to a plain text file named `kong-enterprise-license.json`.
+Then create the Secret with name `kong-enterprise-license` in namespace `kong-app` by running the following command:
 
-```
-image:
-  repository: giantswarm/kong-gateway
-  tag: "3.2.2.1-debian" # use the tag from the release matrix on from the README.md file
-
-enterprise:
-  enabled: true
-  license_secret: "kong-enterprise-license"
-```
-
-Then create the Secret with name `kong-enterprise-license` in namespace `kong-app` from a license file named `kong-enterprise-license.json`:
-
-```
+```bash
 kubectl create secret generic kong-enterprise-license \
   --namespace kong-app \
   --from-file=license=./kong-enterprise-license.json
