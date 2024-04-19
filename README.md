@@ -33,6 +33,7 @@ For older versions, please refer to the [changelog](https://github.com/giantswar
 
 This Chart is configured to deploy *Kong Enterprise*. For instructions on how to deploy Kong Enterprise please read [Kong Enterprise](#kong-enterprise)
 
+### Kong OSS
 A basic installation of *Kong for Kubernetes* will require some custom values.
 
 ```yaml
