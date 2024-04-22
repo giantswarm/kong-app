@@ -19,7 +19,7 @@ workflows:
             tags:
               only: /^v.*/
 
-      # Require manual approval for running enterprise tests
+      # Require manual approval for running oss tests
       - hold-tests:
           name: hold OSS tests
           type: approval
