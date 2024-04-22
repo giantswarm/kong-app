@@ -9,13 +9,13 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [4.0.0] - 2024-04-22
 
-### BEAKING CHANGES
+### BREAKING CHANGES
 
-This is a major release because it changes the default behaviour of the Charts.
+This is a major release because it changes the default behaviour of the Chart.
 - For Kong Enterprise deployment the flag `.Values.image.repository` and `.Values.image.tag` can now be omitted.
 - For Kong OSS deployment the flag `.Values.image.repository` and `.Values.image.tag` now have to be set to the respective OSS values.
 
-For further instructions please refere to the [README.md](./README.md).
+For further instructions please refer to the [README.md](./README.md).
 
 ### Changes
 
