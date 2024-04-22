@@ -19,28 +19,9 @@ workflows:
             tags:
               only: /^v.*/
 
-      - architect/run-tests-with-ats:
-          name: execute chart tests
-          filters:
-            branches:
-              ignore:
-                - main
-          requires:
-            - push-to-giantswarm-app-catalog
-
-      - architect/run-tests-with-ats:
-          name: execute chart tests (1.25)
-          additional_app-test-suite_flags: "--kind-cluster-image=kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1"
-          filters:
-            branches:
-              ignore:
-                - main
-          requires:
-            - push-to-giantswarm-app-catalog
-
       # Require manual approval for running enterprise tests
       - hold-tests:
-          name: hold enterprise tests
+          name: hold OSS tests
           type: approval
           filters:
             branches:
@@ -57,7 +38,6 @@ workflows:
               ignore:
                 - main
           requires:
-            - hold enterprise tests
             - push-to-giantswarm-app-catalog
 
       - architect/run-tests-with-ats:
@@ -68,5 +48,25 @@ workflows:
               ignore:
                 - main
           requires:
-            - hold enterprise tests
+            - push-to-giantswarm-app-catalog
+      
+      - architect/run-tests-with-ats:
+          name: execute chart tests
+          filters:
+            branches:
+              ignore:
+                - main
+          requires:
+            - hold OSS tests
+            - push-to-giantswarm-app-catalog
+
+      - architect/run-tests-with-ats:
+          name: execute chart tests (1.25)
+          additional_app-test-suite_flags: "--kind-cluster-image=kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1"
+          filters:
+            branches:
+              ignore:
+                - main
+          requires:
+            - hold OSS tests
             - push-to-giantswarm-app-catalog
