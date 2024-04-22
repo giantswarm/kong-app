@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [4.0.0] - 2024-04-22
+
 ### Changes
 
 - Align with upstream chart commit [07ddc3d](https://github.com/Kong/charts/commit/07ddc3d3ac28f6313d705e5339520d2cdf22e725) (ahead of release [2.38.0](https://github.com/Kong/charts/releases/tag/kong-2.38.0)) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.35.1...07ddc3d))
@@ -659,7 +661,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v3.8.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v4.0.0...HEAD
+[4.0.0]: https://github.com/giantswarm/kong-app/compare/v3.8.0...v4.0.0
 [3.8.0]: https://github.com/giantswarm/kong-app/compare/v3.7.0...v3.8.0
 [3.7.0]: https://github.com/giantswarm/kong-app/compare/v3.6.2...v3.7.0
 [3.6.2]: https://github.com/giantswarm/kong-app/compare/v3.6.1...v3.6.2
