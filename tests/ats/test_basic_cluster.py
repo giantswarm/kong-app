@@ -37,15 +37,6 @@ def test_api_working(kube_cluster: Cluster) -> None:
 # if you want to assert this multiple times
 @pytest.fixture(scope="module")
 def ic_deployment(request, kube_cluster: Cluster) -> List[pykube.Deployment]:
-    logger.info("Waiting for postgres pods")
-    kube_cluster.kubectl(
-        "rollout status --watch statefulset/kong-app-postgresql",
-        timeout="120s",
-        output_format="",
-        namespace=namespace_name,
-    )
-    logger.info("Postgres pods look ready")
-
     logger.info("Waiting for kong deployment..")
 
     deployment_ready = wait_for_ic_deployment(kube_cluster)
@@ -64,25 +55,32 @@ def wait_for_ic_deployment(kube_cluster: Cluster) -> List[pykube.Deployment]:
     )
     return deployments
 
+
 @pytest.fixture(scope="module")
 def pods(kube_cluster: Cluster) -> List[pykube.Pod]:
     pods = pykube.Pod.objects(kube_cluster.kube_client)
 
-    pods = pods.filter(namespace=namespace_name, selector={'app.kubernetes.io/name': 'kong-app', 'app.kubernetes.io/component': 'app'})
+    pods = pods.filter(namespace=namespace_name, selector={
+                       'app.kubernetes.io/name': 'kong-app', 'app.kubernetes.io/component': 'app'})
 
     return pods
 
 # when we start the tests on circleci, we have to wait for pods to be available, hence
 # this additional delay and retries
+
+
 @pytest.mark.smoke
 @pytest.mark.upgrade
 @pytest.mark.flaky(reruns=5, reruns_delay=10)
 def test_pods_available(kube_cluster: Cluster, ic_deployment: List[pykube.Deployment]):
     for s in ic_deployment:
-        assert int(s.obj["status"]["readyReplicas"]) == int(s.obj["spec"]["replicas"])
+        assert int(s.obj["status"]["readyReplicas"]) == int(
+            s.obj["spec"]["replicas"])
 
 # when we start the tests on circleci, we have to wait for pods to be available, hence
 # this additional delay and retries
+
+
 @pytest.mark.smoke
 @pytest.mark.upgrade
 def test_pods_spread(kube_cluster: Cluster, ic_deployment: List[pykube.Deployment], pods: List[pykube.Pod]):
