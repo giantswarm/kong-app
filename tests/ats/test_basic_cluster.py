@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 deployment_name = "kong-app-kong-app"
 namespace_name = "kong"
 
-timeout: int = 560
+timeout: int = 120
 
 
 @pytest.mark.smoke
@@ -80,7 +80,7 @@ def pods(kube_cluster: Cluster) -> List[pykube.Pod]:
 
 @pytest.mark.smoke
 @pytest.mark.upgrade
-@pytest.mark.flaky(reruns=5, reruns_delay=10)
+@pytest.mark.flaky(reruns=2, reruns_delay=10)
 def test_pods_available(kube_cluster: Cluster, ic_deployment: List[pykube.Deployment]):
     for s in ic_deployment:
         assert int(s.obj["status"]["readyReplicas"]) == int(
