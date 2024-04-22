@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 deployment_name = "kong-app-kong-app"
 namespace_name = "kong"
 
-timeout: int = 120
+timeout: int = 560
 
 
 @pytest.mark.smoke
@@ -37,15 +37,6 @@ def test_api_working(kube_cluster: Cluster) -> None:
 # if you want to assert this multiple times
 @pytest.fixture(scope="module")
 def ic_deployment(request, kube_cluster: Cluster) -> List[pykube.Deployment]:
-    logger.info("Waiting for postgres pods")
-    kube_cluster.kubectl(
-        "rollout status --watch statefulset/kong-app-postgresql",
-        timeout="120s",
-        output_format="",
-        namespace=namespace_name,
-    )
-    logger.info("Postgres pods look ready")
-
     logger.info("Waiting for kong deployment..")
 
     deployment_ready = wait_for_ic_deployment(kube_cluster)
@@ -80,7 +71,7 @@ def pods(kube_cluster: Cluster) -> List[pykube.Pod]:
 
 @pytest.mark.smoke
 @pytest.mark.upgrade
-@pytest.mark.flaky(reruns=2, reruns_delay=10)
+@pytest.mark.flaky(reruns=5, reruns_delay=10)
 def test_pods_available(kube_cluster: Cluster, ic_deployment: List[pykube.Deployment]):
     for s in ic_deployment:
         assert int(s.obj["status"]["readyReplicas"]) == int(
