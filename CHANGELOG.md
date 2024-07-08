@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [3.7.1] - 2024-07-08
+
 ### Changes
 
 - Update kubectl-apply-job to 0.8.0 for enabling `readOnlyRootFilesystem: true` for kubectl CRD install job container.
@@ -644,7 +646,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v3.7.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v3.7.1...HEAD
+[3.7.1]: https://github.com/giantswarm/kong-app/compare/v3.7.0...v3.7.1
 [3.7.0]: https://github.com/giantswarm/kong-app/compare/v3.6.2...v3.7.0
 [3.6.2]: https://github.com/giantswarm/kong-app/compare/v3.6.1...v3.6.2
 [3.6.1]: https://github.com/giantswarm/kong-app/compare/v3.6.0...v3.6.1
