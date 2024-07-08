@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changes
+
+- Update kubectl-apply-job to 0.8.0 for enabling `readOnlyRootFilesystem: true` for kubectl CRD install job container.
+
 ## [3.7.0] - 2024-01-16
 
 ### Changes
