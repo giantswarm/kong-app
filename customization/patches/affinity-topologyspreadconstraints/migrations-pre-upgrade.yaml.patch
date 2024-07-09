@@ -1,0 +1,13 @@
+diff --git b/vendor/kong/charts/kong/templates/migrations-pre-upgrade.yaml a/vendor/kong/charts/kong/templates/migrations-pre-upgrade.yaml
+index 9efb8ba..42d45f6 100644
+--- b/vendor/kong/charts/kong/templates/migrations-pre-upgrade.yaml
++++ a/vendor/kong/charts/kong/templates/migrations-pre-upgrade.yaml
+@@ -81,7 +81,7 @@ spec:
+       {{- include "kong.podsecuritycontext" . | nindent 8 }}
+       {{- if .Values.affinity }}
+       affinity:
+-      {{- toYaml .Values.affinity | nindent 8 }}
++{{ tpl .Values.affinity . | indent 8 }}
+       {{- end }}
+       {{- if .Values.nodeSelector }}
+       nodeSelector:

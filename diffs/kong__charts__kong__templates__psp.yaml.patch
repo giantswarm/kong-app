@@ -1,0 +1,10 @@
+diff --git a/kong.orig/charts/kong/templates/psp.yaml b/kong/charts/kong/templates/psp.yaml
+index bc98447..ff29173 100644
+--- a/kong.orig/charts/kong/templates/psp.yaml
++++ b/kong/charts/kong/templates/psp.yaml
+@@ -1,4 +1,4 @@
+-{{- if and (.Values.podSecurityPolicy.enabled) }}
++{{- if and (not .Values.global.podSecurityStandards.enforced) (.Values.podSecurityPolicy.enabled) (.Capabilities.APIVersions.Has "policy/v1beta1") }}
+ apiVersion: {{ include "kong.policyVersion" . }}
+ kind: PodSecurityPolicy
+ metadata:

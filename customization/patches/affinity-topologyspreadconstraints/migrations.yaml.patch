@@ -1,0 +1,13 @@
+diff --git b/vendor/kong/charts/kong/templates/migrations.yaml a/vendor/kong/charts/kong/templates/migrations.yaml
+index 817f59b..97dbe9e 100644
+--- b/vendor/kong/charts/kong/templates/migrations.yaml
++++ a/vendor/kong/charts/kong/templates/migrations.yaml
+@@ -89,7 +89,7 @@ spec:
+       {{- include "kong.podsecuritycontext" . | nindent 8 }}
+       {{- if .Values.affinity }}
+       affinity:
+-      {{- toYaml .Values.affinity | nindent 8 }}
++{{ tpl .Values.affinity . | indent 8 }}
+       {{- end }}
+       {{- if .Values.nodeSelector }}
+       nodeSelector:

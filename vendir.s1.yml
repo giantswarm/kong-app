@@ -1,0 +1,12 @@
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+- path: vendor
+  contents:
+  - path: kong
+    git:
+      url: https://github.com/Kong/charts
+      ref: 07ddc3d
+    includePaths:
+    - charts/kong/**/*
+    - .kube-linter.yaml

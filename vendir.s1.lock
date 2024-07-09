@@ -1,0 +1,11 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: 'feat(kgo): custom kubeRBACProxy image  (#1047)'
+      sha: 07ddc3d3ac28f6313d705e5339520d2cdf22e725
+      tags:
+      - gateway-operator-0.1.5-5-g07ddc3d
+    path: kong
+  path: vendor
+kind: LockConfig
