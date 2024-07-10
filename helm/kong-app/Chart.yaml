@@ -5,7 +5,7 @@ icon: https://s.giantswarm.io/app-icons/kong/1/light.svg
 maintainers:
   - name: team-k8s-bot
     email: team-k8s@konghq.com
-name: kong
+name: kong-app
 sources:
   - https://github.com/giantswarm/kong-app
   - https://github.com/Kong/charts/tree/main/charts/kong
