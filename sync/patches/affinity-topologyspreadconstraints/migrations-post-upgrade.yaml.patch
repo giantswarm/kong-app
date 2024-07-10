@@ -1,0 +1,13 @@
+diff --git b/helm/kong-app/templates/migrations-post-upgrade.yaml a/helm/kong-app/templates/migrations-post-upgrade.yaml
+index 2e1e30c..5b3a744 100644
+--- b/helm/kong-app/templates/migrations-post-upgrade.yaml
++++ a/helm/kong-app/templates/migrations-post-upgrade.yaml
+@@ -79,7 +79,7 @@ spec:
+       {{- include "kong.podsecuritycontext" . | nindent 8 }}
+       {{- if .Values.affinity }}
+       affinity:
+-      {{- toYaml .Values.affinity | nindent 8 }}
++{{ tpl .Values.affinity . | indent 8 }}
+       {{- end }}
+       {{- if .Values.nodeSelector }}
+       nodeSelector:
