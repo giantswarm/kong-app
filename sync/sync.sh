@@ -8,15 +8,11 @@ dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd ) ; readonly dir
 cd "${dir}/.."
 
 set -x
-# Stage 1 sync - intermediate to the ./vendor folder
+# Sync using vendir
 vendir sync
-# Wipe and copy upstream chart dir
-rm -rf ./helm/kong-app
-cp -a ./vendor/kong/charts/kong ./helm/kong-app
 { set +x; } 2>/dev/null
 
 # Patches
-./sync/patches/chart/patch.sh
 ./sync/patches/crds/patch.sh
 ./sync/patches/values-schema/patch.sh
 ./sync/patches/affinity-topologyspreadconstraints/patch.sh

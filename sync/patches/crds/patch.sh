@@ -22,15 +22,4 @@ readonly script_dir_rel=".${script_dir#"${repo_dir}"}"
 set -x
 git apply "${script_dir_rel}/custom-resource-definitions.yaml.patch"
 
-sed -i \
-    -e '/^dependencies:/a\  - name: kubectl-apply-job\n    version: "0.7.0"\n    repository: oci://giantswarmpublic.azurecr.io/giantswarm-playground-catalog' \
-    "./helm/kong-app/Chart.yaml"
-
-# Instead of running `helm dependency update` which will change the
-# `digest` and `generated` fields in the `Chart.lock`, we're copying
-# a static version which needs manual update if something changes in
-# the `dependencies` of `Chart.yaml`
-# $ helm dependency update "./vendor/kong/charts/kong"
-cp "${script_dir_rel}/Chart.lock" "./helm/kong-app/Chart.lock"
-
 { set +x; } 2>/dev/null

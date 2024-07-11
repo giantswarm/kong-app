@@ -1,5 +1,5 @@
 diff --git a/vendor/kong/charts/kong/Chart.yaml b/helm/kong-app/Chart.yaml
-index b8ca8b0..a118037 100644
+index b8ca8b0..0f572c2 100644
 --- a/vendor/kong/charts/kong/Chart.yaml
 +++ b/helm/kong-app/Chart.yaml
 @@ -1,17 +1,24 @@
@@ -21,15 +21,15 @@ index b8ca8b0..a118037 100644
 -appVersion: "3.6"
 +version: 4.1.0
 +appVersion: "3.6.1.4"
++annotations:
++  application.giantswarm.io/team: "cabbage"
++kubeVersion: ">=1.22.0-0"
  dependencies:
-+  - name: kubectl-apply-job
-+    version: "0.7.0"
-+    repository: oci://giantswarmpublic.azurecr.io/giantswarm-playground-catalog
    - name: postgresql
      version: 11.9.13
 -    repository: https://charts.bitnami.com/bitnami
 +    repository: oci://registry-1.docker.io/bitnamicharts
      condition: postgresql.enabled
-+kubeVersion: ">=1.22.0-0"
-+annotations:
-+  application.giantswarm.io/team: "cabbage"
++  - name: kubectl-apply-job
++    version: "0.7.0"
++    repository: oci://giantswarmpublic.azurecr.io/giantswarm-playground-catalog

@@ -10,3 +10,11 @@ directories:
     includePaths:
     - charts/kong/**/*
     - .kube-linter.yaml
+- path: helm/kong-app
+  contents:
+  - path: .
+    directory:
+      path: vendor/kong/charts/kong
+    ignorePaths:
+    - Chart.lock
+    - Chart.yaml

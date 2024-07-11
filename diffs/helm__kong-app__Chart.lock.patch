@@ -1,17 +1,17 @@
 diff --git a/vendor/kong/charts/kong/Chart.lock b/helm/kong-app/Chart.lock
-index 88cd736..d2c46e8 100644
+index 88cd736..b9d82e5 100644
 --- a/vendor/kong/charts/kong/Chart.lock
 +++ b/helm/kong-app/Chart.lock
 @@ -1,6 +1,9 @@
  dependencies:
-+- name: kubectl-apply-job
-+  repository: oci://giantswarmpublic.azurecr.io/giantswarm-playground-catalog
-+  version: 0.7.0
  - name: postgresql
 -  repository: https://charts.bitnami.com/bitnami
 +  repository: oci://registry-1.docker.io/bitnamicharts
    version: 11.9.13
 -digest: sha256:051285066cef2799e39e2953c4abd405c36510a09e9e1bd1833a29224daffddb
 -generated: "2022-12-19T11:56:46.951582785-08:00"
-+digest: sha256:9361498f87af757c8132354d5ba7d19e05eefa20df97e0647d0729d768ab28c3
-+generated: "2024-07-09T15:33:19.995811939+02:00"
++- name: kubectl-apply-job
++  repository: oci://giantswarmpublic.azurecr.io/giantswarm-playground-catalog
++  version: 0.7.0
++digest: sha256:c35a500c2ec10abc78325ed89588b3416de166d2f786ff572c9824fd3c7557a2
++generated: "2023-12-12T16:34:22.530811904+01:00"

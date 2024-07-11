@@ -8,4 +8,8 @@ directories:
       - gateway-operator-0.1.5-5-g07ddc3d
     path: kong
   path: vendor
+- contents:
+  - directory: {}
+    path: .
+  path: helm/kong-app
 kind: LockConfig
