@@ -584,7 +584,7 @@ spec:
               value: https://localhost:8444
             - name: CONTROLLER_PUBLISH_SERVICE
               value: default/chartsnap-kong-proxy
-          image: kong/kubernetes-ingress-controller:3.0
+          image: kong/nightly-ingress-controller:2024-06-09
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 3
@@ -688,7 +688,7 @@ spec:
               value: "off"
             - name: KONG_NGINX_DAEMON
               value: "off"
-          image: kong:3.4
+          image: kong:3.6
           imagePullPolicy: IfNotPresent
           lifecycle:
             preStop:
@@ -721,7 +721,7 @@ spec:
           readinessProbe:
             failureThreshold: 3
             httpGet:
-              path: /status/ready
+              path: /status
               port: status
               scheme: HTTP
             initialDelaySeconds: 1
@@ -800,7 +800,7 @@ spec:
               value: 0.0.0.0:8100, [::]:8100
             - name: KONG_STREAM_LISTEN
               value: "off"
-          image: kong:3.4
+          image: kong:3.6
           imagePullPolicy: IfNotPresent
           name: clear-stale-pid
           resources: {}

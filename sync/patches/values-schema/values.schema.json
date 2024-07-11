@@ -38,10 +38,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "ingressClassName": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "path": {
                             "type": "string"
@@ -55,7 +55,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "null"
                 },
                 "tls": {
                     "type": "object",
@@ -142,7 +142,7 @@
                     "type": "integer"
                 },
                 "targetCPUUtilizationPercentage": {
-                    "type": ["null", "integer"]
+                    "type": "null"
                 }
             }
         },
@@ -259,10 +259,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "ingressClassName": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "path": {
                             "type": "string"
@@ -276,7 +276,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "null"
                 },
                 "tls": {
                     "type": "object",
@@ -322,10 +322,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "ingressClassName": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "path": {
                             "type": "string"
@@ -339,7 +339,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "null"
                 },
                 "tls": {
                     "type": "object",
@@ -481,6 +481,9 @@
             "properties": {
                 "enabled": {
                     "type": "boolean"
+                },
+                "license_secret": {
+                    "type": "string"
                 },
                 "portal": {
                     "type": "object",
@@ -642,8 +645,7 @@
             "type": "object",
             "properties": {
                 "effectiveSemver": {
-                    "type": ["null", "string"]
-
+                    "type": "null"
                 },
                 "pullPolicy": {
                     "type": "string"
@@ -705,6 +707,9 @@
                         },
                         "failurePolicy": {
                             "type": "string"
+                        },
+                        "filterSecrets": {
+                            "type": "boolean"
                         },
                         "namespaceSelector": {
                             "type": "object",
@@ -917,10 +922,10 @@
                             "type": "object",
                             "properties": {
                                 "cpu": {
-                                    "type": ["string", "integer"]
+                                    "type": "string"
                                 },
                                 "memory": {
-                                    "type": ["string", "integer"]
+                                    "type": "string"
                                 }
                             }
                         },
@@ -928,10 +933,10 @@
                             "type": "object",
                             "properties": {
                                 "cpu": {
-                                    "type": ["string", "integer"]
+                                    "type": "string"
                                 },
                                 "memory": {
-                                    "type": ["string", "integer"]
+                                    "type": "string"
                                 }
                             }
                         }
@@ -1065,10 +1070,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "ingressClassName": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "path": {
                             "type": "string"
@@ -1082,7 +1087,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "null"
                 },
                 "tls": {
                     "type": "object",
@@ -1121,7 +1126,7 @@
                     }
                 },
                 "backoffLimit": {
-                    "type": ["null", "integer"]
+                    "type": "null"
                 },
                 "jobAnnotations": {
                     "type": "object"
@@ -1153,10 +1158,7 @@
                     "type": "boolean"
                 },
                 "maxUnavailable": {
-                    "type": ["string", "integer"]
-                },
-                "minAvailable": {
-                    "type": ["string", "integer"]
+                    "type": "string"
                 }
             }
         },
@@ -1329,10 +1331,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "ingressClassName": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "path": {
                             "type": "string"
@@ -1346,7 +1348,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "null"
                 },
                 "tls": {
                     "type": "object",
@@ -1409,10 +1411,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "ingressClassName": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "path": {
                             "type": "string"
@@ -1426,7 +1428,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "null"
                 },
                 "tls": {
                     "type": "object",
@@ -1496,10 +1498,50 @@
                             }
                         },
                         "containerSecurityContext": {
-                            "type": "object"
+                            "type": "object",
+                            "properties": {
+                                "allowPrivilegeEscalation": {
+                                    "type": "boolean"
+                                },
+                                "capabilities": {
+                                    "type": "object",
+                                    "properties": {
+                                        "drop": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "runAsNonRoot": {
+                                    "type": "boolean"
+                                },
+                                "seccompProfile": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
                         },
                         "podSecurityContext": {
-                            "type": "object"
+                            "type": "object",
+                            "properties": {
+                                "runAsNonRoot": {
+                                    "type": "boolean"
+                                },
+                                "seccompProfile": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 },
@@ -1526,7 +1568,7 @@
                             "type": "object",
                             "properties": {
                                 "postgresql": {
-                                    "type": ["string", "integer"]
+                                    "type": "string"
                                 }
                             }
                         }
@@ -1573,13 +1615,13 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "hosts": {
                             "type": "array"
                         },
                         "ingressClassName": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "labels": {
                             "type": "object"
@@ -1601,7 +1643,7 @@
                     }
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "null"
                 },
                 "nameOverride": {
                     "type": "string"
@@ -1681,10 +1723,10 @@
                     "type": "object",
                     "properties": {
                         "cpu": {
-                            "type": ["string", "integer"]
+                            "type": "integer"
                         },
                         "memory": {
-                            "type": ["string", "integer"]
+                            "type": "string"
                         }
                     }
                 },
@@ -1692,10 +1734,10 @@
                     "type": "object",
                     "properties": {
                         "cpu": {
-                            "type": ["string", "integer"]
+                            "type": "integer"
                         },
                         "memory": {
-                            "type": ["string", "integer"]
+                            "type": "string"
                         }
                     }
                 }
@@ -1731,6 +1773,29 @@
             "properties": {
                 "enabled": {
                     "type": "boolean"
+                },
+                "interval": {
+                    "type": "string"
+                },
+                "relabelings": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "action": {
+                                "type": "string"
+                            },
+                            "sourceLabels": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "targetLabel": {
+                                "type": "string"
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1792,7 +1857,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "null"
                 },
                 "stream": {
                     "type": "array"
