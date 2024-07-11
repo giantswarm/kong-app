@@ -13,5 +13,6 @@ readonly script_dir_rel=".${script_dir#"${repo_dir}"}"
 
 set -x
 git apply "${script_dir_rel}/values.yaml.patch"
+cp "${script_dir_rel}/values.schema.json" ./helm/kong-app/values.schema.json
 
 { set +x; } 2>/dev/null

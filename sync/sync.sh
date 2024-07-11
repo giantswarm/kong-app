@@ -9,7 +9,7 @@ cd "${dir}/.."
 
 set -x
 # Stage 1 sync - intermediate to the ./vendor folder
-vendir sync --file vendir.s1.yml --lock-file vendir.s1.lock
+vendir sync
 # Wipe and copy upstream chart dir
 rm -rf ./helm/kong-app
 cp -a ./vendor/kong/charts/kong ./helm/kong-app
@@ -18,13 +18,12 @@ cp -a ./vendor/kong/charts/kong ./helm/kong-app
 # Patches
 ./sync/patches/chart/patch.sh
 ./sync/patches/crds/patch.sh
-./sync/patches/values/patch.sh
+./sync/patches/values-schema/patch.sh
 ./sync/patches/affinity-topologyspreadconstraints/patch.sh
 ./sync/patches/psp/patch.sh
 ./sync/patches/servicemonitor/patch.sh
 ./sync/patches/gs-helpers/patch.sh
 ./sync/patches/vpa/patch.sh
-./sync/patches/schema/patch.sh
 ./sync/patches/helmignore/patch.sh
 ./sync/patches/kube-linter/patch.sh
 

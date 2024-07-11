@@ -161,9 +161,9 @@ Note:
 When installed through the Giant Swarm App platform, CRD installation is taken care of
 automatically.
 
-## Credit
+## Development
 
-* https://github.com/Kong/charts/
+Information about chart and version development can be found in [sync/README.md](https://github.com/giantswarm/kong-app/blob/main/sync/README.md).
 
 ## Automatic and manual testing
 
@@ -189,3 +189,7 @@ The repository includes resources to test this chart and chart upgrades in direc
 
 Please visit https://www.giantswarm.io/responsible-disclosure for information on
 reporting security issues.
+
+## Credit
+
+* https://github.com/Kong/charts/
