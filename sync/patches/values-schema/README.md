@@ -12,7 +12,7 @@ In case you run into `error: helm/kong-app/values.yaml: patch does not apply`, d
       sed -i 's|b/vendor/kong/charts/kong/values.yaml|b/helm/kong-app/values.yaml|' \
          sync/patches/values-schema/values.yaml.patch
 
-- Once the patch looks good, do `git add sync/patches/values-schema/values.yaml.patch`
+- Once the patch looks good, do `git add sync/patches/values-schema/values.yaml.patch` and run `./sync/sync.sh` again
 
 In case of changes (additions, removals or type changes) in the `values.yaml`, read on
 

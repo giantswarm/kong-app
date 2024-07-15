@@ -6,7 +6,7 @@ directories:
   - path: kong
     git:
       url: https://github.com/Kong/charts
-      ref: 07ddc3d
+      ref: kong-2.39.3
     includePaths:
     - charts/kong/**/*
     - .kube-linter.yaml

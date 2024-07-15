@@ -2,10 +2,11 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'feat(kgo): custom kubeRBACProxy image  (#1047)'
-      sha: 07ddc3d3ac28f6313d705e5339520d2cdf22e725
+      commitTitle: 'fix(kong): don''t populate KONG_ADMIN_GUI_SESSION_CONF only on
+        OIDC (#1093)...'
+      sha: a5ad17a7c4e6fffbe7c79e39eb5b4ca540b28bdc
       tags:
-      - gateway-operator-0.1.5-5-g07ddc3d
+      - kong-2.39.3
     path: kong
   path: vendor
 - contents:

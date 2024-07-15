@@ -1,5 +1,5 @@
 diff --git a/vendor/kong/charts/kong/Chart.yaml b/helm/kong-app/Chart.yaml
-index b8ca8b0..0f572c2 100644
+index f419c2b..e0f312a 100644
 --- a/vendor/kong/charts/kong/Chart.yaml
 +++ b/helm/kong-app/Chart.yaml
 @@ -1,17 +1,24 @@
@@ -17,10 +17,10 @@ index b8ca8b0..0f572c2 100644
  sources:
 +  - https://github.com/giantswarm/kong-app
    - https://github.com/Kong/charts/tree/main/charts/kong
--version: 2.38.0
+-version: 2.39.3
 -appVersion: "3.6"
 +version: 4.1.0
-+appVersion: "3.6.1.4"
++appVersion: "3.7.1.2"
 +annotations:
 +  application.giantswarm.io/team: "cabbage"
 +kubeVersion: ">=1.22.0-0"
