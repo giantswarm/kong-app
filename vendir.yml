@@ -5,25 +5,16 @@ directories:
   contents:
   - path: kong
     git:
-      url: https://github.com/giantswarm/kong-charts-upstream
-      ref: main
+      url: https://github.com/Kong/charts
+      ref: 07ddc3d
     includePaths:
     - charts/kong/**/*
+    - .kube-linter.yaml
 - path: helm/kong-app
   contents:
   - path: .
     directory:
       path: vendor/kong/charts/kong
-    includePaths:
-    - templates/**/*
-    - crds/**/*
-    - ci/**/*
-    - example-values/**/*
-    - "*.md"
     ignorePaths:
-    - values.schema.json
-    - values.yaml
-    - .helmignore
-    - .kube-linter.yaml
     - Chart.lock
     - Chart.yaml

@@ -1,0 +1,15 @@
+diff --git b/vendor/kong/.kube-linter.yaml a/helm/kong-app/.kube-linter.yaml
+index 557af85..7189f3c 100644
+--- b/vendor/kong/.kube-linter.yaml
++++ a/helm/kong-app/.kube-linter.yaml
+@@ -1,8 +1,4 @@
+ checks:
+   exclude:
+-    # TODO: exclude no rule
+-    # https://github.com/Kong/charts/issues/753
+-    - "no-read-only-root-fs"
+-    - "run-as-non-root"
+-    - "unset-cpu-requirements"
+-    - "unset-memory-requirements"
++  - "unset-cpu-requirements"
++  - "unset-memory-requirements"

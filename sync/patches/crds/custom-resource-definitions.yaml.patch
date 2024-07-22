@@ -1,0 +1,11 @@
+diff --git b/helm/kong-app/templates/custom-resource-definitions.yaml a/helm/kong-app/templates/custom-resource-definitions.yaml
+index 5a6dda1..4975ccd 100644
+--- b/helm/kong-app/templates/custom-resource-definitions.yaml
++++ a/helm/kong-app/templates/custom-resource-definitions.yaml
+@@ -32,3 +32,6 @@
+ ---
+ {{- end }}
+ {{- end }}
++
++{{/* This requires giantswarm/kubectl-apply-job to be present as a Chart dependency */}}
++{{ include "kubectlApplyJob.job" . }}

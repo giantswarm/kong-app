@@ -1,0 +1,18 @@
+diff --git b/helm/kong-app/templates/deployment.yaml a/helm/kong-app/templates/deployment.yaml
+index 6e9bba8..110a69c 100644
+--- b/helm/kong-app/templates/deployment.yaml
++++ a/helm/kong-app/templates/deployment.yaml
+@@ -287,11 +287,11 @@ spec:
+         {{- end }} {{/* End of Kong container spec */}}
+     {{- if .Values.affinity }}
+       affinity:
+-{{ toYaml .Values.affinity | indent 8 }}
++{{ tpl .Values.affinity . | indent 8 }}
+     {{- end }}
+     {{- if .Values.topologySpreadConstraints }}
+       topologySpreadConstraints:
+-{{ toYaml .Values.topologySpreadConstraints | indent 8 }}
++{{ tpl .Values.topologySpreadConstraints . | indent 6 }}
+     {{- end }}
+       securityContext:
+       {{- include "kong.podsecuritycontext" . | nindent 8 }}
