@@ -26,6 +26,9 @@ vendir sync
 # Store diffs
 rm -f ./diffs/*
 for f in $(git --no-pager diff --no-exit-code --no-color --no-index vendor/kong/charts/kong helm/kong-app --name-only) ; do
+        # Skip Chart.yaml; as we take it as our own.
+        [[ "$f" == "helm/kong-app/Chart.yaml" ]] && continue
+
         set +e
         set -x
         git --no-pager diff --no-exit-code --no-color --no-index "vendor/kong/charts/kong/${f#"helm/kong-app/"}" "${f}" \
