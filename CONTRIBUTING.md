@@ -5,7 +5,7 @@ This project is Apache 2.0 licensed and accepts contributions via GitHub pull re
 ## Getting started
 
 - Fork the repository on GitHub
-- Read the [README.md](https://github.com/giantswarm/kong-app/blob/main/README.md) for instructions on testing
+- Read the [README.md](https://github.com/giantswarm/kong-app/blob/main/README.md) for instructions on chart development and testing
 
 The helm chart included in this repository is meant to be used within the [Giant Swarm App Plattform](https://docs.giantswarm.io/getting-started/app-platform/) but can be installed with plain helm.
 

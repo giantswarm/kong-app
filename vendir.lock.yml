@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'Merge pull request #22 from giantswarm/servicemonitor-add-relabeling...'
-      sha: 3c252110d81b2d0d4487b6435382189b5436ae77
+      commitTitle: 'feat(kgo): custom kubeRBACProxy image  (#1047)'
+      sha: 07ddc3d3ac28f6313d705e5339520d2cdf22e725
       tags:
-      - kong-2.38.0-101-g3c25211
+      - gateway-operator-0.1.5-5-g07ddc3d
     path: kong
   path: vendor
 - contents:
