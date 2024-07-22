@@ -1,4 +1,4 @@
-name: "Test"
+name: "Validate sync diffs"
 on:
   push: {}
 
