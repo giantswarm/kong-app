@@ -9,6 +9,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [5.0.0] - 2024-07-22
 
+- nothing
+
 ### Changed
 
 - Update kong ingress controller to [3.1.6](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#316)
