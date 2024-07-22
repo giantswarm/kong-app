@@ -9,7 +9,7 @@ name: kong-app
 sources:
   - https://github.com/giantswarm/kong-app
   - https://github.com/Kong/charts/tree/main/charts/kong
-version: 4.1.0
+version: 5.0.0
 appVersion: "3.6.1.4"
 annotations:
   application.giantswarm.io/team: "cabbage"
