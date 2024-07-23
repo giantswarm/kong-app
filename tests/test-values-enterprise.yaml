@@ -33,6 +33,8 @@ env:
   tracing_sampling_rate: "1"
 
 ingressController:
+  image:
+    tag: "2.12.3"
   ingressClass: kong
   admissionWebhook:
     enabled: true
@@ -61,7 +63,7 @@ postgresql:
 
 image:
   repository: giantswarm/kong-gateway
-  tag: "3.5.0.2-debian"
+  tag: "3.5.0.7-rhel"
 
 enterprise:
   enabled: true
