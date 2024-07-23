@@ -2,6 +2,23 @@ version: 2.1
 orbs:
   architect: giantswarm/architect@5.3.0
 
+jobs:
+  test:
+    parameters:
+      kindImage:
+        type: string
+    executor: "machine"
+    steps:
+      - architect/run-tests-with-ats:
+          name: execute enterprise tests (<< parameters.kindImage >>)
+          additional_app-test-suite_flags: "--app-tests-app-config-file=tests/test-values-enterprise.yaml --kind-cluster-image=<< parameters.kindImage >>"
+          filters:
+            branches:
+              ignore:
+                - main
+          requires:
+            - push-to-giantswarm-app-catalog
+
 workflows:
   version: 2
   build:
@@ -31,27 +48,8 @@ workflows:
               ignore: /^v.*/
 
       - architect/run-tests-with-ats:
-          name: execute enterprise tests
-          additional_app-test-suite_flags: "--app-tests-app-config-file=tests/test-values-enterprise.yaml"
-          filters:
-            branches:
-              ignore:
-                - main
-          requires:
-            - push-to-giantswarm-app-catalog
-
-      - architect/run-tests-with-ats:
-          name: execute enterprise tests (1.25)
-          additional_app-test-suite_flags: "--app-tests-app-config-file=tests/test-values-enterprise.yaml --kind-cluster-image=kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1"
-          filters:
-            branches:
-              ignore:
-                - main
-          requires:
-            - push-to-giantswarm-app-catalog
-      
-      - architect/run-tests-with-ats:
-          name: execute chart tests
+          name: execute oss chart tests (1.25)
+          additional_app-test-suite_flags: "--kind-cluster-image=kindest/node:v1.25.16@sha256:5da57dfc290ac3599e775e63b8b6c49c0c85d3fec771cd7d55b45fae14b38d3b"
           filters:
             branches:
               ignore:
@@ -60,13 +58,36 @@ workflows:
             - hold OSS tests
             - push-to-giantswarm-app-catalog
 
-      - architect/run-tests-with-ats:
-          name: execute chart tests (1.25)
-          additional_app-test-suite_flags: "--kind-cluster-image=kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1"
-          filters:
-            branches:
-              ignore:
-                - main
-          requires:
-            - hold OSS tests
-            - push-to-giantswarm-app-catalog
+      - test:
+          matrix:
+            parameters:
+              kindImage:
+              - kindest/node:v1.25.16@sha256:5da57dfc290ac3599e775e63b8b6c49c0c85d3fec771cd7d55b45fae14b38d3b
+              - kindest/node:v1.26.15@sha256:84333e26cae1d70361bb7339efb568df1871419f2019c80f9a12b7e2d485fe19
+              - kindest/node:v1.27.13@sha256:17439fa5b32290e3ead39ead1250dca1d822d94a10d26f1981756cd51b24b9d8
+              - kindest/node:v1.28.9@sha256:dca54bc6a6079dd34699d53d7d4ffa2e853e46a20cd12d619a09207e35300bd0
+              - kindest/node:v1.29.4@sha256:3abb816a5b1061fb15c6e9e60856ec40d56b7b52bcea5f5f1350bc6e2320b6f8
+              - kindest/node:v1.30.0@sha256:047357ac0cfea04663786a612ba1eaba9702bef25227a794b52890dd8bcd692e
+
+
+      #- architect/run-tests-with-ats:
+      #    name: execute enterprise tests (1.25)
+      #    additional_app-test-suite_flags: "--app-tests-app-config-file=tests/test-values-enterprise.yaml --kind-cluster-image=kindest/node:v1.25.16@sha256:5da57dfc290ac3599e775e63b8b6c49c0c85d3fec771cd7d55b45fae14b38d3b"
+      #    filters:
+      #      branches:
+      #        ignore:
+      #          - main
+      #    requires:
+      #      - push-to-giantswarm-app-catalog
+
+
+      #- architect/run-tests-with-ats:
+      #    name: execute chart tests (1.25)
+      #    additional_app-test-suite_flags: "--kind-cluster-image=kindest/node:v1.25.3@sha256:f52781bc0d7a19fb6c405c2af83abfeb311f130707a0e219175677e366cc45d1"
+      #    filters:
+      #      branches:
+      #        ignore:
+      #          - main
+      #    requires:
+      #      - hold OSS tests
+      #      - push-to-giantswarm-app-catalog
