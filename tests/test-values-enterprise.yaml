@@ -36,6 +36,9 @@ ingressController:
   image:
     tag: "2.12.3"
   ingressClass: kong
+  readinessProbe:
+      httpGet:
+        path: /readyz
   admissionWebhook:
     enabled: true
   env:
