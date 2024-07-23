@@ -12,7 +12,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Changed
 
 - Update kong ingress controller to [3.1.6](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#316)
-- Update kong gateway to [3.6.1.7](https://docs.konghq.com/gateway/changelog/#3614)
+- Update kong gateway to [3.6.1.7](https://docs.konghq.com/gateway/changelog/#3617)
 - Enable ServiceMonitor by default, with relabelings for `node` and `app` labels.
 - Update kubectl-apply-job to 0.8.0 for enabling `readOnlyRootFilesystem: true` for kubectl CRD install job container.
 
