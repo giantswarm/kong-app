@@ -51,6 +51,12 @@ For further instructions please refer to the [README.md](./README.md).
 - Align with upstream chart version [2.35.1](https://github.com/Kong/charts/releases/tag/kong-2.35.1) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.33.3...kong-2.35.1))
   - Kong listens now use both IPv4 and IPv6 addresses. [kong/charts#986](https://github.com/Kong/charts/pull/986)
 
+## [3.7.1] - 2024-07-08
+
+### Changes
+
+- Update kubectl-apply-job to 0.8.0 for enabling `readOnlyRootFilesystem: true` for kubectl CRD install job container.
+
 ## [3.7.0] - 2024-01-16
 
 ### Changes
