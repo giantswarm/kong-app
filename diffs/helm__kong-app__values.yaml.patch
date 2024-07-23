@@ -1,5 +1,5 @@
 diff --git a/vendor/kong/charts/kong/values.yaml b/helm/kong-app/values.yaml
-index 0829fcb..5ada467 100644
+index 0829fcb..0d722eb 100644
 --- a/vendor/kong/charts/kong/values.yaml
 +++ b/helm/kong-app/values.yaml
 @@ -88,6 +88,7 @@ deployment:
@@ -23,7 +23,7 @@ index 0829fcb..5ada467 100644
 -  # repository: kong/kong-gateway
 -  # tag: "3.5"
 +  repository: giantswarm/kong-gateway
-+  tag: "3.6.1.4-debian"
++  tag: "3.6.1.7-debian"
  
    # Specify a semver version if your image tag is not one (e.g. "nightly")
    effectiveSemver:
