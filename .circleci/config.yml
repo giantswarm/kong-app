@@ -7,7 +7,7 @@ jobs:
     parameters:
       kindImage:
         type: string
-    executor: "machine"
+    executor: "architect-orb/machine"
     steps:
       - architect/run-tests-with-ats:
           app-test-suite_container_tag: "v0.6.1"
