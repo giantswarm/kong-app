@@ -7,10 +7,12 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [4.2.0] - 2024-07-23
+
 ### Changed
 
 - Update kong ingress controller to [3.1.6](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#316)
-- Update kong gateway to [3.6.1.7](https://docs.konghq.com/gateway/changelog/#3614)
+- Update kong gateway to [3.6.1.7](https://docs.konghq.com/gateway/changelog/#3617)
 - Enable ServiceMonitor by default, with relabelings for `node` and `app` labels.
 - Update kubectl-apply-job to 0.8.0 for enabling `readOnlyRootFilesystem: true` for kubectl CRD install job container.
 
@@ -48,6 +50,12 @@ For further instructions please refer to the [README.md](./README.md).
 - Disable anonymous reports in kong default values for proxy and ingress controller.
 - Align with upstream chart version [2.35.1](https://github.com/Kong/charts/releases/tag/kong-2.35.1) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.33.3...kong-2.35.1))
   - Kong listens now use both IPv4 and IPv6 addresses. [kong/charts#986](https://github.com/Kong/charts/pull/986)
+
+## [3.7.1] - 2024-07-08
+
+### Changes
+
+- Update kubectl-apply-job to 0.8.0 for enabling `readOnlyRootFilesystem: true` for kubectl CRD install job container.
 
 ## [3.7.0] - 2024-01-16
 
@@ -682,10 +690,12 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v4.1.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v4.2.0...HEAD
+[4.2.0]: https://github.com/giantswarm/kong-app/compare/v4.1.0...v4.2.0
 [4.1.0]: https://github.com/giantswarm/kong-app/compare/v4.0.0...v4.1.0
 [4.0.0]: https://github.com/giantswarm/kong-app/compare/v3.8.0...v4.0.0
 [3.8.0]: https://github.com/giantswarm/kong-app/compare/v3.7.0...v3.8.0
+[3.7.1]: https://github.com/giantswarm/kong-app/compare/v3.7.0...v3.7.1
 [3.7.0]: https://github.com/giantswarm/kong-app/compare/v3.6.2...v3.7.0
 [3.6.2]: https://github.com/giantswarm/kong-app/compare/v3.6.1...v3.6.2
 [3.6.1]: https://github.com/giantswarm/kong-app/compare/v3.6.0...v3.6.1
