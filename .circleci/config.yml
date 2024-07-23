@@ -10,8 +10,8 @@ jobs:
     executor: "architect/machine"
     steps:
       - architect/run-tests-with-ats:
-          app-test-suite_container_tag: "v0.6.1"
-          app-test-suite_version: "0.6.1"
+          app-test-suite_container_tag: "0.6.1"
+          app-test-suite_version: "v0.6.1"
           additional_app-test-suite_flags: "--app-tests-app-config-file=tests/test-values-enterprise.yaml --kind-cluster-image=<< parameters.kindImage >>"
 
 workflows:
