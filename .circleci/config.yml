@@ -54,7 +54,7 @@ workflows:
             - push-to-giantswarm-app-catalog
 
       - test:
-          name: execute enterprise tests (<< parameters.kindImage >>)
+          name: execute enterprise tests
           filters:
             branches:
               ignore:
