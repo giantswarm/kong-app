@@ -12,7 +12,7 @@ cd "${repo_dir}"
 readonly script_dir_rel=".${script_dir#"${repo_dir}"}"
 
 set -x
-cp ./vendor/kong/.kube-linter.yaml ./helm/kong-app/.kube-linter.yaml
+cp ./vendor/kong/.kube-linter.yaml ./.kube-linter.yaml
 git apply "${script_dir_rel}/kube-linter.yaml.patch"
 
 { set +x; } 2>/dev/null

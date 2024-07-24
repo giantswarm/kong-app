@@ -1,7 +1,7 @@
-diff --git b/vendor/kong/.kube-linter.yaml a/helm/kong-app/.kube-linter.yaml
+diff --git b/vendor/kong/.kube-linter.yaml a/.kube-linter.yaml
 index 557af85..7189f3c 100644
 --- b/vendor/kong/.kube-linter.yaml
-+++ a/helm/kong-app/.kube-linter.yaml
++++ a/.kube-linter.yaml
 @@ -1,8 +1,4 @@
  checks:
    exclude:
