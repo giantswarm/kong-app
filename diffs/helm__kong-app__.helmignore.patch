@@ -1,14 +1,13 @@
 diff --git a/vendor/kong/charts/kong/.helmignore b/helm/kong-app/.helmignore
-index 7c04072..0f5e36a 100644
+index 7c04072..e99ffc8 100644
 --- a/vendor/kong/charts/kong/.helmignore
 +++ b/helm/kong-app/.helmignore
-@@ -20,3 +20,9 @@
+@@ -20,3 +20,8 @@
  .idea/
  *.tmproj
  OWNERS
 +ci
 +example-values
-+.kube-linter.yaml
 +.helmignore
 +*.back
 +templates/tests
