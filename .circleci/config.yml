@@ -9,6 +9,7 @@ jobs:
         type: string
     executor: "architect/machine"
     steps:
+      - checkout
       - architect/run-tests-with-ats:
           app-test-suite_container_tag: "0.6.1"
           app-test-suite_version: "v0.6.1"
