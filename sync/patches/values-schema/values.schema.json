@@ -482,6 +482,9 @@
                 "enabled": {
                     "type": "boolean"
                 },
+                "license_secret": {
+                    "type": "string"
+                },
                 "portal": {
                     "type": "object",
                     "properties": {
@@ -706,6 +709,9 @@
                         "failurePolicy": {
                             "type": "string"
                         },
+                        "filterSecrets": {
+                            "type": "boolean"
+                        },
                         "namespaceSelector": {
                             "type": "object",
                             "properties": {
@@ -790,7 +796,7 @@
                     "type": "object",
                     "properties": {
                         "effectiveSemver": {
-                            "type": "null"
+                            "type": ["null", "string"]
                         },
                         "registry": {
                             "type": "string"
@@ -1731,6 +1737,29 @@
             "properties": {
                 "enabled": {
                     "type": "boolean"
+                },
+                "interval": {
+                    "type": "string"
+                },
+                "relabelings": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "action": {
+                                "type": "string"
+                            },
+                            "sourceLabels": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "targetLabel": {
+                                "type": "string"
+                            }
+                        }
+                    }
                 }
             }
         },

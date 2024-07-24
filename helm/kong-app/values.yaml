@@ -132,10 +132,10 @@ extraLabels: {}
 image:
   registry: &registry gsoci.azurecr.io
   # repository: giantswarm/kong
-  # tag: "3.6.1"
+  # tag: "3.7.1"
   # Kong Enterprise
   repository: giantswarm/kong-gateway
-  tag: "3.6.1.7-debian"
+  tag: "3.7.1.2-debian"
 
   # Specify a semver version if your image tag is not one (e.g. "nightly")
   effectiveSemver:
@@ -535,7 +535,7 @@ ingressController:
   image:
     registry: *registry
     repository: giantswarm/kong-ingress-controller
-    tag: "3.1.6"
+    tag: "3.2.2"
     # Optionally set a semantic version for version-gated features. This can normally
     # be left unset. You only need to set this if your tag is not a semver string,
     # such as when you are using a "next" tag. Set this to the effective semantic
@@ -586,6 +586,7 @@ ingressController:
 
   admissionWebhook:
     enabled: false
+    filterSecrets: false
     failurePolicy: Fail
     port: 8080
     certificate:
@@ -1131,7 +1132,7 @@ enterprise:
     # https://docs.konghq.com/enterprise/latest/kong-manager/authentication/sessions
     # If using 3.6+ and OIDC, session configuration is instead handled in the auth configuration,
     # and this field can be left empty.
-    session_conf_secret: ""  # CHANGEME
+    session_conf_secret: "kong-session-config"  # CHANGEME
     # If admin_gui_auth is not set to basic-auth, provide a secret name which
     # has an admin_gui_auth_conf key containing the plugin config JSON
     admin_gui_auth_conf_secret: CHANGEME-admin-gui-auth-conf-secret

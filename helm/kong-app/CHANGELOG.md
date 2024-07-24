@@ -2,6 +2,32 @@
 
 ## Unreleased
 
+Nothing yet.
+
+## 2.39.3
+
+### Fixed
+
+* `KONG_ADMIN_GUI_SESSION_CONF` is not populated only when `enterprise.rbac.admin_gui_auth`
+  is set to `openid-connect`. The default value of `enterprise.rbac.session_conf_secret` is
+  restored to `kong-session-config` to avoid breaking changes.
+  [#1093](https://github.com/Kong/charts/pull/1093)
+
+## 2.39.2
+
+### Fixed
+
+* Fixes `KongLicense` policy rules for Ingress controller when using `watchNamespaces`
+  [#1084](https://github.com/Kong/charts/pull/1084)
+
+## 2.39.1
+
+### Fixed
+
+* Added missing `KongCustomEntity` CRD for KIC 3.2.
+
+## 2.39.0
+
 ### Changes
 
 * Updated handling of `session_conf_secret` to accommodate Kong 3.6.
@@ -11,6 +37,20 @@
   for use when the external Service and container listens should differ, such
   as when terminating TLS at a LoadBalancer.
   [#1021](https://github.com/Kong/charts/pull/1021)
+* Added an `ingressController.admissionWebhook.filterSecrets` option. When
+  enabled, the webhook will only validate Secrets that have one of the
+  recognized KIC labels:
+
+  * `konghq.com/credential: <"key-auth", "jwt", etc. credential types>`
+  * `konghq.com/validate: <"plugin", "custom">`
+
+  Earlier versions checked all Secrets and did not require labels, interfering
+  with non-KIC labels. Requires KIC 3.0+.
+  [#1061](https://github.com/Kong/charts/pull/1061)
+* Add RBAC policy rules for Custom Entities
+  [#1081](https://github.com/Kong/charts/pull/1081)
+* Bumped default `kong/kubernetes-ingress-controller` image tag to 3.2.
+  [#1085](https://github.com/Kong/charts/pull/1085)
 
 ## 2.38.0
 
