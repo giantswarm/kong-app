@@ -1,5 +1,5 @@
 diff --git a/vendor/kong/charts/kong/values.yaml b/helm/kong-app/values.yaml
-index bc66e97..75b790b 100644
+index bc66e97..8cabb4e 100644
 --- a/vendor/kong/charts/kong/values.yaml
 +++ b/helm/kong-app/values.yaml
 @@ -88,6 +88,7 @@ deployment:
@@ -35,7 +35,7 @@ index bc66e97..75b790b 100644
 -    tag: "3.2"
 +    registry: *registry
 +    repository: giantswarm/kong-ingress-controller
-+    tag: "3.2.2"
++    tag: "3.2.3"
      # Optionally set a semantic version for version-gated features. This can normally
      # be left unset. You only need to set this if your tag is not a semver string,
      # such as when you are using a "next" tag. Set this to the effective semantic
