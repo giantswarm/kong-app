@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project's packages adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+
 ## [Unreleased]
 
 - Update kong ingress controller to [3.2.2](https://github.com/Kong/kubernetes-ingress-controller/blob/v3.2.2/CHANGELOG.md#322)
