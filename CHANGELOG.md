@@ -697,7 +697,6 @@ From upstream CHANGELOG:
 - Disable using Postgres and use Kubernetes resources for storing state.
 
 [Unreleased]: https://github.com/giantswarm/kong-app/compare/v4.3.0...HEAD
-[4.3.0]: https://github.com/giantswarm/kong-app/compare/v4.3.0...v4.3.0
 [4.3.0]: https://github.com/giantswarm/kong-app/compare/v4.2.0...v4.3.0
 [4.2.0]: https://github.com/giantswarm/kong-app/compare/v4.1.0...v4.2.0
 [4.1.0]: https://github.com/giantswarm/kong-app/compare/v4.0.0...v4.1.0
