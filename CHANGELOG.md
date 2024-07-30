@@ -9,6 +9,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [4.3.0] - 2024-07-30
 
+## [4.3.0] - 2024-07-30
+
 - Update kong ingress controller to [3.2.3](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#323)
 - Update kong gateway to [3.7.1.2](https://docs.konghq.com/gateway/changelog/#3712)
 - Align with upstream chart version [2.39.3](https://github.com/Kong/charts/releases/tag/kong-2.39.2) ([Changes in upstream repository](https://github.com/Kong/charts/compare/07ddc3d...kong-2.39.3))
@@ -697,6 +699,7 @@ From upstream CHANGELOG:
 - Disable using Postgres and use Kubernetes resources for storing state.
 
 [Unreleased]: https://github.com/giantswarm/kong-app/compare/v4.3.0...HEAD
+[4.3.0]: https://github.com/giantswarm/kong-app/compare/v4.3.0...v4.3.0
 [4.3.0]: https://github.com/giantswarm/kong-app/compare/v4.2.0...v4.3.0
 [4.2.0]: https://github.com/giantswarm/kong-app/compare/v4.1.0...v4.2.0
 [4.1.0]: https://github.com/giantswarm/kong-app/compare/v4.0.0...v4.1.0
