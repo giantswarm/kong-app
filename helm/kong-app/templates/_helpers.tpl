@@ -1135,7 +1135,7 @@ the template that it itself is using form the above sections.
       {{- $_ := set $autoEnv "KONG_ADMIN_GUI_AUTH_CONF" $guiAuthConf -}}
     {{- end }}
 
-    {{- if .Values.enterprise.rbac.session_conf_secret }}
+    {{- if not (eq .Values.enterprise.rbac.admin_gui_auth "openid-connect") }}
       {{- $guiSessionConf := include "secretkeyref" (dict "name" .Values.enterprise.rbac.session_conf_secret "key" "admin_gui_session_conf") -}}
       {{- $_ := set $autoEnv "KONG_ADMIN_GUI_SESSION_CONF" $guiSessionConf -}}
     {{- end }}
@@ -1310,6 +1310,24 @@ role sets used in the charts. Updating these requires separating out cluster
 resource roles into their separate templates.
 */}}
 {{- define "kong.kubernetesRBACRules" -}}
+{{- if (semverCompare ">= 3.2.0" (include "kong.effectiveVersion" .Values.ingressController.image)) }}
+- apiGroups:
+  - configuration.konghq.com
+  resources:
+  - kongcustomentities
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - configuration.konghq.com
+  resources:
+  - kongcustomentities/status
+  verbs:
+  - get
+  - patch
+  - update
+{{- end }}
 {{- if and (semverCompare ">= 3.1.0" (include "kong.effectiveVersion" .Values.ingressController.image))
            (contains (print .Values.ingressController.env.feature_gates) "KongServiceFacade=true") }}
 - apiGroups:
@@ -1673,6 +1691,14 @@ resource roles into their separate templates.
   - get
   - list
   - watch
+{{- end -}}
+
+{{/*
+kong.kubernetesRBACClusterRoles outputs a static list of RBAC rules (the "rules" block
+of a Role or ClusterRole) that provide the ingress controller access to the
+Kubernetes Cluster-scoped resources it uses to build Kong configuration.
+*/}}
+{{- define "kong.kubernetesRBACClusterRules" -}}
 {{- if (semverCompare ">= 3.1.0" (include "kong.effectiveVersion" .Values.ingressController.image)) }}
 - apiGroups:
   - configuration.konghq.com
@@ -1691,14 +1717,6 @@ resource roles into their separate templates.
   - patch
   - update
 {{- end -}}
-{{- end -}}
-
-{{/*
-kong.kubernetesRBACClusterRoles outputs a static list of RBAC rules (the "rules" block
-of a Role or ClusterRole) that provide the ingress controller access to the
-Kubernetes Cluster-scoped resources it uses to build Kong configuration.
-*/}}
-{{- define "kong.kubernetesRBACClusterRules" -}}
 {{- if (semverCompare ">= 3.1.0" (include "kong.effectiveVersion" .Values.ingressController.image)) }}
 - apiGroups:
   - configuration.konghq.com

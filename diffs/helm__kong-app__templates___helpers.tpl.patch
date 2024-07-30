@@ -1,5 +1,5 @@
 diff --git a/vendor/kong/charts/kong/templates/_helpers.tpl b/helm/kong-app/templates/_helpers.tpl
-index e0f2a31..f2f04aa 100644
+index 9bdc13f..c82c2dd 100644
 --- a/vendor/kong/charts/kong/templates/_helpers.tpl
 +++ b/helm/kong-app/templates/_helpers.tpl
 @@ -25,23 +25,39 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this

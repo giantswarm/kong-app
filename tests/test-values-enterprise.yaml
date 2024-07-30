@@ -48,9 +48,5 @@ podDisruptionBudget:
   enabled: true
   maxUnavailable: 50%
 
-image:
-  repository: giantswarm/kong-gateway
-  tag: "3.6.1.7-debian"
-
 enterprise:
   enabled: false
