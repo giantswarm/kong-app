@@ -12,7 +12,6 @@ cd "${repo_dir}"
 readonly script_dir_rel=".${script_dir#"${repo_dir}"}"
 
 set -x
-git apply "${script_dir_rel}/servicemonitor.yaml.patch"
 cp "${script_dir_rel}/service-kong-metrics.yaml" ./helm/kong-app/templates/service-kong-metrics.yaml
 
 { set +x; } 2>/dev/null
