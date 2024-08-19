@@ -768,7 +768,8 @@ section of `values.yaml` file:
 | gatewayDiscovery.adminApiService.namespace | The namespace of the Kong admin API service (for more details see [gatewayDiscovery section][gd_section])                                                | `.Release.Namespace`               |
 | gatewayDiscovery.adminApiService.name      | The name of the Kong admin API service (for more details see [gatewayDiscovery section][gd_section])                                                     | ""                                 |
 | konnect.enabled                            | Enable synchronisation of data plane configuration with Konnect Runtime Group                                                                            | false                              |
-| konnect.runtimeGroupID                     | Konnect Runtime Group's unique identifier.                                                                                                               |                                    |
+| konnect.runtimeGroupID                     | Deprecated: Konnect Runtime Group's unique identifier.                                                                                                   |                                    |
+| konnect.controlPlaneID                     | Konnect Control Plane's unique identifier.                                                                                                               |                                    |
 | konnect.apiHostname                        | Konnect API hostname. Defaults to a production US-region.                                                                                                | us.kic.api.konghq.com              |
 | konnect.tlsClientCertSecretName            | Name of the secret that contains Konnect Runtime Group's client TLS certificate.                                                                         | konnect-client-tls                 |
 | konnect.license.enabled                    | Enable automatic license provisioning for Gateways managed by Ingress Controller in Konnect mode.                                                        | false                              |
@@ -860,6 +861,7 @@ On the Gateway release side, set either `admin.tls.client.secretName` to the nam
 | ---------------------------------- | ------------------------------------------------------------------------------------- | ------------------- |
 | namespace                          | Namespace to deploy chart resources                                                   |                     |
 | deployment.kong.enabled            | Enable or disable deploying Kong                                                      | `true`              |
+| deployment.revisionHistoryLimit    | The number of `ReplicaSet`s to retain.                                              | `10`                |
 | deployment.minReadySeconds         | Minimum number of seconds for which newly created pods should be ready without any of its container crashing, for it to be considered available. |                     |
 | deployment.initContainers          | Create initContainers. Please go to Kubernetes doc for the spec of the initContainers |                     |
 | deployment.daemonset               | Use a DaemonSet instead of a Deployment                                               | `false`             |
@@ -912,6 +914,7 @@ On the Gateway release side, set either `admin.tls.client.secretName` to the nam
 | serviceMonitor.targetLabels        | ServiceMonitor targetLabels                                                           | `{}`                |
 | serviceMonitor.honorLabels         | ServiceMonitor honorLabels                                                            | `{}`                |
 | serviceMonitor.metricRelabelings   | ServiceMonitor metricRelabelings                                                      | `{}`                |
+| serviceMonitor.relabelings         | ServiceMonitor relabelings                                                            | `[]`                |
 | extraConfigMaps                    | ConfigMaps to add to mounted volumes                                                  | `[]`                |
 | extraSecrets                       | Secrets to add to mounted volumes                                                     | `[]`                |
 | nameOverride                       | Replaces "kong" in resource names, like "RELEASENAME-nameOverride" instead of "RELEASENAME-kong" | `""`                |

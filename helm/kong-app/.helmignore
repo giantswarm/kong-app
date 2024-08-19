@@ -22,7 +22,7 @@
 OWNERS
 ci
 example-values
-.kube-linter.yaml
 .helmignore
-*.back
 templates/tests
+.kube-linter.yaml
+*.back

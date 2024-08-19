@@ -547,10 +547,17 @@ The name of the Service which will be used by the controller to update the Ingre
   {{- end }}
 
   {{- $konnect := .Values.ingressController.konnect -}}
-  {{- $_ := required "ingressController.konnect.runtimeGroupID is required when ingressController.konnect.enabled" $konnect.runtimeGroupID -}}
+  {{- $_ := required "ingressController.konnect.controlPlaneID is required when ingressController.konnect.enabled" $konnect.controlPlaneID -}}
+
+  {{- if $konnect.controlPlaneID }}
+  {{- $_ = set $autoEnv "CONTROLLER_KONNECT_CONTROL_PLANE_ID" $konnect.controlPlaneID -}}
+  {{- else if $konnect.runtimeGroupID }}
+  {{- $_ = set $autoEnv "CONTROLLER_KONNECT_CONTROL_PLANE_ID" $konnect.runtimeGroupID -}}
+  {{- else }}
+  {{- fail "At least one of konnect.controlPlaneID or konnect.runtimeGroupID must be set." -}}
+  {{- end }}
 
   {{- $_ = set $autoEnv "CONTROLLER_KONNECT_SYNC_ENABLED" true -}}
-  {{- $_ = set $autoEnv "CONTROLLER_KONNECT_RUNTIME_GROUP_ID" $konnect.runtimeGroupID -}}
   {{- $_ = set $autoEnv "CONTROLLER_KONNECT_ADDRESS" (printf "https://%s" .Values.ingressController.konnect.apiHostname) -}}
 
   {{- $tlsCert := include "secretkeyref" (dict "name" $konnect.tlsClientCertSecretName "key" "tls.crt") -}}
@@ -1135,7 +1142,14 @@ the template that it itself is using form the above sections.
       {{- $_ := set $autoEnv "KONG_ADMIN_GUI_AUTH_CONF" $guiAuthConf -}}
     {{- end }}
 
-    {{- if not (eq .Values.enterprise.rbac.admin_gui_auth "openid-connect") }}
+    {{/*
+    KONG_ADMIN_GUI_SESSION_CONF is required for Kong versions <3.6.0.
+    For >=3.6.0, when openid-connect is used as the admin_gui_auth, the session_conf_secret is not required.
+    https://docs.konghq.com/gateway/3.6.x/kong-manager/auth/oidc/migrate/
+    */}}
+    {{- if or (not (eq .Values.enterprise.rbac.admin_gui_auth "openid-connect"))
+              (semverCompare "< 3.6.0" (include "kong.effectiveVersion" .Values.image))
+    -}}
       {{- $guiSessionConf := include "secretkeyref" (dict "name" .Values.enterprise.rbac.session_conf_secret "key" "admin_gui_session_conf") -}}
       {{- $_ := set $autoEnv "KONG_ADMIN_GUI_SESSION_CONF" $guiSessionConf -}}
     {{- end }}

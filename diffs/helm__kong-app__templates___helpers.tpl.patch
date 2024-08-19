@@ -1,5 +1,5 @@
 diff --git a/vendor/kong/charts/kong/templates/_helpers.tpl b/helm/kong-app/templates/_helpers.tpl
-index 9bdc13f..c82c2dd 100644
+index fe20eb4..5608e07 100644
 --- a/vendor/kong/charts/kong/templates/_helpers.tpl
 +++ b/helm/kong-app/templates/_helpers.tpl
 @@ -25,23 +25,39 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this
@@ -45,7 +45,7 @@ index 9bdc13f..c82c2dd 100644
  {{- define "kong.postgresql.fullname" -}}
  {{- $name := default "postgresql" .Values.postgresql.nameOverride -}}
  {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-@@ -1272,9 +1288,13 @@ Environment variables are sorted alphabetically
+@@ -1286,9 +1302,13 @@ Environment variables are sorted alphabetically
  {{- if .unifiedRepoTag }}
  {{- .unifiedRepoTag }}
  {{- else if .repository }}

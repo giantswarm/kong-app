@@ -2,11 +2,11 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'fix(kong): don''t populate KONG_ADMIN_GUI_SESSION_CONF only on
-        OIDC (#1093)...'
-      sha: a5ad17a7c4e6fffbe7c79e39eb5b4ca540b28bdc
+      commitTitle: 'fix(kong): handle admin openid-connect correctly for Kong < 3.6.0
+        (#1101)'
+      sha: e8334f833acee1fbbe3ba92076450413385617f3
       tags:
-      - kong-2.39.3
+      - kong-2.40.0
     path: kong
   path: vendor
 - contents:

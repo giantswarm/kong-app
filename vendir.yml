@@ -6,7 +6,7 @@ directories:
   - path: kong
     git:
       url: https://github.com/Kong/charts
-      ref: kong-2.39.3
+      ref: kong-2.40.0
       depth: 1
     includePaths:
     - charts/kong/**/*
