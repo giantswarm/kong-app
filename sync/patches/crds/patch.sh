@@ -9,7 +9,7 @@ script_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd ) ; readonly script_d
 
 cd "${repo_dir}"
 
-kong_ingress_controller_version="v3.2.3"
+kong_ingress_controller_version="v3.2.4"
 crds_file="./helm/kong-app/crds/custom-resource-definitions.yaml"
 
 # Fetch right CRDs file
