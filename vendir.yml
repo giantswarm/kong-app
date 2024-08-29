@@ -6,11 +6,14 @@ directories:
   - path: kong
     git:
       url: https://github.com/Kong/charts
-      ref: kong-2.40.0
+      ref: kong-2.41.0
       depth: 1
     includePaths:
     - charts/kong/**/*
     - .kube-linter.yaml
+    excludePaths:
+    - charts/kong/ci/.chartsnap.yaml
+    - charts/kong/ci/__snapshots__/*
 - path: helm/kong-app
   contents:
   - path: .

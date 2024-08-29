@@ -2,11 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'fix(kong): handle admin openid-connect correctly for Kong < 3.6.0
-        (#1101)'
-      sha: e8334f833acee1fbbe3ba92076450413385617f3
+      commitTitle: 'chore: bump KIC tag v3.3 and release v2.41.0 (#1121)...'
+      sha: 4d44227109381676d629b0ba0c47ae8f83d78e89
       tags:
-      - kong-2.40.0
+      - kong-2.41.0
     path: kong
   path: vendor
 - contents:
