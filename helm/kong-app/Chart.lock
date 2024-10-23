@@ -1,9 +1,9 @@
 dependencies:
 - name: postgresql
   repository: oci://registry-1.docker.io/bitnamicharts
-  version: 11.9.13
+  version: 16.0.5
 - name: kubectl-apply-job
   repository: oci://giantswarmpublic.azurecr.io/giantswarm-playground-catalog
   version: 0.8.0
-digest: sha256:e51bb892e434a9e518083a7fbe8944ccf709c269e91e7e7719b02955834c0c7c
-generated: "2024-07-08T16:50:20.619353016+02:00"
+digest: sha256:3c8906ea36b851411f06bb4acb09b5c13f8ded952a2d7d6698cf9f725c084dce
+generated: "2024-10-23T04:50:10.648013992Z"
