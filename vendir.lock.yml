@@ -2,10 +2,11 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'chore: bump KIC tag v3.3 and release v2.41.0 (#1121)...'
-      sha: 4d44227109381676d629b0ba0c47ae8f83d78e89
+      commitTitle: 'feat(kong): add new admission webhook configuration fields: matchPolicy,
+        matchConditions and objectSelector (#1133)...'
+      sha: 9d12430467716ff84ea9866e8156d1a25a0b608b
       tags:
-      - kong-2.41.0
+      - kong-2.42.0
     path: kong
   path: vendor
 - contents:

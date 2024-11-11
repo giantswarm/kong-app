@@ -588,6 +588,7 @@ ingressController:
   envFrom: []
 
   admissionWebhook:
+    matchPolicy: Equivalent
     enabled: false
     filterSecrets: false
     failurePolicy: Fail
@@ -600,6 +601,13 @@ ingressController:
         operator: NotIn
         values:
         - linkerd
+    # ObjectSelector specifies which objects to match against validations.kong.konghq.com webhook webhook
+    objectSelector:
+      matchExpressions:
+      - key: owner
+        operator: NotIn
+        values:
+        - helm
     # Specifiy the secretName when the certificate is provided via a TLS secret
     # secretName: ""
     # Specifiy the CA bundle of the provided certificate.

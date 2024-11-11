@@ -1,5 +1,30 @@
 # Changelog
 
+## 2.42.0
+
+### Fixes
+
+* Fixed handling version labels `app.kubernetes.io/version` and `version` so that
+  they are not based on `Chart.yaml`'s version but on the version set in `values.yaml`.
+  [#1132](https://github.com/Kong/charts/pull/1132)
+
+### Changes
+
+* Bumped default `kong` image tag to 3.7.
+  [#1131](https://github.com/Kong/charts/pull/1131)
+* Add new admission webhook configuration fields:
+  * `matchPolicy`
+  * `matchConditions` and
+  * `objectSelector`
+  [#1133](https://github.com/Kong/charts/pull/1133)
+
+## 2.41.1
+
+### Changes
+
+* Deleted an unnecessary conditional statement for `ingressController.konnect.controlPlaneID`.
+  [#1126](https://github.com/Kong/charts/pull/1126)
+
 ## 2.41.0
 
 ### Changes
