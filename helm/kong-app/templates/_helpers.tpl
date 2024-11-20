@@ -38,13 +38,14 @@ app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
 helm.sh/chart: {{ template "kong.chart" . }}
 app.kubernetes.io/instance: "{{ .Release.Name }}"
 app.kubernetes.io/managed-by: "{{ .Release.Service }}"
-app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{ $version := semver (include "kong.effectiveVersion" .Values.image) }}
+app.kubernetes.io/version: {{ printf "%d.%d" $version.Major $version.Minor | quote }}
 giantswarm.io/service-type: "managed"
 giantswarm.io/monitoring_basic_sli: "true"
 application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
 application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
 {{- range $key, $value := .Values.extraLabels }}
-{{ $key }}: {{ $value | quote }}
+{{ $key }}: {{ include "kong.renderTpl" (dict "value" $value "context" $) | quote }}
 {{- end }}
 {{- end -}}
 
@@ -547,7 +548,6 @@ The name of the Service which will be used by the controller to update the Ingre
   {{- end }}
 
   {{- $konnect := .Values.ingressController.konnect -}}
-  {{- $_ := required "ingressController.konnect.controlPlaneID is required when ingressController.konnect.enabled" $konnect.controlPlaneID -}}
 
   {{- if $konnect.controlPlaneID }}
   {{- $_ = set $autoEnv "CONTROLLER_KONNECT_CONTROL_PLANE_ID" $konnect.controlPlaneID -}}

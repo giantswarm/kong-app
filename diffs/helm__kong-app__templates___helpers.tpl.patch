@@ -1,8 +1,8 @@
 diff --git a/vendor/kong/charts/kong/templates/_helpers.tpl b/helm/kong-app/templates/_helpers.tpl
-index fe20eb4..5608e07 100644
+index d720e4d..6d72907 100644
 --- a/vendor/kong/charts/kong/templates/_helpers.tpl
 +++ b/helm/kong-app/templates/_helpers.tpl
-@@ -25,23 +25,39 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this
+@@ -25,24 +25,40 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this
  {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
  {{- end -}}
  
@@ -20,14 +20,14 @@ index fe20eb4..5608e07 100644
  helm.sh/chart: {{ template "kong.chart" . }}
  app.kubernetes.io/instance: "{{ .Release.Name }}"
  app.kubernetes.io/managed-by: "{{ .Release.Service }}"
- app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+ {{ $version := semver (include "kong.effectiveVersion" .Values.image) }}
+ app.kubernetes.io/version: {{ printf "%d.%d" $version.Major $version.Minor | quote }}
 +giantswarm.io/service-type: "managed"
 +giantswarm.io/monitoring_basic_sli: "true"
 +application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
 +application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
  {{- range $key, $value := .Values.extraLabels }}
--{{ $key }}: {{ include "kong.renderTpl" (dict "value" $value "context" $) | quote }}
-+{{ $key }}: {{ $value | quote }}
+ {{ $key }}: {{ include "kong.renderTpl" (dict "value" $value "context" $) | quote }}
  {{- end }}
  {{- end -}}
  
