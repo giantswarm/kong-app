@@ -589,9 +589,9 @@ ingressController:
 
   admissionWebhook:
     matchPolicy: Equivalent
-    enabled: false
+    enabled: true
     filterSecrets: false
-    failurePolicy: Fail
+    failurePolicy: Ignore
     port: 8080
     certificate:
       provided: false
