@@ -33,8 +33,6 @@ env:
 
 ingressController:
   ingressClass: kong
-  admissionWebhook:
-    enabled: true
   env:
     anonymous_reports: "false"
     proxy_sync_seconds: "30"
