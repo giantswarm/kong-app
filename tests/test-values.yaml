@@ -18,14 +18,12 @@ env:
 
 image:
   repository: giantswarm/kong
-  tag: "3.7.1"
+  tag: "3.8.0"
 
 enterprise:
   enabled: false
 ingressController:
   ingressClass: kong
-  admissionWebhook:
-    enabled: true
   env:
     anonymous_reports: "false"
   installCRDs: false
