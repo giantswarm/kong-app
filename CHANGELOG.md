@@ -9,9 +9,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Changed
 
-- Update Kong chart version to `kong-2.46.0` ([#1200](https://github.com/Kong/charts/pull/1200))
+- Update kong ingress controller to [3.4.1](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#341)
+- Align with upstream chart version [2.46.0](https://github.com/Kong/charts/releases/tag/kong-2.46.0) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.40.0...kong-2.46.0))
+- Revert `ingressController.admissionWebhook` settings to upstream values. (Enabled by default with `failurePolicy: Ignore`)
 - Update Kong Gateway image to `3.8.1.0-debian`
-- Update Kong Ingress Controller version to `3.4.1`
 
 ## [4.4.0] - 2024-08-19
 
