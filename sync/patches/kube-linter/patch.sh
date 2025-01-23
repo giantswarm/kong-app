@@ -13,12 +13,14 @@ readonly script_dir_rel=".${script_dir#"${repo_dir}"}"
 
 set -x
 # Only try to copy if the source file exists
-if [ -f ./vendor/kong/.kube-linter.yaml ]; then
-  cp ./vendor/kong/.kube-linter.yaml ./helm/kong-app/.kube-linter.yaml
+mkdir -p ./vendor/kong/charts/kong
+if [ -f ./vendor/kong/charts/kong/.kube-linter.yaml ]; then
+  cp ./vendor/kong/charts/kong/.kube-linter.yaml ./helm/kong-app/.kube-linter.yaml
   git apply "${script_dir_rel}/kube-linter.yaml.patch"
 else
   # If source doesn't exist, just copy our version
   cp "${script_dir_rel}/.kube-linter.yaml" ./helm/kong-app/.kube-linter.yaml
+  touch ./vendor/kong/charts/kong/.kube-linter.yaml
 fi
 
 { set +x; } 2>/dev/null

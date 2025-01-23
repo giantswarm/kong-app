@@ -14,6 +14,7 @@ readonly script_dir_rel=".${script_dir#"${repo_dir}"}"
 set -x
 # Copy our custom service monitor template
 cp "${script_dir_rel}/service-kong-metrics.yaml" ./helm/kong-app/templates/service-kong-metrics.yaml
+mkdir -p ./vendor/kong/charts/kong/templates
 touch ./vendor/kong/charts/kong/templates/service-kong-metrics.yaml
 
 { set +x; } 2>/dev/null
