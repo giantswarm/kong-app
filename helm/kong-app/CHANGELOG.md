@@ -1,5 +1,51 @@
 # Changelog
 
+## 2.46.0
+
+### Changes
+
+* Bumped default `kong/kubernetes-ingress-controller` image tag to 3.4.
+  [#1200](https://github.com/Kong/charts/pull/1200)
+
+## 2.45.0
+
+### Changes
+
+* Bump default `kong` image tag to 3.8.
+  [#1192](https://github.com/Kong/charts/pull/1192)
+
+## 2.44.1
+
+### Fixes
+
+* Added missing RBAC policy rules for `BackendTLSPolicy` and `ConfigMap`s
+  [#1191](https://github.com/Kong/charts/pull/1191)
+
+## 2.44.0
+
+### Fixes
+
+* Added admission webhook `objectSelector` for:
+  * `secrets.credentials.validation.ingress-controller.konghq.com`
+  * and `secrets.plugins.validation.ingress-controller.konghq.com`
+  to not validate Konnect (`konnect`) credentials in `Secret`s which are reconciled by KGO.
+  [#1186](https://github.com/Kong/charts/pull/1186)
+
+## 2.43.0
+
+### Changes
+
+* Added `serviceMonitor.trustCRDsExist` for render based deployments
+  [#1077](https://github.com/Kong/charts/pull/1077)
+* Add `migrations.ttlSecondsAfterFinished` option to chart
+  [#1174](https://github.com/Kong/charts/pull/1174)
+* Explicitly cert-manager group on Certificate.
+  [#1128](https://github.com/Kong/charts/pull/1128)
+* Add missing load balancer service values.
+  [#1116](https://github.com/Kong/charts/pull/1116)
+* Enables KIC metrics to be scraped by adding in a service to correctly work with the defined ServiceMonitor.
+  [#1134](https://github.com/Kong/charts/pull/1134)
+
 ## 2.42.0
 
 ### Fixes
