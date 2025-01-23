@@ -894,44 +894,11 @@ terminationGracePeriodSeconds: 30
 
 # Affinity for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-affinity: |-
-  podAntiAffinity:
-    preferredDuringSchedulingIgnoredDuringExecution:
-    - weight: 100
-      podAffinityTerm:
-        labelSelector:
-          matchExpressions:
-          - key: app.kubernetes.io/name
-            operator: In
-            values:
-            - {{ include "kong.chart-name" . | quote }}
-          - key: app.kubernetes.io/instance
-            operator: In
-            values:
-            - {{ .Release.Name | quote }}
-        topologyKey: kubernetes.io/hostname
+# affinity: {}
 
 # Topology spread constraints for pod assignment (requires Kubernetes >= 1.19)
 # Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
-# Important: We strongly suggest you review these settings before applying onto your clusters.
-# Document https://docs.giantswarm.io/advanced/high-availability/multi-az/ gives more insight.
-topologySpreadConstraints: |-
-  - maxSkew: 1
-    topologyKey: topology.kubernetes.io/zone
-    whenUnsatisfiable: ScheduleAnyway
-    labelSelector:
-      matchLabels:
-        app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
-        app.kubernetes.io/instance: {{ .Release.Name | quote }}
-        application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
-  - maxSkew: 1
-    topologyKey: kubernetes.io/hostname
-    whenUnsatisfiable: ScheduleAnyway
-    labelSelector:
-      matchLabels:
-        app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
-        app.kubernetes.io/instance: {{ .Release.Name | quote }}
-        application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
+# topologySpreadConstraints: []
 
 # Tolerations for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
@@ -951,7 +918,7 @@ podLabels: {}
 
 # Kong pod count.
 # It has no effect when autoscaling.enabled is set to true
-replicaCount: 2
+replicaCount: 1
 
 # Annotations to be added to Kong deployment
 deploymentAnnotations: {}
@@ -977,8 +944,10 @@ autoscaling:
 
 # Kong Pod Disruption Budget
 podDisruptionBudget:
-  enabled: true
-  maxUnavailable: "25%"
+  enabled: false
+  # Uncomment only one of the following when enabled is set to true
+  # maxUnavailable: "50%"
+  # minAvailable: "50%"
 
 podSecurityPolicy:
   enabled: false
@@ -1013,19 +982,13 @@ podSecurityPolicy:
 priorityClassName: ""
 
 # securityContext for Kong pods.
-securityContext:
-  runAsNonRoot: true
-  runAsUser: 65534  # nobody
-  runAsGroup: 65534  # nobody
-  seccompProfile:
-    type: RuntimeDefault
+securityContext: {}
 
 # securityContext for containers.
 containerSecurityContext:
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
-  runAsUser: 65534  # nobody
-  runAsGroup: 65534  # nobody
+  runAsUser: 1000
   runAsNonRoot: true
   seccompProfile:
     type: RuntimeDefault

@@ -12,6 +12,8 @@ cd "${repo_dir}"
 readonly script_dir_rel=".${script_dir#"${repo_dir}"}"
 
 set -x
+# Copy our custom VPA template
 cp "${script_dir_rel}/vpa.yaml" ./helm/kong-app/templates/vpa.yaml
+touch ./vendor/kong/charts/kong/templates/vpa.yaml
 
 { set +x; } 2>/dev/null
