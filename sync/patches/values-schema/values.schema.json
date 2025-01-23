@@ -38,10 +38,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": "null"
+                            "type": ["null", "string"]
                         },
                         "ingressClassName": {
-                            "type": "null"
+                            "type": ["null", "string"]
                         },
                         "path": {
                             "type": "string"
@@ -55,7 +55,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": "null"
+                    "type": ["null", "string"]
                 },
                 "tls": {
                     "type": "object",
@@ -142,7 +142,7 @@
                     "type": "integer"
                 },
                 "targetCPUUtilizationPercentage": {
-                    "type": "null"
+                    "type": ["null", "integer"]
                 }
             }
         },
@@ -259,10 +259,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": "null"
+                            "type": ["null", "string"]
                         },
                         "ingressClassName": {
-                            "type": "null"
+                            "type": ["null", "string"]
                         },
                         "path": {
                             "type": "string"
@@ -276,7 +276,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": "null"
+                    "type": ["null", "string"]
                 },
                 "tls": {
                     "type": "object",
@@ -322,10 +322,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": "null"
+                            "type": ["null", "string"]
                         },
                         "ingressClassName": {
-                            "type": "null"
+                            "type": ["null", "string"]
                         },
                         "path": {
                             "type": "string"
@@ -339,7 +339,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": "null"
+                    "type": ["null", "string"]
                 },
                 "tls": {
                     "type": "object",
@@ -648,7 +648,7 @@
             "type": "object",
             "properties": {
                 "effectiveSemver": {
-                    "type": "null"
+                    "type": ["null", "string"]
                 },
                 "pullPolicy": {
                     "type": "string"
@@ -826,7 +826,7 @@
                     "type": "object",
                     "properties": {
                         "effectiveSemver": {
-                            "type": "null"
+                            "type": ["null", "string"]
                         },
                         "registry": {
                             "type": "string"
@@ -956,10 +956,10 @@
                             "type": "object",
                             "properties": {
                                 "cpu": {
-                                    "type": "string"
+                                    "type": ["string", "integer"]
                                 },
                                 "memory": {
-                                    "type": "string"
+                                    "type": ["string", "integer"]
                                 }
                             }
                         },
@@ -967,10 +967,10 @@
                             "type": "object",
                             "properties": {
                                 "cpu": {
-                                    "type": "string"
+                                    "type": ["string", "integer"]
                                 },
                                 "memory": {
-                                    "type": "string"
+                                    "type": ["string", "integer"]
                                 }
                             }
                         }
@@ -1104,10 +1104,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": "null"
+                            "type": ["null", "string"]
                         },
                         "ingressClassName": {
-                            "type": "null"
+                            "type": ["null", "string"]
                         },
                         "path": {
                             "type": "string"
@@ -1121,7 +1121,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": "null"
+                    "type": ["null", "string"]
                 },
                 "tls": {
                     "type": "object",
@@ -1160,7 +1160,7 @@
                     }
                 },
                 "backoffLimit": {
-                    "type": "null"
+                    "type": ["null", "integer"]
                 },
                 "jobAnnotations": {
                     "type": "object"
@@ -1195,7 +1195,10 @@
                     "type": "boolean"
                 },
                 "maxUnavailable": {
-                    "type": "string"
+                    "type": ["string", "integer"]
+                },
+                "minAvailable": {
+                    "type": ["string", "integer"]
                 }
             }
         },
@@ -1368,10 +1371,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": "null"
+                            "type": ["null", "string"]
                         },
                         "ingressClassName": {
-                            "type": "null"
+                            "type": ["null", "string"]
                         },
                         "path": {
                             "type": "string"
@@ -1385,7 +1388,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": "null"
+                    "type": ["null", "string"]
                 },
                 "tls": {
                     "type": "object",
@@ -1448,10 +1451,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": "null"
+                            "type": ["null", "string"]
                         },
                         "ingressClassName": {
-                            "type": "null"
+                            "type": ["null", "string"]
                         },
                         "path": {
                             "type": "string"
@@ -1465,7 +1468,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": "null"
+                    "type": ["null", "string"]
                 },
                 "tls": {
                     "type": "object",
@@ -1605,7 +1608,7 @@
                             "type": "object",
                             "properties": {
                                 "postgresql": {
-                                    "type": "string"
+                                    "type": ["string", "integer"]
                                 }
                             }
                         }
@@ -1652,13 +1655,13 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": "null"
+                            "type": ["null", "string"]
                         },
                         "hosts": {
                             "type": "array"
                         },
                         "ingressClassName": {
-                            "type": "null"
+                            "type": ["null", "string"]
                         },
                         "labels": {
                             "type": "object"
@@ -1763,10 +1766,10 @@
                     "type": "object",
                     "properties": {
                         "cpu": {
-                            "type": "integer"
+                            "type": ["string", "integer"]
                         },
                         "memory": {
-                            "type": "string"
+                            "type": ["string", "integer"]
                         }
                     }
                 },
@@ -1774,10 +1777,10 @@
                     "type": "object",
                     "properties": {
                         "cpu": {
-                            "type": "integer"
+                            "type": ["string", "integer"]
                         },
                         "memory": {
-                            "type": "string"
+                            "type": ["string", "integer"]
                         }
                     }
                 }
@@ -1900,7 +1903,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": "null"
+                    "type": ["null", "string"]
                 },
                 "stream": {
                     "type": "array"
