@@ -38,10 +38,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "ingressClassName": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "path": {
                             "type": "string"
@@ -55,7 +55,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "null"
                 },
                 "tls": {
                     "type": "object",
@@ -142,7 +142,7 @@
                     "type": "integer"
                 },
                 "targetCPUUtilizationPercentage": {
-                    "type": ["null", "integer"]
+                    "type": "null"
                 }
             }
         },
@@ -259,10 +259,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "ingressClassName": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "path": {
                             "type": "string"
@@ -276,7 +276,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "null"
                 },
                 "tls": {
                     "type": "object",
@@ -322,10 +322,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "ingressClassName": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "path": {
                             "type": "string"
@@ -339,7 +339,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "null"
                 },
                 "tls": {
                     "type": "object",
@@ -443,6 +443,9 @@
                             "type": "string"
                         }
                     }
+                },
+                "revisionHistoryLimit": {
+                    "type": "integer"
                 },
                 "serviceAccount": {
                     "type": "object",
@@ -645,8 +648,7 @@
             "type": "object",
             "properties": {
                 "effectiveSemver": {
-                    "type": ["null", "string"]
-
+                    "type": "null"
                 },
                 "pullPolicy": {
                     "type": "string"
@@ -712,7 +714,35 @@
                         "filterSecrets": {
                             "type": "boolean"
                         },
+                        "matchPolicy": {
+                            "type": "string"
+                        },
                         "namespaceSelector": {
+                            "type": "object",
+                            "properties": {
+                                "matchExpressions": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "key": {
+                                                "type": "string"
+                                            },
+                                            "operator": {
+                                                "type": "string"
+                                            },
+                                            "values": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "objectSelector": {
                             "type": "object",
                             "properties": {
                                 "matchExpressions": {
@@ -796,7 +826,7 @@
                     "type": "object",
                     "properties": {
                         "effectiveSemver": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "registry": {
                             "type": "string"
@@ -819,6 +849,9 @@
                     "type": "object",
                     "properties": {
                         "apiHostname": {
+                            "type": "string"
+                        },
+                        "controlPlaneID": {
                             "type": "string"
                         },
                         "enabled": {
@@ -923,10 +956,10 @@
                             "type": "object",
                             "properties": {
                                 "cpu": {
-                                    "type": ["string", "integer"]
+                                    "type": "string"
                                 },
                                 "memory": {
-                                    "type": ["string", "integer"]
+                                    "type": "string"
                                 }
                             }
                         },
@@ -934,10 +967,10 @@
                             "type": "object",
                             "properties": {
                                 "cpu": {
-                                    "type": ["string", "integer"]
+                                    "type": "string"
                                 },
                                 "memory": {
-                                    "type": ["string", "integer"]
+                                    "type": "string"
                                 }
                             }
                         }
@@ -1071,10 +1104,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "ingressClassName": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "path": {
                             "type": "string"
@@ -1088,7 +1121,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "null"
                 },
                 "tls": {
                     "type": "object",
@@ -1127,7 +1160,7 @@
                     }
                 },
                 "backoffLimit": {
-                    "type": ["null", "integer"]
+                    "type": "null"
                 },
                 "jobAnnotations": {
                     "type": "object"
@@ -1140,6 +1173,9 @@
                 },
                 "resources": {
                     "type": "object"
+                },
+                "ttlSecondsAfterFinished": {
+                    "type": "integer"
                 }
             }
         },
@@ -1159,10 +1195,7 @@
                     "type": "boolean"
                 },
                 "maxUnavailable": {
-                    "type": ["string", "integer"]
-                },
-                "minAvailable": {
-                    "type": ["string", "integer"]
+                    "type": "string"
                 }
             }
         },
@@ -1335,10 +1368,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "ingressClassName": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "path": {
                             "type": "string"
@@ -1352,7 +1385,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "null"
                 },
                 "tls": {
                     "type": "object",
@@ -1415,10 +1448,10 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "ingressClassName": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "path": {
                             "type": "string"
@@ -1432,7 +1465,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "null"
                 },
                 "tls": {
                     "type": "object",
@@ -1502,10 +1535,50 @@
                             }
                         },
                         "containerSecurityContext": {
-                            "type": "object"
+                            "type": "object",
+                            "properties": {
+                                "allowPrivilegeEscalation": {
+                                    "type": "boolean"
+                                },
+                                "capabilities": {
+                                    "type": "object",
+                                    "properties": {
+                                        "drop": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "runAsNonRoot": {
+                                    "type": "boolean"
+                                },
+                                "seccompProfile": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
                         },
                         "podSecurityContext": {
-                            "type": "object"
+                            "type": "object",
+                            "properties": {
+                                "runAsNonRoot": {
+                                    "type": "boolean"
+                                },
+                                "seccompProfile": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 },
@@ -1532,7 +1605,7 @@
                             "type": "object",
                             "properties": {
                                 "postgresql": {
-                                    "type": ["string", "integer"]
+                                    "type": "string"
                                 }
                             }
                         }
@@ -1579,13 +1652,13 @@
                             "type": "boolean"
                         },
                         "hostname": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "hosts": {
                             "type": "array"
                         },
                         "ingressClassName": {
-                            "type": ["null", "string"]
+                            "type": "null"
                         },
                         "labels": {
                             "type": "object"
@@ -1607,7 +1680,10 @@
                     }
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "string"
+                },
+                "loadBalancerSourceRanges": {
+                    "type": "array"
                 },
                 "nameOverride": {
                     "type": "string"
@@ -1687,10 +1763,10 @@
                     "type": "object",
                     "properties": {
                         "cpu": {
-                            "type": ["string", "integer"]
+                            "type": "integer"
                         },
                         "memory": {
-                            "type": ["string", "integer"]
+                            "type": "string"
                         }
                     }
                 },
@@ -1698,10 +1774,10 @@
                     "type": "object",
                     "properties": {
                         "cpu": {
-                            "type": ["string", "integer"]
+                            "type": "integer"
                         },
                         "memory": {
-                            "type": ["string", "integer"]
+                            "type": "string"
                         }
                     }
                 }
@@ -1760,6 +1836,9 @@
                             }
                         }
                     }
+                },
+                "trustCRDsExist": {
+                    "type": "boolean"
                 }
             }
         },
@@ -1821,7 +1900,7 @@
                     "type": "object"
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "null"
                 },
                 "stream": {
                     "type": "array"
