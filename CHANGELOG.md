@@ -12,6 +12,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Update Kong chart version to `kong-2.46.0` ([#1200](https://github.com/Kong/charts/pull/1200))
 - Update Kong Gateway image to `3.9.0.0-debian`
 - Update Kong Ingress Controller version to `3.4.1`
+- Set migration job `ttlSecondsAfterFinished` to `3600` for automatic cleanup
 - Improve documentation in values-schema README.md
 
 ## [4.4.0] - 2024-08-19
