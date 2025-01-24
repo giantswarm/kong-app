@@ -1,5 +1,5 @@
 diff --git a/vendor/kong/charts/kong/values.yaml b/helm/kong-app/values.yaml
-index 0f43f0e..c70688a 100644
+index 0f43f0e..1a37c28 100644
 --- a/vendor/kong/charts/kong/values.yaml
 +++ b/helm/kong-app/values.yaml
 @@ -91,6 +91,7 @@ deployment:
@@ -93,7 +93,7 @@ index 0f43f0e..c70688a 100644
  
    konnect:
      enabled: false
-@@ -733,12 +740,33 @@ postgresql:
+@@ -733,12 +740,31 @@ postgresql:
      username: kong
      database: kong
    image:
@@ -123,12 +123,10 @@ index 0f43f0e..c70688a 100644
 +        - ALL
 +  rbac:
 +    create: true
-+  psp:
-+    create: true
  
  # -----------------------------------------------------------------------------
  # Configure cert-manager integration
-@@ -819,7 +847,8 @@ waitImage:
+@@ -819,7 +845,8 @@ waitImage:
    # Optionally specify an image that provides bash for pre-migration database
    # checks. If none is specified, the chart uses the Kong image. The official
    # Kong images provide bash
@@ -138,7 +136,7 @@ index 0f43f0e..c70688a 100644
    # tag: 5
    pullPolicy: IfNotPresent
  
-@@ -832,13 +861,13 @@ updateStrategy: {}
+@@ -832,13 +859,13 @@ updateStrategy: {}
  
  # If you want to specify resources, uncomment the following
  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
@@ -159,7 +157,7 @@ index 0f43f0e..c70688a 100644
  
  # readinessProbe for Kong pods
  readinessProbe:
-@@ -894,11 +923,44 @@ terminationGracePeriodSeconds: 30
+@@ -894,11 +921,44 @@ terminationGracePeriodSeconds: 30
  
  # Affinity for pod assignment
  # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
@@ -206,7 +204,7 @@ index 0f43f0e..c70688a 100644
  
  # Tolerations for pod assignment
  # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-@@ -909,16 +971,14 @@ tolerations: []
+@@ -909,16 +969,14 @@ tolerations: []
  nodeSelector: {}
  
  # Annotation to be added to Kong pods
@@ -225,7 +223,7 @@ index 0f43f0e..c70688a 100644
  
  # Annotations to be added to Kong deployment
  deploymentAnnotations: {}
-@@ -942,29 +1002,52 @@ autoscaling:
+@@ -942,11 +1000,24 @@ autoscaling:
            type: Utilization
            averageUtilization: 80
  
@@ -252,41 +250,7 @@ index 0f43f0e..c70688a 100644
    # minAvailable: "50%"
  
  podSecurityPolicy:
--  enabled: false
-+  enabled: true
-   labels: {}
--  annotations: {}
-+  annotations:
-+    seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'runtime/default'
-   spec:
-     privileged: false
-     fsGroup:
--      rule: RunAsAny
-+      rule: MustRunAs
-+      ranges:
-+        - min: 1
-+          max: 65533
-     runAsUser:
--      rule: RunAsAny
-+      rule: MustRunAsNonRoot
-     runAsGroup:
--      rule: RunAsAny
-+      rule: MustRunAs
-+      ranges:
-+        - min: 1
-+          max: 65535
-     seLinux:
-       rule: RunAsAny
-     supplementalGroups:
--      rule: RunAsAny
-+      rule: MustRunAs
-+      ranges:
-+        - min: 1
-+          max: 65535
-     volumes:
-       - 'configMap'
-       - 'secret'
-@@ -982,13 +1065,19 @@ podSecurityPolicy:
+@@ -982,13 +1053,19 @@ podSecurityPolicy:
  priorityClassName: ""
  
  # securityContext for Kong pods.
@@ -308,7 +272,7 @@ index 0f43f0e..c70688a 100644
    runAsNonRoot: true
    seccompProfile:
      type: RuntimeDefault
-@@ -1014,9 +1103,9 @@ serviceMonitor:
+@@ -1014,9 +1091,9 @@ serviceMonitor:
    # Specifies whether ServiceMonitor for Prometheus operator should be created
    # If you wish to gather metrics from a Kong instance with the proxy disabled (such as a hybrid control plane), see:
    # https://github.com/Kong/charts/blob/main/charts/kong/README.md#prometheus-operator-integration
@@ -320,7 +284,7 @@ index 0f43f0e..c70688a 100644
    # Specifies namespace, where ServiceMonitor should be installed
    # namespace: monitoring
    # labels:
-@@ -1026,7 +1115,15 @@ serviceMonitor:
+@@ -1026,7 +1103,15 @@ serviceMonitor:
  
    # honorLabels: false
    # metricRelabelings: []
@@ -337,7 +301,7 @@ index 0f43f0e..c70688a 100644
  
  # -----------------------------------------------------------------------------
  # Kong Enterprise parameters
-@@ -1036,12 +1133,12 @@ serviceMonitor:
+@@ -1036,12 +1121,12 @@ serviceMonitor:
  # RBAC and SMTP configuration have additional options that must all be set together
  # Other settings should be added to the "env" settings below
  enterprise:
@@ -352,7 +316,7 @@ index 0f43f0e..c70688a 100644
    vitals:
      enabled: true
    portal:
-@@ -1277,3 +1374,18 @@ extraObjects: []
+@@ -1277,3 +1362,9 @@ extraObjects: []
  #   config:
  #     per_consumer: false
  #   plugin: prometheus
@@ -362,12 +326,3 @@ index 0f43f0e..c70688a 100644
 +kubectlApplyJob:
 +  files:
 +  - crds/custom-resource-definitions.yaml
-+  podSecurityPolicy:
-+    annotations:
-+      seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'runtime/default'
-+  securityContext:
-+    seccompProfileType: RuntimeDefault
-+
-+global:
-+  podSecurityStandards:
-+    enforced: false
