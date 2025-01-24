@@ -1,5 +1,5 @@
 diff --git a/vendor/kong/charts/kong/values.yaml b/helm/kong-app/values.yaml
-index cc8a8b2..4b02c35 100644
+index 0f43f0e..c70688a 100644
 --- a/vendor/kong/charts/kong/values.yaml
 +++ b/helm/kong-app/values.yaml
 @@ -91,6 +91,7 @@ deployment:
@@ -15,31 +15,40 @@ index cc8a8b2..4b02c35 100644
  # Specify Kong's Docker image and repository details here
  image:
 -  repository: kong
--  tag: "3.7"
+-  tag: "3.8"
 +  registry: &registry gsoci.azurecr.io
 +  # repository: giantswarm/kong
-+  # tag: "3.7.1"
++  # tag: "3.8.0"
    # Kong Enterprise
 -  # repository: kong/kong-gateway
--  # tag: "3.7"
+-  # tag: "3.8"
 +  repository: giantswarm/kong-gateway
-+  tag: "3.7.1.2-debian"
++  tag: "3.8.1.0-debian"
  
    # Specify a semver version if your image tag is not one (e.g. "nightly")
    effectiveSemver:
-@@ -534,8 +536,9 @@ dblessConfig:
+@@ -484,7 +486,7 @@ migrations:
+   # Optionally set a backoffLimit. If none is set, Jobs will use the cluster default
+   backoffLimit:
+   # Optionally set to specify the time-to-live (TTL) for a pod after it has completed its execution before automatic deletion. If left unset, pod lifetime is indefinite.
+-  ttlSecondsAfterFinished:
++  ttlSecondsAfterFinished: 3600
+   resources: {}
+   # Example reasonable setting for "resources":
+   # resources:
+@@ -538,8 +540,9 @@ dblessConfig:
  ingressController:
    enabled: true
    image:
 -    repository: kong/kubernetes-ingress-controller
--    tag: "3.3"
+-    tag: "3.4"
 +    registry: *registry
 +    repository: giantswarm/kong-ingress-controller
-+    tag: "3.3.1"
++    tag: "3.4.1"
      # Optionally set a semantic version for version-gated features. This can normally
      # be left unset. You only need to set this if your tag is not a semver string,
      # such as when you are using a "next" tag. Set this to the effective semantic
-@@ -562,6 +565,7 @@ ingressController:
+@@ -566,6 +569,7 @@ ingressController:
  
    # Specify Kong Ingress Controller configuration via environment variables
    env:
@@ -47,7 +56,7 @@ index cc8a8b2..4b02c35 100644
      # The controller disables TLS verification by default because Kong
      # generates self-signed certificates by default. Set this to false once you
      # have installed CA-signed certificates.
-@@ -591,7 +595,12 @@ ingressController:
+@@ -597,7 +601,12 @@ ingressController:
      port: 8080
      certificate:
        provided: false
@@ -61,7 +70,7 @@ index cc8a8b2..4b02c35 100644
      # ObjectSelector specifies which objects to match against validations.kong.konghq.com webhook webhook
      objectSelector:
        matchExpressions:
-@@ -646,15 +655,13 @@ ingressController:
+@@ -652,15 +661,13 @@ ingressController:
      periodSeconds: 10
      successThreshold: 1
      failureThreshold: 3
@@ -84,7 +93,7 @@ index cc8a8b2..4b02c35 100644
  
    konnect:
      enabled: false
-@@ -727,12 +734,33 @@ postgresql:
+@@ -733,12 +740,33 @@ postgresql:
      username: kong
      database: kong
    image:
@@ -119,7 +128,7 @@ index cc8a8b2..4b02c35 100644
  
  # -----------------------------------------------------------------------------
  # Configure cert-manager integration
-@@ -813,7 +841,8 @@ waitImage:
+@@ -819,7 +847,8 @@ waitImage:
    # Optionally specify an image that provides bash for pre-migration database
    # checks. If none is specified, the chart uses the Kong image. The official
    # Kong images provide bash
@@ -129,7 +138,7 @@ index cc8a8b2..4b02c35 100644
    # tag: 5
    pullPolicy: IfNotPresent
  
-@@ -826,13 +855,13 @@ updateStrategy: {}
+@@ -832,13 +861,13 @@ updateStrategy: {}
  
  # If you want to specify resources, uncomment the following
  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
@@ -150,7 +159,7 @@ index cc8a8b2..4b02c35 100644
  
  # readinessProbe for Kong pods
  readinessProbe:
-@@ -888,11 +917,44 @@ terminationGracePeriodSeconds: 30
+@@ -894,11 +923,44 @@ terminationGracePeriodSeconds: 30
  
  # Affinity for pod assignment
  # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
@@ -197,7 +206,7 @@ index cc8a8b2..4b02c35 100644
  
  # Tolerations for pod assignment
  # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-@@ -903,16 +965,14 @@ tolerations: []
+@@ -909,16 +971,14 @@ tolerations: []
  nodeSelector: {}
  
  # Annotation to be added to Kong pods
@@ -216,7 +225,7 @@ index cc8a8b2..4b02c35 100644
  
  # Annotations to be added to Kong deployment
  deploymentAnnotations: {}
-@@ -936,29 +996,52 @@ autoscaling:
+@@ -942,29 +1002,52 @@ autoscaling:
            type: Utilization
            averageUtilization: 80
  
@@ -277,7 +286,7 @@ index cc8a8b2..4b02c35 100644
      volumes:
        - 'configMap'
        - 'secret'
-@@ -976,13 +1059,19 @@ podSecurityPolicy:
+@@ -982,13 +1065,19 @@ podSecurityPolicy:
  priorityClassName: ""
  
  # securityContext for Kong pods.
@@ -299,18 +308,19 @@ index cc8a8b2..4b02c35 100644
    runAsNonRoot: true
    seccompProfile:
      type: RuntimeDefault
-@@ -1008,8 +1097,8 @@ serviceMonitor:
+@@ -1014,9 +1103,9 @@ serviceMonitor:
    # Specifies whether ServiceMonitor for Prometheus operator should be created
    # If you wish to gather metrics from a Kong instance with the proxy disabled (such as a hybrid control plane), see:
    # https://github.com/Kong/charts/blob/main/charts/kong/README.md#prometheus-operator-integration
 -  enabled: false
--  # interval: 30s
 +  enabled: true
+   trustCRDsExist: false
+-  # interval: 30s
 +  interval: 30s
    # Specifies namespace, where ServiceMonitor should be installed
    # namespace: monitoring
    # labels:
-@@ -1019,7 +1108,15 @@ serviceMonitor:
+@@ -1026,7 +1115,15 @@ serviceMonitor:
  
    # honorLabels: false
    # metricRelabelings: []
@@ -327,7 +337,7 @@ index cc8a8b2..4b02c35 100644
  
  # -----------------------------------------------------------------------------
  # Kong Enterprise parameters
-@@ -1029,12 +1126,12 @@ serviceMonitor:
+@@ -1036,12 +1133,12 @@ serviceMonitor:
  # RBAC and SMTP configuration have additional options that must all be set together
  # Other settings should be added to the "env" settings below
  enterprise:
@@ -342,7 +352,7 @@ index cc8a8b2..4b02c35 100644
    vitals:
      enabled: true
    portal:
-@@ -1270,3 +1367,18 @@ extraObjects: []
+@@ -1277,3 +1374,18 @@ extraObjects: []
  #   config:
  #     per_consumer: false
  #   plugin: prometheus

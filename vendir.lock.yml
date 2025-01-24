@@ -2,11 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'feat(kong): add new admission webhook configuration fields: matchPolicy,
-        matchConditions and objectSelector (#1133)...'
-      sha: 9d12430467716ff84ea9866e8156d1a25a0b608b
+      commitTitle: 'Merge pull request #1200 from Kong/kic-3.4...'
+      sha: a3dbcd3fef696ce0080fb94ad6e4083ebfd5333b
       tags:
-      - kong-2.42.0
+      - kong-2.46.0
     path: kong
   path: vendor
 - contents:

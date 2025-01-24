@@ -444,6 +444,9 @@
                         }
                     }
                 },
+                "revisionHistoryLimit": {
+                    "type": "integer"
+                },
                 "serviceAccount": {
                     "type": "object",
                     "properties": {
@@ -646,7 +649,6 @@
             "properties": {
                 "effectiveSemver": {
                     "type": ["null", "string"]
-
                 },
                 "pullPolicy": {
                     "type": "string"
@@ -712,7 +714,35 @@
                         "filterSecrets": {
                             "type": "boolean"
                         },
+                        "matchPolicy": {
+                            "type": "string"
+                        },
                         "namespaceSelector": {
+                            "type": "object",
+                            "properties": {
+                                "matchExpressions": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "key": {
+                                                "type": "string"
+                                            },
+                                            "operator": {
+                                                "type": "string"
+                                            },
+                                            "values": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "objectSelector": {
                             "type": "object",
                             "properties": {
                                 "matchExpressions": {
@@ -819,6 +849,9 @@
                     "type": "object",
                     "properties": {
                         "apiHostname": {
+                            "type": "string"
+                        },
+                        "controlPlaneID": {
                             "type": "string"
                         },
                         "enabled": {
@@ -1140,6 +1173,9 @@
                 },
                 "resources": {
                     "type": "object"
+                },
+                "ttlSecondsAfterFinished": {
+                    "type": "integer"
                 }
             }
         },
@@ -1502,10 +1538,50 @@
                             }
                         },
                         "containerSecurityContext": {
-                            "type": "object"
+                            "type": "object",
+                            "properties": {
+                                "allowPrivilegeEscalation": {
+                                    "type": "boolean"
+                                },
+                                "capabilities": {
+                                    "type": "object",
+                                    "properties": {
+                                        "drop": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "runAsNonRoot": {
+                                    "type": "boolean"
+                                },
+                                "seccompProfile": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
                         },
                         "podSecurityContext": {
-                            "type": "object"
+                            "type": "object",
+                            "properties": {
+                                "runAsNonRoot": {
+                                    "type": "boolean"
+                                },
+                                "seccompProfile": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 },
@@ -1607,7 +1683,10 @@
                     }
                 },
                 "loadBalancerClass": {
-                    "type": ["null", "string"]
+                    "type": "string"
+                },
+                "loadBalancerSourceRanges": {
+                    "type": "array"
                 },
                 "nameOverride": {
                     "type": "string"
@@ -1760,6 +1839,9 @@
                             }
                         }
                     }
+                },
+                "trustCRDsExist": {
+                    "type": "boolean"
                 }
             }
         },

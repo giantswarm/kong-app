@@ -1,8 +1,8 @@
 diff --git a/vendor/kong/charts/kong/templates/migrations.yaml b/helm/kong-app/templates/migrations.yaml
-index e1a85fb..3affd7f 100644
+index ae66be9..6dd2ccd 100644
 --- a/vendor/kong/charts/kong/templates/migrations.yaml
 +++ b/helm/kong-app/templates/migrations.yaml
-@@ -89,7 +89,7 @@ spec:
+@@ -92,7 +92,7 @@ spec:
        {{- include "kong.podsecuritycontext" . | nindent 8 }}
        {{- if .Values.affinity }}
        affinity:

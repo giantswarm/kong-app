@@ -135,10 +135,10 @@ extraLabels: {}
 image:
   registry: &registry gsoci.azurecr.io
   # repository: giantswarm/kong
-  # tag: "3.7.1"
+  # tag: "3.8.0"
   # Kong Enterprise
   repository: giantswarm/kong-gateway
-  tag: "3.7.1.2-debian"
+  tag: "3.8.1.0-debian"
 
   # Specify a semver version if your image tag is not one (e.g. "nightly")
   effectiveSemver:
@@ -284,7 +284,9 @@ proxy:
   # Enable creating a Kubernetes service for the proxy
   enabled: true
   type: LoadBalancer
-  loadBalancerClass:
+  loadBalancerClass: ""
+  # Configures optional firewall rules and in the VPC network to only allow certain source ranges.
+  loadBalancerSourceRanges: []
   # Override proxy Service name
   nameOverride: ""
   # To specify annotations or labels for the proxy service, add them to the respective
@@ -483,6 +485,8 @@ migrations:
   jobAnnotations: {}
   # Optionally set a backoffLimit. If none is set, Jobs will use the cluster default
   backoffLimit:
+  # Optionally set to specify the time-to-live (TTL) for a pod after it has completed its execution before automatic deletion. If left unset, pod lifetime is indefinite.
+  ttlSecondsAfterFinished: 3600
   resources: {}
   # Example reasonable setting for "resources":
   # resources:
@@ -538,7 +542,7 @@ ingressController:
   image:
     registry: *registry
     repository: giantswarm/kong-ingress-controller
-    tag: "3.3.1"
+    tag: "3.4.1"
     # Optionally set a semantic version for version-gated features. This can normally
     # be left unset. You only need to set this if your tag is not a semver string,
     # such as when you are using a "next" tag. Set this to the effective semantic
@@ -590,6 +594,8 @@ ingressController:
   admissionWebhook:
     matchPolicy: Equivalent
     enabled: true
+    # Limit the `secrets.plugins.validation.ingress-controller.konghq.com` webhook
+    # to only Secrets with the appropriate KIC "konghq.com/validate" label.
     filterSecrets: false
     failurePolicy: Ignore
     port: 8080
@@ -1098,6 +1104,7 @@ serviceMonitor:
   # If you wish to gather metrics from a Kong instance with the proxy disabled (such as a hybrid control plane), see:
   # https://github.com/Kong/charts/blob/main/charts/kong/README.md#prometheus-operator-integration
   enabled: true
+  trustCRDsExist: false
   interval: 30s
   # Specifies namespace, where ServiceMonitor should be installed
   # namespace: monitoring
