@@ -17,7 +17,6 @@ vendir sync
 ./sync/patches/values-schema/patch.sh
 ./sync/patches/affinity-topologyspreadconstraints/patch.sh
 ./sync/patches/psp/patch.sh
-./sync/patches/servicemonitor/patch.sh
 ./sync/patches/gs-helpers/patch.sh
 ./sync/patches/vpa/patch.sh
 ./sync/patches/helmignore/patch.sh

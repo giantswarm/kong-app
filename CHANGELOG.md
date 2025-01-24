@@ -14,6 +14,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Revert `ingressController.admissionWebhook` settings to upstream values. (Enabled by default with `failurePolicy: Ignore`)
 - Update Kong Gateway image to `3.8.1.0-debian`
 
+### Removed
+
+- Legacy Giant Swarm metrics Service and labels
+
 ## [4.4.0] - 2024-08-19
 
 ### Changed

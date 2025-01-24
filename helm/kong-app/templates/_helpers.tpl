@@ -41,7 +41,6 @@ app.kubernetes.io/managed-by: "{{ .Release.Service }}"
 {{ $version := semver (include "kong.effectiveVersion" .Values.image) }}
 app.kubernetes.io/version: {{ printf "%d.%d" $version.Major $version.Minor | quote }}
 giantswarm.io/service-type: "managed"
-giantswarm.io/monitoring_basic_sli: "true"
 application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
 application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
 {{- range $key, $value := .Values.extraLabels }}

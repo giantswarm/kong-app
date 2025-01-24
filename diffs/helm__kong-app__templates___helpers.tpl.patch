@@ -1,8 +1,8 @@
 diff --git a/vendor/kong/charts/kong/templates/_helpers.tpl b/helm/kong-app/templates/_helpers.tpl
-index 92f728c..a4dc243 100644
+index 92f728c..7c9178c 100644
 --- a/vendor/kong/charts/kong/templates/_helpers.tpl
 +++ b/helm/kong-app/templates/_helpers.tpl
-@@ -25,24 +25,40 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this
+@@ -25,24 +25,39 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this
  {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
  {{- end -}}
  
@@ -23,7 +23,6 @@ index 92f728c..a4dc243 100644
  {{ $version := semver (include "kong.effectiveVersion" .Values.image) }}
  app.kubernetes.io/version: {{ printf "%d.%d" $version.Major $version.Minor | quote }}
 +giantswarm.io/service-type: "managed"
-+giantswarm.io/monitoring_basic_sli: "true"
 +application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
 +application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
  {{- range $key, $value := .Values.extraLabels }}
@@ -45,7 +44,7 @@ index 92f728c..a4dc243 100644
  {{- define "kong.postgresql.fullname" -}}
  {{- $name := default "postgresql" .Values.postgresql.nameOverride -}}
  {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-@@ -1286,9 +1302,13 @@ Environment variables are sorted alphabetically
+@@ -1286,9 +1301,13 @@ Environment variables are sorted alphabetically
  {{- if .unifiedRepoTag }}
  {{- .unifiedRepoTag }}
  {{- else if .repository }}
