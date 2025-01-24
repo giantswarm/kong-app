@@ -10,7 +10,7 @@ sources:
   - https://github.com/giantswarm/kong-app
   - https://github.com/Kong/charts/tree/main/charts/kong
 version: 4.4.0
-appVersion: "3.7.1.2"
+appVersion: "3.8.1.0"
 annotations:
   application.giantswarm.io/team: "cabbage"
 kubeVersion: ">=1.22.0-0"
