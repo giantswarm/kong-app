@@ -22,3 +22,4 @@ dependencies:
   - name: kubectl-apply-job
     version: "0.9.0"
     repository: oci://giantswarmpublic.azurecr.io/giantswarm-playground-catalog
+    condition: ingressController.enabled

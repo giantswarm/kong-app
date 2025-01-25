@@ -13,6 +13,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Align with upstream chart version [2.46.0](https://github.com/Kong/charts/releases/tag/kong-2.46.0) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.40.0...kong-2.46.0))
 - Revert `ingressController.admissionWebhook` settings to upstream values. (Enabled by default with `failurePolicy: Ignore`)
 - Update Kong Gateway image to `3.8.1.0-debian`
+- Execute CRD installation Job only if ingressController is enabled (`ingressController.enabled`)
 
 ### Removed
 
