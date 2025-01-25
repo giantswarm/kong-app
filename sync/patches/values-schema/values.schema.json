@@ -631,19 +631,6 @@
         "extraSecrets": {
             "type": "array"
         },
-        "global": {
-            "type": "object",
-            "properties": {
-                "podSecurityStandards": {
-                    "type": "object",
-                    "properties": {
-                        "enforced": {
-                            "type": "boolean"
-                        }
-                    }
-                }
-            }
-        },
         "image": {
             "type": "object",
             "properties": {
@@ -989,27 +976,6 @@
                     "items": {
                         "type": "string"
                     }
-                },
-                "podSecurityPolicy": {
-                    "type": "object",
-                    "properties": {
-                        "annotations": {
-                            "type": "object",
-                            "properties": {
-                                "seccomp.security.alpha.kubernetes.io/allowedProfileNames": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    }
-                },
-                "securityContext": {
-                    "type": "object",
-                    "properties": {
-                        "seccompProfileType": {
-                            "type": "string"
-                        }
-                    }
                 }
             }
         },
@@ -1209,12 +1175,7 @@
             "type": "object",
             "properties": {
                 "annotations": {
-                    "type": "object",
-                    "properties": {
-                        "seccomp.security.alpha.kubernetes.io/allowedProfileNames": {
-                            "type": "string"
-                        }
-                    }
+                    "type": "object"
                 },
                 "enabled": {
                     "type": "boolean"
@@ -1231,20 +1192,6 @@
                         "fsGroup": {
                             "type": "object",
                             "properties": {
-                                "ranges": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "max": {
-                                                "type": "integer"
-                                            },
-                                            "min": {
-                                                "type": "integer"
-                                            }
-                                        }
-                                    }
-                                },
                                 "rule": {
                                     "type": "string"
                                 }
@@ -1268,20 +1215,6 @@
                         "runAsGroup": {
                             "type": "object",
                             "properties": {
-                                "ranges": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "max": {
-                                                "type": "integer"
-                                            },
-                                            "min": {
-                                                "type": "integer"
-                                            }
-                                        }
-                                    }
-                                },
                                 "rule": {
                                     "type": "string"
                                 }
@@ -1306,20 +1239,6 @@
                         "supplementalGroups": {
                             "type": "object",
                             "properties": {
-                                "ranges": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "max": {
-                                                "type": "integer"
-                                            },
-                                            "min": {
-                                                "type": "integer"
-                                            }
-                                        }
-                                    }
-                                },
                                 "rule": {
                                     "type": "string"
                                 }
@@ -1582,14 +1501,6 @@
                                     }
                                 }
                             }
-                        }
-                    }
-                },
-                "psp": {
-                    "type": "object",
-                    "properties": {
-                        "create": {
-                            "type": "boolean"
                         }
                     }
                 },

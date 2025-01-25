@@ -765,8 +765,6 @@ postgresql:
         - ALL
   rbac:
     create: true
-  psp:
-    create: true
 
 # -----------------------------------------------------------------------------
 # Configure cert-manager integration
@@ -1023,31 +1021,21 @@ podDisruptionBudget:
   # minAvailable: "50%"
 
 podSecurityPolicy:
-  enabled: true
+  enabled: false
   labels: {}
-  annotations:
-    seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'runtime/default'
+  annotations: {}
   spec:
     privileged: false
     fsGroup:
-      rule: MustRunAs
-      ranges:
-        - min: 1
-          max: 65533
+      rule: RunAsAny
     runAsUser:
-      rule: MustRunAsNonRoot
+      rule: RunAsAny
     runAsGroup:
-      rule: MustRunAs
-      ranges:
-        - min: 1
-          max: 65535
+      rule: RunAsAny
     seLinux:
       rule: RunAsAny
     supplementalGroups:
-      rule: MustRunAs
-      ranges:
-        - min: 1
-          max: 65535
+      rule: RunAsAny
     volumes:
       - 'configMap'
       - 'secret'
@@ -1380,12 +1368,3 @@ extraObjects: []
 kubectlApplyJob:
   files:
   - crds/custom-resource-definitions.yaml
-  podSecurityPolicy:
-    annotations:
-      seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'runtime/default'
-  securityContext:
-    seccompProfileType: RuntimeDefault
-
-global:
-  podSecurityStandards:
-    enforced: false

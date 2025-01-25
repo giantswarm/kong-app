@@ -10,7 +10,7 @@ sources:
   - https://github.com/giantswarm/kong-app
   - https://github.com/Kong/charts/tree/main/charts/kong
 version: 4.4.0
-appVersion: "3.7.1.2"
+appVersion: "3.8.1.0"
 annotations:
   application.giantswarm.io/team: "cabbage"
 kubeVersion: ">=1.22.0-0"
@@ -20,5 +20,5 @@ dependencies:
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: kubectl-apply-job
-    version: "0.8.0"
+    version: "0.9.0"
     repository: oci://giantswarmpublic.azurecr.io/giantswarm-playground-catalog
