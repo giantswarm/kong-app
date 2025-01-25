@@ -17,6 +17,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Removed
 
 - Keep PSP disabled by default and remove Giant Swarm PSP-PSS migration hacks
+- Legacy Giant Swarm metrics Service and labels
 
 ## [4.4.0] - 2024-08-19
 
