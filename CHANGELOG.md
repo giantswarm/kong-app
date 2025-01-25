@@ -14,6 +14,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Revert `ingressController.admissionWebhook` settings to upstream values. (Enabled by default with `failurePolicy: Ignore`)
 - Update Kong Gateway image to `3.8.1.0-debian`
 
+### Removed
+
+- Keep PSP disabled by default and remove Giant Swarm PSP-PSS migration hacks
+
 ## [4.4.0] - 2024-08-19
 
 ### Changed
