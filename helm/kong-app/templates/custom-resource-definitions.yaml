@@ -34,4 +34,6 @@
 {{- end }}
 
 {{/* This requires giantswarm/kubectl-apply-job to be present as a Chart dependency */}}
+{{- if .Values.ingressController.enabled -}}
 {{ include "kubectlApplyJob.job" . }}
+{{- end }}
