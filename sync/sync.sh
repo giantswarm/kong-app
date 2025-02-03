@@ -20,6 +20,7 @@ vendir sync
 ./sync/patches/vpa/patch.sh
 ./sync/patches/helmignore/patch.sh
 ./sync/patches/kube-linter/patch.sh
+./sync/patches/pdb-unhealthypodevictionpolicy/patch.sh
 
 # Store diffs
 rm -f ./diffs/*
