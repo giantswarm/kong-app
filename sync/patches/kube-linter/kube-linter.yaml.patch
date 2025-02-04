@@ -1,8 +1,8 @@
 diff --git b/vendor/kong/.kube-linter.yaml a/helm/kong-app/.kube-linter.yaml
-index 557af85..7189f3c 100644
+index 557af85..12ec65f 100644
 --- b/vendor/kong/.kube-linter.yaml
 +++ a/helm/kong-app/.kube-linter.yaml
-@@ -1,8 +1,4 @@
+@@ -1,8 +1,7 @@
  checks:
    exclude:
 -    # TODO: exclude no rule
@@ -13,3 +13,6 @@ index 557af85..7189f3c 100644
 -    - "unset-memory-requirements"
 +  - "unset-cpu-requirements"
 +  - "unset-memory-requirements"
++  # Disable this check because of a false positive
++  # Remove once app-build-suite upgrades helm
++  - "pdb-unhealthy-pod-eviction-policy"
