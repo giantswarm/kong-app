@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Allow users to change the `unhealthyPodEvictionPolicy` of the generated PodDisruptionPolicy. Default is `IfHealthyBudget`
+
 ## [4.5.0] - 2025-01-28
 
 ### Changed

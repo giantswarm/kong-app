@@ -1165,6 +1165,10 @@
                 },
                 "minAvailable": {
                     "type": ["string", "integer"]
+                },
+                "unhealthyPodEvictionPolicy": {
+                    "type": "string",
+                    "enum": ["AlwaysAllow", "IfHealthyBudget"]
                 }
             }
         },
