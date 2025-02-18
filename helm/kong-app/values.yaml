@@ -1367,5 +1367,6 @@ extraObjects: []
 # Values for subchart kubectl-apply-job
 # for installing CRDs
 kubectlApplyJob:
+  enabled: true
   files:
   - crds/custom-resource-definitions.yaml

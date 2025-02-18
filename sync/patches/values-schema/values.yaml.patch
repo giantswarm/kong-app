@@ -318,7 +318,7 @@ index 0f43f0e..63cb2e6 100644
    vitals:
      enabled: true
    portal:
-@@ -1277,3 +1363,9 @@ extraObjects: []
+@@ -1277,3 +1363,10 @@ extraObjects: []
  #   config:
  #     per_consumer: false
  #   plugin: prometheus
@@ -326,5 +326,6 @@ index 0f43f0e..63cb2e6 100644
 +# Values for subchart kubectl-apply-job
 +# for installing CRDs
 +kubectlApplyJob:
++  enabled: true
 +  files:
 +  - crds/custom-resource-definitions.yaml
