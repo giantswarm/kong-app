@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [4.5.1] - 2025-02-18
+
 ### Added
 
 - Allow users to change the `unhealthyPodEvictionPolicy` of the generated PodDisruptionPolicy. Default is `IfHealthyBudget`
@@ -722,7 +724,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v4.5.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v4.5.1...HEAD
+[4.5.1]: https://github.com/giantswarm/kong-app/compare/v4.5.0...v4.5.1
 [4.5.0]: https://github.com/giantswarm/kong-app/compare/v4.4.0...v4.5.0
 [4.4.0]: https://github.com/giantswarm/kong-app/compare/v4.3.0...v4.4.0
 [4.3.0]: https://github.com/giantswarm/kong-app/compare/v4.2.0...v4.3.0
