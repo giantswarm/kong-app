@@ -971,6 +971,9 @@
         "kubectlApplyJob": {
             "type": "object",
             "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
                 "files": {
                     "type": "array",
                     "items": {
