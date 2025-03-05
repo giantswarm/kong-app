@@ -34,9 +34,9 @@ for f in $(git --no-pager diff --no-exit-code --no-color --no-index vendor/kong/
         set -x
         git --no-pager diff --no-exit-code --no-color --no-index "vendor/kong/charts/kong/${f#"helm/kong-app/"}" "${f}" \
                 > "./diffs/${f//\//__}.patch" # ${f//\//__} replaces all "/" with "__"
-        ret=$?
         { set +x; } 2>/dev/null
         set -e
+        ret=$?
         if [ $ret -ne 0 ] && [ $ret -ne 1 ] ; then
                 exit $ret
         fi
