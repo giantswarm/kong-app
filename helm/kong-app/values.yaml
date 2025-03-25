@@ -772,6 +772,7 @@ postgresql:
   primary:
     annotations:
       "ignore-check.kube-linter.io/no-read-only-root-fs": "writable fs is required"
+      "ignore-check.kube-linter.io/unset-memory-requirements": "external project"
     podSecurityContext:
       runAsNonRoot: true
       seccompProfile:
