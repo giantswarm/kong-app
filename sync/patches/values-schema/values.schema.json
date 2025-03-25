@@ -99,6 +99,9 @@
         "autoscaling": {
             "type": "object",
             "properties": {
+                "annotations": {
+                    "type": "object"
+                },
                 "behavior": {
                     "type": "object"
                 },
@@ -899,6 +902,9 @@
                     "properties": {
                         "create": {
                             "type": "boolean"
+                        },
+                        "enableClusterRoles": {
+                            "type": "boolean"
                         }
                     }
                 },
@@ -1144,7 +1150,7 @@
                     "type": "object"
                 },
                 "ttlSecondsAfterFinished": {
-                    "type": "integer"
+                    "type": ["null", "integer"]
                 }
             }
         },
@@ -1710,15 +1716,6 @@
         "securityContext": {
             "type": "object",
             "properties": {
-                "runAsGroup": {
-                    "type": "integer"
-                },
-                "runAsNonRoot": {
-                    "type": "boolean"
-                },
-                "runAsUser": {
-                    "type": "integer"
-                },
                 "seccompProfile": {
                     "type": "object",
                     "properties": {

@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'Merge pull request #1200 from Kong/kic-3.4...'
-      sha: a3dbcd3fef696ce0080fb94ad6e4083ebfd5333b
+      commitTitle: 'chore: prepare kong 2.48.0 (#1286)'
+      sha: d19219e8ef438009bc9245bedadb070703017c12
       tags:
-      - kong-2.46.0
+      - kong-2.48.0
     path: kong
   path: vendor
 - contents:

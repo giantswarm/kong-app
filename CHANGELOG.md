@@ -7,6 +7,11 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Update kong ingress controller to [3.4.3](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#343)
+- Align with upstream chart version [2.48.0](https://github.com/Kong/charts/releases/tag/kong-2.48.0) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.46.0...kong-2.48.0))
+
 ## [4.5.1] - 2025-02-18
 
 ### Added
