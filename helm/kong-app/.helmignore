@@ -24,5 +24,3 @@ ci
 example-values
 .helmignore
 templates/tests
-.kube-linter.yaml
-*.back

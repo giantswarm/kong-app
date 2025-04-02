@@ -25,37 +25,22 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{/*
-Value used for app.kubernetes.io/name label on resources.
-Needs to be stable as Giant Swarm is using it for monitoring.
-*/}}
-{{- define "kong.chart-name" -}}
-{{- .Chart.Name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
 {{- define "kong.metaLabels" -}}
-app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
+app.kubernetes.io/name: {{ template "kong.name" . }}
 helm.sh/chart: {{ template "kong.chart" . }}
 app.kubernetes.io/instance: "{{ .Release.Name }}"
 app.kubernetes.io/managed-by: "{{ .Release.Service }}"
 {{ $version := semver (include "kong.effectiveVersion" .Values.image) }}
 app.kubernetes.io/version: {{ printf "%d.%d" $version.Major $version.Minor | quote }}
-giantswarm.io/service-type: "managed"
-application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
-application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
 {{- range $key, $value := .Values.extraLabels }}
 {{ $key }}: {{ include "kong.renderTpl" (dict "value" $value "context" $) | quote }}
 {{- end }}
 {{- end -}}
 
 {{- define "kong.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
+app.kubernetes.io/name: {{ template "kong.name" . }}
 app.kubernetes.io/component: app
 app.kubernetes.io/instance: "{{ .Release.Name }}"
-{{- end -}}
-
-{{- define "kong.imagesHash" -}}
-{{- printf "%s-%s" (include "kong.getRepoTag" .Values.image) (include "kong.getRepoTag" .Values.ingressController.image) | sha256sum | trunc 63 -}}
 {{- end -}}
 
 {{- define "kong.postgresql.fullname" -}}
@@ -1307,11 +1292,7 @@ Environment variables are sorted alphabetically
 {{- if .unifiedRepoTag }}
 {{- .unifiedRepoTag }}
 {{- else if .repository }}
-{{- if .registry }}
-{{- .registry }}/{{ .repository }}:{{ .tag }}
-{{- else }}
 {{- .repository }}:{{ .tag }}
-{{- end -}}
 {{- end -}}
 {{- end -}}
 
