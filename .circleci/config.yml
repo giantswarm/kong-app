@@ -24,25 +24,6 @@ workflows:
             ignore:
             - main
             - master
-    - hold-tests:
-        name: hold OSS tests
-        type: approval
-        filters:
-          branches:
-            ignore:
-            - main
-          tags:
-            ignore: /^v.*/
-
-    - architect/run-tests-with-ats:
-        name: execute enterprise tests
-        additional_app-test-suite_flags: --app-tests-app-config-file=tests/test-values-enterprise.yaml
-        filters:
-          branches:
-            ignore:
-            - main
-        requires:
-        - push-to-giantswarm-app-catalog
 
     - architect/run-tests-with-ats:
         name: execute chart tests
@@ -51,5 +32,4 @@ workflows:
             ignore:
             - main
         requires:
-        - hold OSS tests
         - push-to-giantswarm-app-catalog

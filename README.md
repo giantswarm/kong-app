@@ -39,7 +39,7 @@ For older versions, please refer to the [changelog](https://github.com/giantswar
 
 ## Configuration
 
-This Chart is configured to deploy *Kong Enterprise*. For instructions on how to deploy Kong Enterprise please read [Kong Enterprise](#kong-enterprise).
+This Chart is configured to deploy *Kong OSS*. For instructions on how to deploy Kong Enterprise please read [Kong Enterprise](#kong-enterprise).
 
 When supplying a set of custom configuration options, only include configuation you want to change. **DO NOT** copy the whole `values.yaml` file.
 
@@ -56,18 +56,6 @@ is possible launch postgres alongside this App (described below).
 
 The default installation of the App will use Kong Ingress Controller.
 The recommended way to configure plugins, consumers and services when using *Kong for Kubernetes* is by utilizing [Kong annotations](https://docs.konghq.com/kubernetes-ingress-controller/latest/references/annotations/) and [Kong custom resources](https://docs.konghq.com/kubernetes-ingress-controller/latest/concepts/custom-resources/#main).
-
-### Kong OSS
-
-A basic installation of *Kong for Kubernetes* will require some custom values.
-
-```yaml
-image:
-  repository: giantswarm/kong
-  tag: "3.6.1"
-enterprise:
-  enabled: false
-```
 
 ### Container image registry
 
@@ -101,6 +89,17 @@ Then create the Secret with name `kong-enterprise-license` in namespace `kong-ap
 kubectl create secret generic kong-enterprise-license \
   --namespace kong-app \
   --from-file=license=./kong-enterprise-license.json
+```
+
+Make sure to set the following values in your `values.yaml` file:
+
+```yaml
+image:
+  repository: giantswarm/kong-gateway
+  tag: 3.8.1.0-debian # check the Release matrix above for possible versions
+enterprise:
+  enabled: true
+  licenseSecret: kong-enterprise-license
 ```
 
 ### Using your own Database
@@ -166,6 +165,13 @@ Note:
 
 When installed through the Giant Swarm App platform, CRD installation is taken care of
 automatically.
+
+To disable CRD installation, set the following value in your `values.yaml` file:
+
+```yaml
+kubectlApplyJob:
+  enabled: false
+```
 
 ## Development
 

@@ -7,7 +7,11 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
-This release drops support for Kubernetes below v1.26
+We're going back to installing the kong OSS version by default instead of enterprise. In case you're relying on this default behaviour, please make sure to set the `.Values.image.repository`, `.Values.image.tag`, `.Values.enterprise.enabled` and `.Values.enterprise.license_secret` values to the respective Enterprise values.
+
+These changes were introduced in PRs [#378](https://github.com/giantswarm/kong-app/pull/378) and [#379](https://github.com/giantswarm/kong-app/pull/379).
+
+This release drops support for Kubernetes below v1.26.
 
 ### Changed
 

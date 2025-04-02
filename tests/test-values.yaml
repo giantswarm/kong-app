@@ -16,12 +16,6 @@ env:
   proxy_next_upstream: "off"
   proxy_next_upstream_tries: "1"
 
-image:
-  repository: giantswarm/kong
-  tag: "3.8.0"
-
-enterprise:
-  enabled: false
 ingressController:
   ingressClass: kong
   admissionWebhook:
