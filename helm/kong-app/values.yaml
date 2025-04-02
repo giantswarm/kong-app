@@ -91,7 +91,6 @@ deployment:
 # e.g. setting pg_user here will override the value normally set when postgresql.enabled
 # is set below. In general, you should not set values here if they are set elsewhere.
 env:
-  anonymous_reports: "off"
   database: "off"
   # the chart uses the traditional router (for Kong 3.x+) because the ingress
   # controller generates traditional routes. if you do not use the controller,
@@ -133,12 +132,11 @@ extraLabels: {}
 
 # Specify Kong's Docker image and repository details here
 image:
-  registry: &registry gsoci.azurecr.io
-  # repository: giantswarm/kong
-  # tag: "3.8.0"
+  repository: kong
+  tag: "3.9"
   # Kong Enterprise
-  repository: giantswarm/kong-gateway
-  tag: "3.8.1.0-debian"
+  # repository: kong/kong-gateway
+  # tag: "3.9"
 
   # Specify a semver version if your image tag is not one (e.g. "nightly")
   effectiveSemver:
@@ -542,9 +540,8 @@ dblessConfig:
 ingressController:
   enabled: true
   image:
-    registry: *registry
-    repository: giantswarm/kong-ingress-controller
-    tag: "3.4.3"
+    repository: kong/kubernetes-ingress-controller
+    tag: "3.4"
     # Optionally set a semantic version for version-gated features. This can normally
     # be left unset. You only need to set this if your tag is not a semver string,
     # such as when you are using a "next" tag. Set this to the effective semantic
@@ -571,7 +568,6 @@ ingressController:
 
   # Specify Kong Ingress Controller configuration via environment variables
   env:
-    anonymous_reports: "false"
     # The controller disables TLS verification by default because Kong
     # generates self-signed certificates by default. Set this to false once you
     # have installed CA-signed certificates.
@@ -612,12 +608,7 @@ ingressController:
     #        operator: NotIn
     #        values:
     #          - kube-system
-    namespaceSelector:
-      matchExpressions:
-      - key: kubernetes.io/metadata.name
-        operator: NotIn
-        values:
-        - linkerd
+    namespaceSelector: {}
     # ObjectSelector specifies which objects to match against validations.kong.konghq.com webhook webhook
     objectSelector:
       matchExpressions:
@@ -682,13 +673,15 @@ ingressController:
     periodSeconds: 10
     successThreshold: 1
     failureThreshold: 3
-  resources:
-    limits:
-      cpu: 100m
-      memory: 256Mi
-    requests:
-      cpu: 100m
-      memory: 256Mi
+  resources: {}
+  # Example reasonable setting for "resources":
+  # resources:
+  #   limits:
+  #     cpu: 100m
+  #     memory: 256Mi
+  #   requests:
+  #     cpu: 50m
+  #     memory: 128Mi
 
   konnect:
     enabled: false
@@ -761,18 +754,15 @@ postgresql:
     username: kong
     database: kong
   image:
-    registry: *registry
-    repository: giantswarm/postgresql-bitnami
     # use postgres < 14 until is https://github.com/Kong/kong/issues/8533 resolved and released
     # enterprise (kong-gateway) supports postgres 14
-    tag: 13.6.0-debian-10-r52
+    tag: 13.11.0-debian-11-r20
   service:
     ports:
       postgresql: "5432"
   primary:
     annotations:
       "ignore-check.kube-linter.io/no-read-only-root-fs": "writable fs is required"
-      "ignore-check.kube-linter.io/unset-memory-requirements": "external project"
     podSecurityContext:
       runAsNonRoot: true
       seccompProfile:
@@ -785,8 +775,6 @@ postgresql:
       capabilities:
         drop:
         - ALL
-  rbac:
-    create: true
 
 # -----------------------------------------------------------------------------
 # Configure cert-manager integration
@@ -867,8 +855,7 @@ waitImage:
   # Optionally specify an image that provides bash for pre-migration database
   # checks. If none is specified, the chart uses the Kong image. The official
   # Kong images provide bash
-  # registry: *registry
-  # repository: giantswarm/bash
+  # repository: bash
   # tag: 5
   pullPolicy: IfNotPresent
 
@@ -881,13 +868,13 @@ updateStrategy: {}
 
 # If you want to specify resources, uncomment the following
 # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-resources:
-  limits:
-    cpu: 1
-    memory: 2G
-  requests:
-    cpu: 1
-    memory: 2G
+resources: {}
+  # limits:
+  #  cpu: 1
+  #  memory: 2G
+  # requests:
+  #  cpu: 1
+  #  memory: 2G
 
 # readinessProbe for Kong pods
 readinessProbe:
@@ -943,44 +930,11 @@ terminationGracePeriodSeconds: 30
 
 # Affinity for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-affinity: |-
-  podAntiAffinity:
-    preferredDuringSchedulingIgnoredDuringExecution:
-    - weight: 100
-      podAffinityTerm:
-        labelSelector:
-          matchExpressions:
-          - key: app.kubernetes.io/name
-            operator: In
-            values:
-            - {{ include "kong.chart-name" . | quote }}
-          - key: app.kubernetes.io/instance
-            operator: In
-            values:
-            - {{ .Release.Name | quote }}
-        topologyKey: kubernetes.io/hostname
+# affinity: {}
 
 # Topology spread constraints for pod assignment (requires Kubernetes >= 1.19)
 # Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
-# Important: We strongly suggest you review these settings before applying onto your clusters.
-# Document https://docs.giantswarm.io/advanced/high-availability/multi-az/ gives more insight.
-topologySpreadConstraints: |-
-  - maxSkew: 1
-    topologyKey: topology.kubernetes.io/zone
-    whenUnsatisfiable: ScheduleAnyway
-    labelSelector:
-      matchLabels:
-        app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
-        app.kubernetes.io/instance: {{ .Release.Name | quote }}
-        application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
-  - maxSkew: 1
-    topologyKey: kubernetes.io/hostname
-    whenUnsatisfiable: ScheduleAnyway
-    labelSelector:
-      matchLabels:
-        app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
-        app.kubernetes.io/instance: {{ .Release.Name | quote }}
-        application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
+# topologySpreadConstraints: []
 
 # Tolerations for pod assignment
 # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
@@ -991,14 +945,16 @@ tolerations: []
 nodeSelector: {}
 
 # Annotation to be added to Kong pods
-podAnnotations: {}
+podAnnotations:
+  kuma.io/gateway: enabled
+  traffic.sidecar.istio.io/includeInboundPorts: ""
 
 # Labels to be added to Kong pods
 podLabels: {}
 
 # Kong pod count.
 # It has no effect when autoscaling.enabled is set to true
-replicaCount: 2
+replicaCount: 1
 
 # Annotations to be added to Kong deployment
 deploymentAnnotations: {}
@@ -1023,24 +979,11 @@ autoscaling:
           type: Utilization
           averageUtilization: 80
 
-# Enable autoscaling using VerticalPodAutoscaler
-# When configuring an VPA, you must set resource requests on all containers via
-# "resources" and, if using the controller, "ingressController.resources" in values.yaml
-verticalPodAutoscaler:
-  enabled: false
-  proxy:
-    minAllowed:
-      cpu: 250m
-      memory: 256Mi
-  controller:
-    minAllowed:
-      cpu: 100m
-
 # Kong Pod Disruption Budget
 podDisruptionBudget:
-  enabled: true
+  enabled: false
   # Uncomment only one of the following when enabled is set to true
-  maxUnavailable: "25%"
+  # maxUnavailable: "50%"
   # minAvailable: "50%"
   unhealthyPodEvictionPolicy: IfHealthyBudget
 
@@ -1112,9 +1055,9 @@ serviceMonitor:
   # Specifies whether ServiceMonitor for Prometheus operator should be created
   # If you wish to gather metrics from a Kong instance with the proxy disabled (such as a hybrid control plane), see:
   # https://github.com/Kong/charts/blob/main/charts/kong/README.md#prometheus-operator-integration
-  enabled: true
+  enabled: false
   trustCRDsExist: false
-  interval: 30s
+  # interval: 30s
   # Specifies namespace, where ServiceMonitor should be installed
   # namespace: monitoring
   # labels:
@@ -1124,15 +1067,7 @@ serviceMonitor:
 
   # honorLabels: false
   # metricRelabelings: []
-  relabelings:
-  - action: replace
-    sourceLabels:
-    - __meta_kubernetes_pod_label_app
-    targetLabel: app
-  - action: replace
-    sourceLabels:
-    - __meta_kubernetes_pod_node_name
-    targetLabel: node
+  # relabelings: []
 
 # -----------------------------------------------------------------------------
 # Kong Enterprise parameters
@@ -1142,12 +1077,12 @@ serviceMonitor:
 # RBAC and SMTP configuration have additional options that must all be set together
 # Other settings should be added to the "env" settings below
 enterprise:
-  enabled: true
+  enabled: false
   # Kong Enterprise license secret name
   # This secret must contain a single 'license' key, containing your base64-encoded license data
   # The license secret is required to unlock all Enterprise features. If you omit it,
   # Kong will run in free mode, with some Enterprise features disabled.
-  license_secret: kong-enterprise-license
+  # license_secret: kong-enterprise-license
   vitals:
     enabled: true
   portal:
@@ -1383,10 +1318,3 @@ extraObjects: []
 #   config:
 #     per_consumer: false
 #   plugin: prometheus
-
-# Values for subchart kubectl-apply-job
-# for installing CRDs
-kubectlApplyJob:
-  enabled: true
-  files:
-  - crds/custom-resource-definitions.yaml
