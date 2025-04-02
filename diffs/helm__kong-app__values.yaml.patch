@@ -1,5 +1,5 @@
 diff --git a/vendor/kong/charts/kong/values.yaml b/helm/kong-app/values.yaml
-index bdecdf6..489441b 100644
+index bdecdf6..3949ac2 100644
 --- a/vendor/kong/charts/kong/values.yaml
 +++ b/helm/kong-app/values.yaml
 @@ -91,6 +91,7 @@ deployment:
@@ -18,7 +18,7 @@ index bdecdf6..489441b 100644
 -  tag: "3.9"
 +  registry: &registry gsoci.azurecr.io
 +  repository: giantswarm/kong
-+  tag: "3.8.1"
++  tag: "3.8.0"
    # Kong Enterprise
    # repository: kong/kong-gateway
 -  # tag: "3.9"

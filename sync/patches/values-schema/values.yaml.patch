@@ -18,7 +18,7 @@ index bdecdf6..489441b 100644
 -  tag: "3.9"
 +  registry: &registry gsoci.azurecr.io
 +  repository: giantswarm/kong
-+  tag: "3.8.1"
++  tag: "3.8.0"
    # Kong Enterprise
    # repository: kong/kong-gateway
 -  # tag: "3.9"
