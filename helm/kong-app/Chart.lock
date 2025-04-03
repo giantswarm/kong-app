@@ -3,7 +3,7 @@ dependencies:
   repository: oci://registry-1.docker.io/bitnamicharts
   version: 11.9.13
 - name: kubectl-apply-job
-  repository: oci://giantswarmpublic.azurecr.io/giantswarm-playground-catalog
-  version: 0.9.1
-digest: sha256:b0f62051316cf1afd6a806dd5c236d0f701defa773cb3c349e976d824cd5d628
-generated: "2025-02-18T10:47:58.449193804+01:00"
+  repository: oci://giantswarmpublic.azurecr.io/giantswarm-playground-test-catalog
+  version: 0.9.1-767b5579e2ba3b59ebe33941d32c0bd27a59bfc9
+digest: sha256:0499d0aef1722373c35c9b76d36f11ec1a3868a3e103004db07376928db5a2fe
+generated: "2025-04-03T14:19:01.173140674+02:00"
