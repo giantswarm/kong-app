@@ -20,6 +20,6 @@ dependencies:
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: kubectl-apply-job
-    version: "0.9.1-2c24edb13f6faec4c2899ffaa6e44235d419274e"
+    version: "0.9.1-a4b4c78e95d57b6ed92e5e709eace9c4552312e9"
     repository: oci://giantswarmpublic.azurecr.io/giantswarm-playground-test-catalog
     condition: ingressController.enabled
