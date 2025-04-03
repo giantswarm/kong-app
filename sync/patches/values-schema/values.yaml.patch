@@ -1,5 +1,5 @@
 diff --git b/helm/kong-app/values.yaml a/helm/kong-app/values.yaml
-index bdecdf6..f4587ab 100644
+index bdecdf6..489441b 100644
 --- b/helm/kong-app/values.yaml
 +++ a/helm/kong-app/values.yaml
 @@ -91,6 +91,7 @@ deployment:
@@ -17,13 +17,12 @@ index bdecdf6..f4587ab 100644
 -  repository: kong
 -  tag: "3.9"
 +  registry: &registry gsoci.azurecr.io
-+  # repository: giantswarm/kong
-+  # tag: "3.8.0"
++  repository: giantswarm/kong
++  tag: "3.8.0"
    # Kong Enterprise
--  # repository: kong/kong-gateway
+   # repository: kong/kong-gateway
 -  # tag: "3.9"
-+  repository: giantswarm/kong-gateway
-+  tag: "3.8.1.0-debian"
++  # tag: "3.8.1.0-debian"
  
    # Specify a semver version if your image tag is not one (e.g. "nightly")
    effectiveSemver:
@@ -266,21 +265,6 @@ index bdecdf6..f4587ab 100644
  
  # -----------------------------------------------------------------------------
  # Kong Enterprise parameters
-@@ -1077,12 +1142,12 @@ serviceMonitor:
- # RBAC and SMTP configuration have additional options that must all be set together
- # Other settings should be added to the "env" settings below
- enterprise:
--  enabled: false
-+  enabled: true
-   # Kong Enterprise license secret name
-   # This secret must contain a single 'license' key, containing your base64-encoded license data
-   # The license secret is required to unlock all Enterprise features. If you omit it,
-   # Kong will run in free mode, with some Enterprise features disabled.
--  # license_secret: kong-enterprise-license
-+  license_secret: kong-enterprise-license
-   vitals:
-     enabled: true
-   portal:
 @@ -1318,3 +1383,10 @@ extraObjects: []
  #   config:
  #     per_consumer: false
