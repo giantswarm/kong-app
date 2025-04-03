@@ -13,6 +13,10 @@ These changes were introduced in PRs [#378](https://github.com/giantswarm/kong-a
 
 This release drops support for Kubernetes below v1.26.
 
+### Added
+
+- Allow chart users to specify the version of the CRDs to match the kong ingress controller version by changing `.Values.kubectlApplyJob.files` to any other file in `helm/kong-app/crds/` folder. The default is `crds/custom-resource-definitions-v3.4.3.yaml`.
+
 ### Changed
 
 - Update kong ingress controller to [3.4.3](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#343)
