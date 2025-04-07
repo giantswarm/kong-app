@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [5.0.0] - 2025-04-07
+
 We're going back to installing the kong OSS version by default instead of enterprise. In case you're relying on this default behaviour, please make sure to set the `.Values.image.repository`, `.Values.image.tag`, `.Values.enterprise.enabled` and `.Values.enterprise.license_secret` values to the respective Enterprise values.
 
 These changes were introduced in PRs [#378](https://github.com/giantswarm/kong-app/pull/378) and [#379](https://github.com/giantswarm/kong-app/pull/379).
@@ -739,7 +741,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v4.5.1...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v5.0.0...HEAD
+[5.0.0]: https://github.com/giantswarm/kong-app/compare/v4.5.1...v5.0.0
 [4.5.1]: https://github.com/giantswarm/kong-app/compare/v4.5.0...v4.5.1
 [4.5.0]: https://github.com/giantswarm/kong-app/compare/v4.4.0...v4.5.0
 [4.4.0]: https://github.com/giantswarm/kong-app/compare/v4.3.0...v4.4.0
