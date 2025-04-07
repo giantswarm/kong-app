@@ -173,6 +173,16 @@ kubectlApplyJob:
   enabled: false
 ```
 
+It is possible to change the version of the CRD to match the kong ingress controller version. For this, change your `values.yaml` like this:
+
+```yaml
+kubectlApplyJob:
+  files:
+  - crds/custom-resource-definitions-v3.2.4.yaml
+```
+
+Please check file [`helm/kong-app/crds`](https://github.com/giantswarm/kong-app/tree/main/helm/kong-app/crds) of the chart version you're using, to see available CRD files.
+
 ## Development
 
 Information about chart and version development can be found in [sync/README.md](https://github.com/giantswarm/kong-app/blob/main/sync/README.md).
