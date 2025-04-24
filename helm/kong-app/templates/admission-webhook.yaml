@@ -27,7 +27,7 @@ kind: ValidatingWebhookConfiguration
 {{- if .Capabilities.APIVersions.Has "admissionregistration.k8s.io/v1" }}
 apiVersion: admissionregistration.k8s.io/v1
 {{- else }}
-apiVersion: admissionregistration.k8s.io/v1beta1
+apiVersion: admissionregistration.k8s.io/v1
 {{- end }}
 metadata:
   name: {{ template "kong.fullname" . }}-{{ template "kong.namespace" . }}-validations
