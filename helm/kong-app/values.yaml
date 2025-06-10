@@ -638,6 +638,9 @@ ingressController:
     # timeoutSeconds: 10
 
   ingressClass: kong
+  # Check existence and create the `IngressClass` with given name in the cluster.
+  # You can set it to `false` to disable the creation of `IngressClass` if your user to run helm does not have the permission to create `IngressClass`es.
+  createIngressClass: true
   # annotations for IngressClass resource (Kubernetes 1.18+)
   ingressClassAnnotations: {}
 
@@ -795,6 +798,11 @@ postgresql:
 certificates:
   enabled: false
 
+  # Set the certificate timers or leave on the default value
+  # Default is 15 days
+  renewBefore: "360h0m0s"
+  # Default is 90d days
+  duration: "2160h0m0s"
   # Set either `issuer` or `clusterIssuer` to the name of the desired cert manager issuer
   # If left blank a built in self-signed issuer will be created and utilized
   issuer: ""

@@ -1,8 +1,8 @@
 diff --git a/vendor/kong/charts/kong/templates/deployment.yaml b/helm/kong-app/templates/deployment.yaml
-index 0e2ec01..d701369 100644
+index ce7c211..b0abc1b 100644
 --- a/vendor/kong/charts/kong/templates/deployment.yaml
 +++ b/helm/kong-app/templates/deployment.yaml
-@@ -291,11 +291,11 @@ spec:
+@@ -298,11 +298,11 @@ spec:
          {{- end }} {{/* End of Kong container spec */}}
      {{- if .Values.affinity }}
        affinity:
