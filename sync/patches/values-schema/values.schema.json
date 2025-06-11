@@ -195,6 +195,9 @@
                 "clusterIssuer": {
                     "type": "string"
                 },
+                "duration": {
+                    "type": "string"
+                },
                 "enabled": {
                     "type": "boolean"
                 },
@@ -240,6 +243,9 @@
                             "type": "string"
                         }
                     }
+                },
+                "renewBefore": {
+                    "type": "string"
                 }
             }
         },
@@ -772,6 +778,9 @@
                 },
                 "args": {
                     "type": "array"
+                },
+                "createIngressClass": {
+                    "type": "boolean"
                 },
                 "enabled": {
                     "type": "boolean"

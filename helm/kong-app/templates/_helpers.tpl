@@ -1831,6 +1831,7 @@ Kubernetes Cluster-scoped resources it uses to build Kong configuration.
   - list
   - watch
 {{- end }}
+{{ if .Values.ingressController.createIngressClass }}
 - apiGroups:
   - networking.k8s.io
   resources:
@@ -1839,6 +1840,7 @@ Kubernetes Cluster-scoped resources it uses to build Kong configuration.
   - get
   - list
   - watch
+{{- end -}}
 {{- end -}}
 
 {{- define "kong.autoscalingVersion" -}}

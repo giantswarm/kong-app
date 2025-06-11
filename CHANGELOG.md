@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Align with upstream chart version [2.49.0](https://github.com/Kong/charts/releases/tag/kong-2.49.0) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.48.0...kong-2.49.0))
+
 ## [5.0.0] - 2025-04-07
 
 We're going back to installing the kong OSS version by default instead of enterprise. In case you're relying on this default behaviour, please make sure to set the `.Values.image.repository`, `.Values.image.tag`, `.Values.enterprise.enabled` and `.Values.enterprise.license_secret` values to the respective Enterprise values.

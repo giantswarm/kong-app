@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'chore: prepare kong 2.48.0 (#1286)'
-      sha: d19219e8ef438009bc9245bedadb070703017c12
+      commitTitle: 'docs(changelog): update changelog for kong 2.49 (#1324)...'
+      sha: a70a4a88510f26498d039cfb60b1aecdb0838104
       tags:
-      - kong-2.48.0
+      - kong-2.49.0
     path: kong
   path: vendor
 - contents:
