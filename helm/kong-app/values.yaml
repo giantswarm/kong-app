@@ -135,7 +135,7 @@ extraLabels: {}
 image:
   registry: &registry gsoci.azurecr.io
   repository: giantswarm/kong
-  tag: "3.8.0"
+  tag: "3.9.1"
   # Kong Enterprise
   # repository: kong/kong-gateway
   # tag: "3.8.1.0-debian"
@@ -544,7 +544,7 @@ ingressController:
   image:
     registry: *registry
     repository: giantswarm/kong-ingress-controller
-    tag: "3.4.3"
+    tag: "3.4.6"
     # Optionally set a semantic version for version-gated features. This can normally
     # be left unset. You only need to set this if your tag is not a semver string,
     # such as when you are using a "next" tag. Set this to the effective semantic
@@ -1397,4 +1397,4 @@ extraObjects: []
 kubectlApplyJob:
   enabled: true
   files:
-  - crds/custom-resource-definitions-v3.4.3.yaml
+  - crds/custom-resource-definitions-v3.4.6.yaml

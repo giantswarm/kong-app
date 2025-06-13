@@ -18,7 +18,7 @@ index bdecdf6..489441b 100644
 -  tag: "3.9"
 +  registry: &registry gsoci.azurecr.io
 +  repository: giantswarm/kong
-+  tag: "3.8.0"
++  tag: "3.9.1"
    # Kong Enterprise
    # repository: kong/kong-gateway
 -  # tag: "3.9"
@@ -34,7 +34,7 @@ index bdecdf6..489441b 100644
 -    tag: "3.4"
 +    registry: *registry
 +    repository: giantswarm/kong-ingress-controller
-+    tag: "3.4.3"
++    tag: "3.4.6"
      # Optionally set a semantic version for version-gated features. This can normally
      # be left unset. You only need to set this if your tag is not a semver string,
      # such as when you are using a "next" tag. Set this to the effective semantic
@@ -275,4 +275,4 @@ index bdecdf6..489441b 100644
 +kubectlApplyJob:
 +  enabled: true
 +  files:
-+  - crds/custom-resource-definitions-v3.4.3.yaml
++  - crds/custom-resource-definitions-v3.4.6.yaml

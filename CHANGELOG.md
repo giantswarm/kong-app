@@ -10,6 +10,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Changed
 
 - Align with upstream chart version [2.49.0](https://github.com/Kong/charts/releases/tag/kong-2.49.0) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.48.0...kong-2.49.0))
+- Update kong ingress controller to [3.4.6](https://github.com/Kong/kubernetes-ingress-controller/blob/main/CHANGELOG.md#346)
+- Update kong to [3.9.1](https://github.com/Kong/kong/blob/release/3.9.x/CHANGELOG.md#391)
 
 ## [5.0.0] - 2025-04-07
 
