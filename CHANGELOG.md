@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Fix SeccompProfile in CRD apply job
+
 ## [5.1.0] - 2025-06-16
 
 ### Changed
