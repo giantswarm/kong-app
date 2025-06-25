@@ -10,6 +10,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Changed
 
 - Fix SeccompProfile in CRD apply job
+- Rename `helm/kong-app/crds` folder to `helm/kong-app/files`
 
 ## [5.1.0] - 2025-06-16
 
