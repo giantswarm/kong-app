@@ -1,5 +1,5 @@
 diff --git a/vendor/kong/charts/kong/values.yaml b/helm/kong-app/values.yaml
-index 28910eb..0d0e28d 100644
+index 28910eb..340ca92 100644
 --- a/vendor/kong/charts/kong/values.yaml
 +++ b/helm/kong-app/values.yaml
 @@ -91,6 +91,7 @@ deployment:
@@ -275,4 +275,4 @@ index 28910eb..0d0e28d 100644
 +kubectlApplyJob:
 +  enabled: true
 +  files:
-+  - crds/custom-resource-definitions-v3.4.6.yaml
++  - files/custom-resource-definitions-v3.4.6.yaml
