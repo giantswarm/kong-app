@@ -1397,4 +1397,4 @@ extraObjects: []
 kubectlApplyJob:
   enabled: true
   files:
-  - crds/custom-resource-definitions-v3.4.6.yaml
+  - files/custom-resource-definitions-v3.4.6.yaml
