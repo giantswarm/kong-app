@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [5.1.1] - 2025-06-25
+
 ### Changed
 
 - Fix SeccompProfile in CRD apply job
@@ -754,7 +756,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v5.1.0...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v5.1.1...HEAD
+[5.1.1]: https://github.com/giantswarm/kong-app/compare/v5.1.0...v5.1.1
 [5.1.0]: https://github.com/giantswarm/kong-app/compare/v5.0.0...v5.1.0
 [5.0.0]: https://github.com/giantswarm/kong-app/compare/v4.5.1...v5.0.0
 [4.5.1]: https://github.com/giantswarm/kong-app/compare/v4.5.0...v4.5.1
