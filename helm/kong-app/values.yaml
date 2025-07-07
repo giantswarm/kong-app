@@ -544,7 +544,7 @@ ingressController:
   image:
     registry: *registry
     repository: giantswarm/kong-ingress-controller
-    tag: "3.5.0"
+    tag: "3.4.7"
     # Optionally set a semantic version for version-gated features. This can normally
     # be left unset. You only need to set this if your tag is not a semver string,
     # such as when you are using a "next" tag. Set this to the effective semantic
@@ -1401,4 +1401,4 @@ extraObjects: []
 kubectlApplyJob:
   enabled: true
   files:
-  - files/custom-resource-definitions-v3.4.6.yaml
+  - files/custom-resource-definitions-v3.4.7.yaml

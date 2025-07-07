@@ -11,7 +11,7 @@ cd "${repo_dir}"
 
 mkdir -p ./helm/kong-app/files
 
-versions="v3.0.2 v3.1.6 v3.2.4 v3.3.1 v3.4.3 v3.4.6"
+versions="v3.0.2 v3.1.6 v3.2.4 v3.3.1 v3.4.3 v3.4.6 v3.4.7"
 
 for version in $versions; do
     crds_file="./helm/kong-app/files/custom-resource-definitions-${version}.yaml"
