@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [5.2.0] - 2025-07-07
+
 From upstream chart version v2.51.0 onwards, the chart uses kong kubernetes ingress controller (kic) v3.5.0.
 This version of kic dropped the CRDs from its repository to use indepenently maintainted and versioned CRDs from the https://github.com/kong/kubernetes-configuration repository.
 For chart users that change the default kic version (`ingressController.image`), we advise to also change the CRDs installation values to match the kic version. Change `kubectlApplyJob.files` to any other file in `helm/kong-app/files/` folder. The default for kic v3.5.0 is `files/kong-kubernetes-configuration-v1.5.2.yaml`.
@@ -765,7 +767,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v5.1.1...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v5.2.0...HEAD
+[5.2.0]: https://github.com/giantswarm/kong-app/compare/v5.1.1...v5.2.0
 [5.1.1]: https://github.com/giantswarm/kong-app/compare/v5.1.0...v5.1.1
 [5.1.0]: https://github.com/giantswarm/kong-app/compare/v5.0.0...v5.1.0
 [5.0.0]: https://github.com/giantswarm/kong-app/compare/v4.5.1...v5.0.0
