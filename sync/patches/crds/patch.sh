@@ -20,6 +20,19 @@ for version in $versions; do
     kubectl kustomize "github.com/kong/kubernetes-ingress-controller/config/crd?ref=${version}" >> "$crds_file"
 done
 
+# From upstream chart version v2.51.0 onwards, the chart uses kong kubernetes ingress controller (kic) v3.5.0.
+# This version dropped the CRDs from its repository.
+# Instead, kong CRDs are now indepenently maintainted and versioned in the https://github.com/kong/kubernetes-configuration repository.
+
+kubernetes_configuration_versions="v1.5.2"
+
+for version in $kubernetes_configuration_versions; do
+    crds_file="./helm/kong-app/files/kong-kubernetes-configuration-${version}.yaml"
+    # Fetch CRDs file
+    echo "# generated using: kubectl kustomize 'kubectl kustomize github.com/kong/kubernetes-configuration/config/crd/ingress-controller?ref=${version}'" > "$crds_file"
+    kubectl kustomize github.com/kong/kubernetes-configuration/config/crd/ingress-controller?ref=${version} >> "$crds_file"
+done
+
 # Add kubectl-apply-job call to CRDs template
 readonly script_dir_rel=".${script_dir#"${repo_dir}"}"
 
