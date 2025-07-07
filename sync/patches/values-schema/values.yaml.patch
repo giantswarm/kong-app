@@ -34,7 +34,7 @@ index bdecdf6..489441b 100644
 -    tag: "3.4"
 +    registry: *registry
 +    repository: giantswarm/kong-ingress-controller
-+    tag: "3.4.6"
++    tag: "3.4.7"
      # Optionally set a semantic version for version-gated features. This can normally
      # be left unset. You only need to set this if your tag is not a semver string,
      # such as when you are using a "next" tag. Set this to the effective semantic
@@ -275,4 +275,4 @@ index bdecdf6..489441b 100644
 +kubectlApplyJob:
 +  enabled: true
 +  files:
-+  - files/custom-resource-definitions-v3.4.6.yaml
++  - files/custom-resource-definitions-v3.4.7.yaml

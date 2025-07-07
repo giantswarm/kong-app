@@ -1,5 +1,5 @@
 diff --git a/vendor/kong/charts/kong/values.yaml b/helm/kong-app/values.yaml
-index 28910eb..340ca92 100644
+index 69ec7c4..9fff49f 100644
 --- a/vendor/kong/charts/kong/values.yaml
 +++ b/helm/kong-app/values.yaml
 @@ -91,6 +91,7 @@ deployment:
@@ -34,7 +34,7 @@ index 28910eb..340ca92 100644
 -    tag: "3.4"
 +    registry: *registry
 +    repository: giantswarm/kong-ingress-controller
-+    tag: "3.4.6"
++    tag: "3.4.7"
      # Optionally set a semantic version for version-gated features. This can normally
      # be left unset. You only need to set this if your tag is not a semver string,
      # such as when you are using a "next" tag. Set this to the effective semantic
@@ -60,7 +60,7 @@ index 28910eb..340ca92 100644
      # ObjectSelector specifies which objects to match against validations.kong.konghq.com webhook webhook
      objectSelector:
        matchExpressions:
-@@ -676,15 +685,13 @@ ingressController:
+@@ -680,15 +689,13 @@ ingressController:
      periodSeconds: 10
      successThreshold: 1
      failureThreshold: 3
@@ -83,7 +83,7 @@ index 28910eb..340ca92 100644
  
    konnect:
      enabled: false
-@@ -757,15 +764,18 @@ postgresql:
+@@ -761,15 +768,18 @@ postgresql:
      username: kong
      database: kong
    image:
@@ -103,7 +103,7 @@ index 28910eb..340ca92 100644
      podSecurityContext:
        runAsNonRoot: true
        seccompProfile:
-@@ -778,6 +788,8 @@ postgresql:
+@@ -782,6 +792,8 @@ postgresql:
        capabilities:
          drop:
          - ALL
@@ -112,7 +112,7 @@ index 28910eb..340ca92 100644
  
  # -----------------------------------------------------------------------------
  # Configure cert-manager integration
-@@ -863,7 +875,8 @@ waitImage:
+@@ -867,7 +879,8 @@ waitImage:
    # Optionally specify an image that provides bash for pre-migration database
    # checks. If none is specified, the chart uses the Kong image. The official
    # Kong images provide bash
@@ -122,7 +122,7 @@ index 28910eb..340ca92 100644
    # tag: 5
    pullPolicy: IfNotPresent
  
-@@ -876,13 +889,13 @@ updateStrategy: {}
+@@ -880,13 +893,13 @@ updateStrategy: {}
  
  # If you want to specify resources, uncomment the following
  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
@@ -143,7 +143,7 @@ index 28910eb..340ca92 100644
  
  # readinessProbe for Kong pods
  readinessProbe:
-@@ -938,11 +951,44 @@ terminationGracePeriodSeconds: 30
+@@ -942,11 +955,44 @@ terminationGracePeriodSeconds: 30
  
  # Affinity for pod assignment
  # Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
@@ -190,7 +190,7 @@ index 28910eb..340ca92 100644
  
  # Tolerations for pod assignment
  # Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-@@ -953,16 +999,14 @@ tolerations: []
+@@ -957,16 +1003,14 @@ tolerations: []
  nodeSelector: {}
  
  # Annotation to be added to Kong pods
@@ -209,7 +209,7 @@ index 28910eb..340ca92 100644
  
  # Annotations to be added to Kong deployment
  deploymentAnnotations: {}
-@@ -987,11 +1031,24 @@ autoscaling:
+@@ -991,11 +1035,24 @@ autoscaling:
            type: Utilization
            averageUtilization: 80
  
@@ -236,7 +236,7 @@ index 28910eb..340ca92 100644
    # minAvailable: "50%"
    unhealthyPodEvictionPolicy: IfHealthyBudget
  
-@@ -1063,9 +1120,9 @@ serviceMonitor:
+@@ -1067,9 +1124,9 @@ serviceMonitor:
    # Specifies whether ServiceMonitor for Prometheus operator should be created
    # If you wish to gather metrics from a Kong instance with the proxy disabled (such as a hybrid control plane), see:
    # https://github.com/Kong/charts/blob/main/charts/kong/README.md#prometheus-operator-integration
@@ -248,7 +248,7 @@ index 28910eb..340ca92 100644
    # Specifies namespace, where ServiceMonitor should be installed
    # namespace: monitoring
    # labels:
-@@ -1075,7 +1132,15 @@ serviceMonitor:
+@@ -1079,7 +1136,15 @@ serviceMonitor:
  
    # honorLabels: false
    # metricRelabelings: []
@@ -265,7 +265,7 @@ index 28910eb..340ca92 100644
  
  # -----------------------------------------------------------------------------
  # Kong Enterprise parameters
-@@ -1326,3 +1391,10 @@ extraObjects: []
+@@ -1330,3 +1395,10 @@ extraObjects: []
  #   config:
  #     per_consumer: false
  #   plugin: prometheus
@@ -275,4 +275,4 @@ index 28910eb..340ca92 100644
 +kubectlApplyJob:
 +  enabled: true
 +  files:
-+  - files/custom-resource-definitions-v3.4.6.yaml
++  - files/custom-resource-definitions-v3.4.7.yaml
