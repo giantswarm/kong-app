@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'kong: generate Gateway API RBAC policy rules by default (#1334)'
-      sha: 3ef7128b7960ea24beb37113f5c7667b05741100
+      commitTitle: 'chore(kic): release 3.5 (#1343)...'
+      sha: 0fd1503b2f5836d5e340df5a20cca250cab0b017
       tags:
-      - kong-2.50.0
+      - kong-2.51.0
     path: kong
   path: vendor
 - contents:

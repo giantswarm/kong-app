@@ -31,10 +31,10 @@ index bdecdf6..489441b 100644
    enabled: true
    image:
 -    repository: kong/kubernetes-ingress-controller
--    tag: "3.4"
+-    tag: "3.5"
 +    registry: *registry
 +    repository: giantswarm/kong-ingress-controller
-+    tag: "3.4.7"
++    tag: "3.5.0"
      # Optionally set a semantic version for version-gated features. This can normally
      # be left unset. You only need to set this if your tag is not a semver string,
      # such as when you are using a "next" tag. Set this to the effective semantic
@@ -275,4 +275,4 @@ index bdecdf6..489441b 100644
 +kubectlApplyJob:
 +  enabled: true
 +  files:
-+  - files/custom-resource-definitions-v3.4.7.yaml
++  - files/kong-kubernetes-configuration-v1.5.2.yaml
