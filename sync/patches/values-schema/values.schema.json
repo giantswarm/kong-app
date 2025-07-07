@@ -914,6 +914,14 @@
                         },
                         "enableClusterRoles": {
                             "type": "boolean"
+                        },
+                        "gatewayAPI": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                }
+                            }
                         }
                     }
                 },
