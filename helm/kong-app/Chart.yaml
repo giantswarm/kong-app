@@ -16,7 +16,7 @@ annotations:
 kubeVersion: ">=1.26.0-0"
 dependencies:
   - name: postgresql
-    version: 11.9.13
+    version: 18.0.7
     repository: oci://registry-1.docker.io/bitnamicharts
     condition: postgresql.enabled
   - name: kubectl-apply-job
