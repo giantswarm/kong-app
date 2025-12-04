@@ -4,6 +4,6 @@ dependencies:
   version: 11.9.13
 - name: kubectl-apply-job
   repository: oci://giantswarmpublic.azurecr.io/giantswarm-playground-catalog
-  version: 0.10.0
-digest: sha256:a9eea27037f866d67b560b6d42a50901878acba5a65006601baef5fb6aed5246
-generated: "2025-06-25T09:55:25.841998928Z"
+  version: 0.11.0
+digest: sha256:06e1f0899563c64bb2553ba50c0c31af4e6f8cf5cd76f94c988a8f8d8d97e36a
+generated: "2025-12-04T15:06:59.777080911Z"
