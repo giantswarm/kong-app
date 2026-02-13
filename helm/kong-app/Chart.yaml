@@ -12,7 +12,8 @@ sources:
 version: 5.2.0
 appVersion: "3.8.0"
 annotations:
-  application.giantswarm.io/team: "cabbage"
+  io.giantswarm.application.team: cabbage
+  io.giantswarm.application.audience: "all"
 kubeVersion: ">=1.26.0-0"
 dependencies:
   - name: postgresql
