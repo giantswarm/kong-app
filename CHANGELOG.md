@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Remove restriction when deploying VPA and HPA together.
+
 ## [5.2.0] - 2025-07-07
 
 From upstream chart version v2.51.0 onwards, the chart uses kong kubernetes ingress controller (kic) v3.5.0.
