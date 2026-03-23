@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Make VPA resource more flexible: `updateMode`, `controlledValues`, and `mode` are now configurable per container group; `maxAllowed` is supported for both proxy and controller containers.
+
 ## [5.2.1] - 2026-03-04
 
 ### Changed
