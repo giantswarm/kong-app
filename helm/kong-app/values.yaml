@@ -1043,7 +1043,7 @@ autoscaling:
 verticalPodAutoscaler:
   enabled: false
   # updateMode controls when VPA applies resource recommendations.
-  # Allowed values: Auto, Recreate, Initial, Off
+  # Allowed values: Off, Initial, Recreate, InPlaceOrRecreate, Auto
   updateMode: Auto
   proxy:
     # mode controls whether VPA is active for proxy containers. Allowed values: Auto, Off

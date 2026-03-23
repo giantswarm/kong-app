@@ -1,5 +1,5 @@
 diff --git a/vendor/kong/charts/kong/values.yaml b/helm/kong-app/values.yaml
-index 4013d36..48157c0 100644
+index 4013d36..4eaac4d 100644
 --- a/vendor/kong/charts/kong/values.yaml
 +++ b/helm/kong-app/values.yaml
 @@ -91,6 +91,7 @@ deployment:
@@ -219,7 +219,7 @@ index 4013d36..48157c0 100644
 +verticalPodAutoscaler:
 +  enabled: false
 +  # updateMode controls when VPA applies resource recommendations.
-+  # Allowed values: Auto, Recreate, Initial, Off
++  # Allowed values: Off, Initial, Recreate, InPlaceOrRecreate, Auto
 +  updateMode: Auto
 +  proxy:
 +    # mode controls whether VPA is active for proxy containers. Allowed values: Auto, Off
