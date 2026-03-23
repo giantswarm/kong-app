@@ -1042,13 +1042,26 @@ autoscaling:
 # "resources" and, if using the controller, "ingressController.resources" in values.yaml
 verticalPodAutoscaler:
   enabled: false
+  # updateMode controls when VPA applies resource recommendations.
+  # Allowed values: Auto, Recreate, Initial, Off
+  updateMode: Auto
   proxy:
+    # mode controls whether VPA is active for proxy containers. Allowed values: Auto, Off
+    mode: Auto
+    # controlledValues specifies which resource values are controlled. Allowed values: RequestsAndLimits, RequestsOnly
+    controlledValues: RequestsAndLimits
     minAllowed:
       cpu: 250m
       memory: 256Mi
+    # maxAllowed: {}
   controller:
+    # mode controls whether VPA is active for the ingress controller container. Allowed values: Auto, Off
+    mode: Auto
+    # controlledValues specifies which resource values are controlled. Allowed values: RequestsAndLimits, RequestsOnly
+    controlledValues: RequestsAndLimits
     minAllowed:
       cpu: 100m
+    # maxAllowed: {}
 
 # Kong Pod Disruption Budget
 podDisruptionBudget:

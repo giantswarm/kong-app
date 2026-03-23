@@ -209,7 +209,7 @@ index bdecdf6..489441b 100644
  
  # Annotations to be added to Kong deployment
  deploymentAnnotations: {}
-@@ -979,11 +1023,24 @@ autoscaling:
+@@ -979,11 +1023,37 @@ autoscaling:
            type: Utilization
            averageUtilization: 80
  
@@ -218,13 +218,26 @@ index bdecdf6..489441b 100644
 +# "resources" and, if using the controller, "ingressController.resources" in values.yaml
 +verticalPodAutoscaler:
 +  enabled: false
++  # updateMode controls when VPA applies resource recommendations.
++  # Allowed values: Auto, Recreate, Initial, Off
++  updateMode: Auto
 +  proxy:
++    # mode controls whether VPA is active for proxy containers. Allowed values: Auto, Off
++    mode: Auto
++    # controlledValues specifies which resource values are controlled. Allowed values: RequestsAndLimits, RequestsOnly
++    controlledValues: RequestsAndLimits
 +    minAllowed:
 +      cpu: 250m
 +      memory: 256Mi
++    # maxAllowed: {}
 +  controller:
++    # mode controls whether VPA is active for the ingress controller container. Allowed values: Auto, Off
++    mode: Auto
++    # controlledValues specifies which resource values are controlled. Allowed values: RequestsAndLimits, RequestsOnly
++    controlledValues: RequestsAndLimits
 +    minAllowed:
 +      cpu: 100m
++    # maxAllowed: {}
 +
  # Kong Pod Disruption Budget
  podDisruptionBudget:
@@ -236,7 +249,7 @@ index bdecdf6..489441b 100644
    # minAvailable: "50%"
    unhealthyPodEvictionPolicy: IfHealthyBudget
  
-@@ -1055,9 +1112,9 @@ serviceMonitor:
+@@ -1055,9 +1125,9 @@ serviceMonitor:
    # Specifies whether ServiceMonitor for Prometheus operator should be created
    # If you wish to gather metrics from a Kong instance with the proxy disabled (such as a hybrid control plane), see:
    # https://github.com/Kong/charts/blob/main/charts/kong/README.md#prometheus-operator-integration
@@ -248,7 +261,7 @@ index bdecdf6..489441b 100644
    # Specifies namespace, where ServiceMonitor should be installed
    # namespace: monitoring
    # labels:
-@@ -1067,7 +1124,15 @@ serviceMonitor:
+@@ -1067,7 +1137,15 @@ serviceMonitor:
  
    # honorLabels: false
    # metricRelabelings: []
@@ -265,7 +278,7 @@ index bdecdf6..489441b 100644
  
  # -----------------------------------------------------------------------------
  # Kong Enterprise parameters
-@@ -1318,3 +1383,10 @@ extraObjects: []
+@@ -1318,3 +1396,10 @@ extraObjects: []
  #   config:
  #     per_consumer: false
  #   plugin: prometheus
