@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [5.2.2] - 2026-03-24
+
 ### Changed
 
 - Make VPA resource more flexible: `updateMode`, `controlledValues`, and `mode` are now configurable per container group; `maxAllowed` is supported for both proxy and controller containers.
@@ -777,7 +779,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v5.2.1...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v5.2.2...HEAD
+[5.2.2]: https://github.com/giantswarm/kong-app/compare/v5.2.1...v5.2.2
 [5.2.1]: https://github.com/giantswarm/kong-app/compare/v5.2.0...v5.2.1
 [5.2.0]: https://github.com/giantswarm/kong-app/compare/v5.1.1...v5.2.0
 [5.1.1]: https://github.com/giantswarm/kong-app/compare/v5.1.0...v5.1.1
