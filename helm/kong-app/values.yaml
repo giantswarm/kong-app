@@ -158,6 +158,8 @@ admin:
   enabled: false
   type: NodePort
   loadBalancerClass:
+  ipFamilyPolicy:
+  ipFamilies: []
   # To specify annotations or labels for the admin service, add them to the respective
   # "annotations" or "labels" dictionaries below.
   annotations: {}
@@ -261,6 +263,8 @@ cluster:
 
   type: ClusterIP
   loadBalancerClass:
+  ipFamilyPolicy:
+  ipFamilies: []
 
   # Kong cluster ingress settings. Useful if you want to split CP and DP
   # in different clusters.
@@ -285,6 +289,8 @@ proxy:
   enabled: true
   type: LoadBalancer
   loadBalancerClass: ""
+  ipFamilyPolicy:
+  ipFamilies: []
   # Configures optional firewall rules and in the VPC network to only allow certain source ranges.
   loadBalancerSourceRanges: []
   # Override proxy Service name
@@ -413,6 +419,8 @@ udpProxy:
   enabled: false
   type: LoadBalancer
   loadBalancerClass:
+  ipFamilyPolicy:
+  ipFamilies: []
   # To specify annotations or labels for the proxy service, add them to the respective
   # "annotations" or "labels" dictionaries below.
   annotations: {}
@@ -505,6 +513,16 @@ migrations:
   # sidecarContainers:
   #   - name: sidecar
   #     image: sidecar:latest
+  ## Optionally set securitycontext for the wait-for-postgres migrations init container
+  # waitContainer:
+  #   securityContext:
+  #     allowPrivilegeEscalation: false
+  #     capabilities:
+  #       drop:
+  #       - ALL
+  #     readOnlyRootFilesystem: true
+  #     runAsNonRoot: true
+  #     runAsUser: 1000
 
 # Kong's configuration for DB-less mode
 # Note: Use this section only if you are deploying Kong in DB-less mode
@@ -744,8 +762,7 @@ ingressController:
 # Postgres sub-chart parameters
 # -----------------------------------------------------------------------------
 
-# Kong can run without a database or use either Postgres or Cassandra
-# as a backend datatstore for it's configuration.
+# Kong can run without a database or use Postgres as a backend datatstore for it's configuration.
 # By default, this chart installs Kong without a database.
 
 # If you would like to use a database, there are two options:
@@ -830,7 +847,7 @@ certificates:
     # - "*.apps.example"
     # - "*.kong.example"
 
-  # Set admin.enabled true to issue kong admin api and manager certificate with cert-manager
+  # Set admin.enabled true to issue kong admin api certificate with cert-manager
   admin:
     enabled: true
     # Set `issuer` or `clusterIssuer` to name of alternate cert-manager clusterIssuer to override default
@@ -840,6 +857,20 @@ certificates:
     # Use commonName and dnsNames to set the common name and dns alt names which this
     # certificate is valid for. Wildcard records are supported by the included self-signed issuer.
     commonName: "kong.example"
+    # Remove the "[]" and uncomment/change the examples to add SANs
+    dnsNames: []
+    # - "admin.kong.example"
+
+  # Set manager.enabled true to issue a dedicated Kong Manager (admin GUI) certificate with cert-manager
+  # If disabled, Kong Manager will fall back to using the admin certificate (backward compatible behavior).
+  manager:
+    enabled: false
+    # Set `issuer` or `clusterIssuer` to name of alternate cert-manager issuer to override default
+    issuer: ""
+    clusterIssuer: ""
+    # Use commonName and dnsNames to set the common name and dns alt names which this
+    # certificate is valid for. Wildcard records are supported by the included self-signed issuer.
+    commonName: "manager.kong.example"
     # Remove the "[]" and uncomment/change the examples to add SANs
     dnsNames: []
     # - "manager.kong.example"
@@ -1006,6 +1037,8 @@ nodeSelector: {}
 
 # Annotation to be added to Kong pods
 podAnnotations: {}
+  # kuma.io/gateway: enabled
+  # traffic.sidecar.istio.io/includeInboundPorts: ""
 
 # Labels to be added to Kong pods
 podLabels: {}
@@ -1036,32 +1069,6 @@ autoscaling:
         target:
           type: Utilization
           averageUtilization: 80
-
-# Enable autoscaling using VerticalPodAutoscaler
-# When configuring an VPA, you must set resource requests on all containers via
-# "resources" and, if using the controller, "ingressController.resources" in values.yaml
-verticalPodAutoscaler:
-  enabled: false
-  # updateMode controls when VPA applies resource recommendations.
-  # Allowed values: Off, Initial, Recreate, InPlaceOrRecreate, Auto
-  updateMode: Auto
-  proxy:
-    # mode controls whether VPA is active for proxy containers. Allowed values: Auto, Off
-    mode: Auto
-    # controlledValues specifies which resource values are controlled. Allowed values: RequestsAndLimits, RequestsOnly
-    controlledValues: RequestsAndLimits
-    minAllowed:
-      cpu: 250m
-      memory: 256Mi
-    # maxAllowed: {}
-  controller:
-    # mode controls whether VPA is active for the ingress controller container. Allowed values: Auto, Off
-    mode: Auto
-    # controlledValues specifies which resource values are controlled. Allowed values: RequestsAndLimits, RequestsOnly
-    controlledValues: RequestsAndLimits
-    minAllowed:
-      cpu: 100m
-    # maxAllowed: {}
 
 # Kong Pod Disruption Budget
 podDisruptionBudget:
@@ -1109,7 +1116,10 @@ securityContext:
     type: RuntimeDefault
 
 # securityContext for containers.
+# Set containerSecurityContext.enabled=false for OpenShift, where the platform
+# automatically assigns UIDs/GIDs via Security Context Constraints (SCC).
 containerSecurityContext:
+  enabled: true
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
   runAsUser: 1000
@@ -1219,6 +1229,8 @@ manager:
   enabled: true
   type: NodePort
   loadBalancerClass:
+  ipFamilyPolicy:
+  ipFamilies: []
   # To specify annotations or labels for the Manager service, add them to the respective
   # "annotations" or "labels" dictionaries below.
   annotations: {}
@@ -1266,6 +1278,8 @@ portal:
   enabled: true
   type: NodePort
   loadBalancerClass:
+  ipFamilyPolicy:
+  ipFamilies: []
   # To specify annotations or labels for the Portal service, add them to the respective
   # "annotations" or "labels" dictionaries below.
   annotations: {}
@@ -1313,6 +1327,8 @@ portalapi:
   enabled: true
   type: NodePort
   loadBalancerClass:
+  ipFamilyPolicy:
+  ipFamilies: []
   # To specify annotations or labels for the Portal API service, add them to the respective
   # "annotations" or "labels" dictionaries below.
   annotations: {}
@@ -1371,6 +1387,8 @@ clustertelemetry:
 
   type: ClusterIP
   loadBalancerClass:
+  ipFamilyPolicy:
+  ipFamilies: []
 
   # Kong clustertelemetry ingress settings. Useful if you want to split
   # CP and DP in different clusters.

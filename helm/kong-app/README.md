@@ -32,6 +32,7 @@ helm install kong/kong --generate-name
     - [DB-less deployment](#db-less-deployment)
     - [Using the Postgres sub-chart](#using-the-postgres-sub-chart)
       - [Postgres sub-chart considerations for OpenShift](#postgres-sub-chart-considerations-for-openshift)
+    - [Kong container security context for OpenShift](#kong-container-security-context-for-openshift)
   - [Runtime package](#runtime-package)
   - [Configuration method](#configuration-method)
   - [Separate admin and proxy nodes](#separate-admin-and-proxy-nodes)
@@ -178,6 +179,10 @@ after updating externally supplied ConfigMap content.
 
 #### Using the Postgres sub-chart
 
+> **NOTE**: Due to Bitnami images not being maintained anymore, starting with
+> Kong chart 3.0 users have to specify the Postgres image themselves via
+> `postgresql.image.registry`, `postgresql.image.repository` and `postgresql.image.tag`.
+
 The chart can optionally spawn a Postgres instance using [Bitnami's Postgres
 chart](https://github.com/bitnami/charts/blob/master/bitnami/postgresql/README.md)
 as a sub-chart. Set `postgresql.enabled=true` to enable the sub-chart. Enabling
@@ -187,6 +192,8 @@ The Postgres sub-chart is best used to quickly provision temporary environments
 without installing and configuring your database separately. For longer-lived
 environments, we recommend you manage your database outside the Kong Helm
 release.
+You can find a guide for using Cloud Native PostgreSQL with Kong
+[on our documentation site](https://developer.konghq.com/gateway/install/kubernetes/on-prem/).
 
 ##### Postgres sub-chart considerations for OpenShift
 
@@ -203,6 +210,24 @@ Due to the default `securityContexts` in the postgres sub-chart, you will need t
     podSecurityContext:
       enabled: false
 ```
+
+#### Kong container security context for OpenShift
+
+OpenShift uses Security Context Constraints (SCC) that automatically assign
+dynamic user/group IDs to containers. The default `containerSecurityContext`
+in this chart includes hardcoded `runAsUser: 1000` and `runAsGroup: 1000`
+values that conflict with OpenShift's security model.
+
+To deploy Kong on OpenShift, disable the container security context so that
+OpenShift can inject its own dynamic UID/GID values:
+
+```yaml
+containerSecurityContext:
+  enabled: false
+```
+
+This allows OpenShift's SCC to manage the security context automatically,
+which is the recommended approach for OpenShift deployments.
 
 ### Runtime package
 
@@ -474,10 +499,15 @@ and set `certificates.clusterIssuer: selfsigned-issuer` for testing. You
 should, however, migrate to an issuer using a CA your clients trust for actual
 usage.
 
-The `proxy`, `admin`, `portal`, and `cluster` subsections under `certificates`
+The `proxy`, `admin`, `manager`, `portal`, and `cluster` subsections under `certificates`
 let you choose hostnames, override issuers, set `subject` or set `privateKey` on a per-certificate basis for the
-proxy, admin API and Manager, Portal and Portal API, and hybrid mode mTLS
+proxy, admin API, Kong Manager (Enterprise only), Portal and Portal API, and hybrid mode mTLS
 services, respectively.
+
+For Kong Enterprise deployments, the `manager` certificate configuration allows you to generate a dedicated
+certificate for Kong Manager (the admin GUI) separate from the admin API certificate. This improves security
+by allowing different hostnames and access patterns for the GUI versus the API. If `certificates.manager.enabled`
+is not set, Kong Manager will fall back to using the admin certificate for backward compatibility.
 
 To use hybrid mode, the control and data plane releases must use the same
 issuer for their cluster certificates.
@@ -627,6 +657,7 @@ directory.
 | migrations.ttlSecondsAfterFinished | Automatically deletes completed pods after a specified time to clean up resources     |                     |
 | migrations.jobAnnotations          | Additional annotations for migration jobs                                             | `{}`                |
 | migrations.backoffLimit            | Override the system backoffLimit                                                      | `{}`                |
+| migrations.waitContainer.securityContext | Security context configurations for wait-for-postgres migrations init container |                     |
 | waitImage.enabled                  | Spawn init containers that wait for the database before starting Kong                 | `true`              |
 | waitImage.repository               | Image used to wait for database to become ready. Uses the Kong image if none set      |                     |
 | waitImage.tag                      | Tag for image used to wait for database to become ready                               |                     |
@@ -690,6 +721,8 @@ or `ingress` sections, as it is used only for stream listens.
 | SVC.tls.appProtocol               | `appProtocol` to be set in a Service's port. If left empty, no `appProtocol` will be set. |                          |
 | SVC.type                          | k8s service type. Options: NodePort, ClusterIP, LoadBalancer                              |                          |
 | SVC.clusterIP                     | k8s service clusterIP                                                                     |                          |
+| SVC.ipFamilyPolicy                | k8s service's ipFamilyPolicy. Options: SingleStack, PreferDualStack, RequireDualStack     |                          |
+| SVC.ipFamilies                    | k8s service's ipFamilies                                                                  | `[]`                     |
 | SVC.loadBalancerClass             | loadBalancerClass to use for LoadBalancer provisionning                                   |                          |
 | SVC.loadBalancerSourceRanges      | Limit service access to CIDRs if set and service type is `LoadBalancer`                   | `[]`                     |
 | SVC.loadBalancerIP                | Reuse an existing ingress static IP for the service                                       |                          |
@@ -901,6 +934,7 @@ On the Gateway release side, set either `admin.tls.client.secretName` to the nam
 | podAnnotations                     | Annotations to add to each pod                                                        |  see `values.yaml`  |
 | podLabels                          | Labels to add to each pod                                                             | `{}`                |
 | resources                          | Pod resource requests & limits                                                        | `{}`                |
+| initContainerResources             | Init container resource requests & limits                                                        | `{}`                |
 | tolerations                        | List of node taints to tolerate                                                       | `[]`                |
 | dnsPolicy                          | Pod dnsPolicy                                                                         |                     |
 | dnsConfig                          | Pod dnsConfig                                                                         |                     |
@@ -916,6 +950,7 @@ On the Gateway release side, set either `admin.tls.client.secretName` to the nam
 | secretVolumes                      | Mount given secrets as a volume in Kong container to override default certs and keys. | `[]`                |
 | securityContext                    | Set the securityContext for Kong Pods                                                 | See values.yaml     |
 | containerSecurityContext           | Set the securityContext for Containers                                                | See values.yaml     |
+| containerSecurityContext.enabled   | Enable container security context (set to `false` for OpenShift)                      | `true`              |
 | serviceMonitor.enabled             | Create ServiceMonitor for Prometheus Operator                                         | `false`             |
 | serviceMonitor.trustCRDsExist      | Do not check for the Prometheus Operator CRDs, just try to deploy                     | `false`             |
 | serviceMonitor.interval            | Scraping interval                                                                     | `30s`               |

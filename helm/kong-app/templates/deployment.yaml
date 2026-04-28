@@ -102,10 +102,12 @@ spec:
       - name: clear-stale-pid
         image: {{ include "kong.getRepoTag" .Values.image }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- if .Values.containerSecurityContext.enabled }}
         securityContext:
-        {{ toYaml .Values.containerSecurityContext | nindent 10 }}
+        {{ toYaml (omit .Values.containerSecurityContext "enabled") | nindent 10 }}
+        {{- end }}
         resources:
-{{ toYaml .Values.resources | indent 10 }}
+{{ toYaml (default .Values.resources .Values.initContainerResources) | indent 10 }}
         command:
         - "rm"
         - "-vrf"
@@ -144,8 +146,10 @@ spec:
       - name: "proxy"
         image: {{ include "kong.getRepoTag" .Values.image }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- if .Values.containerSecurityContext.enabled }}
         securityContext:
-        {{ toYaml .Values.containerSecurityContext | nindent 10 }}
+        {{ toYaml (omit .Values.containerSecurityContext "enabled") | nindent 10 }}
+        {{- end }}
         env:
         {{- include "kong.no_daemon_env" . | nindent 8 }}
         {{- include "kong.envFrom" .Values.envFrom | nindent 8 }}
@@ -298,11 +302,11 @@ spec:
         {{- end }} {{/* End of Kong container spec */}}
     {{- if .Values.affinity }}
       affinity:
-{{ tpl .Values.affinity . | indent 8 }}
+{{ toYaml .Values.affinity | indent 8 }}
     {{- end }}
     {{- if .Values.topologySpreadConstraints }}
       topologySpreadConstraints:
-{{ tpl .Values.topologySpreadConstraints . | indent 6 }}
+{{ toYaml .Values.topologySpreadConstraints | indent 8 }}
     {{- end }}
       securityContext:
       {{- include "kong.podsecuritycontext" . | nindent 8 }}

@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: 'chore(kic): release 3.5 (#1343)...'
-      sha: 0fd1503b2f5836d5e340df5a20cca250cab0b017
+      commitTitle: 'chore: prepare kong chart 3.2.0 (#1509)...'
+      sha: 0449cd96172009a037182a4fdbf818b6900cf338
       tags:
-      - kong-2.51.0
+      - kong-3.2.0
     path: kong
   path: vendor
 - contents:

@@ -25,37 +25,22 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
-{{/*
-Value used for app.kubernetes.io/name label on resources.
-Needs to be stable as Giant Swarm is using it for monitoring.
-*/}}
-{{- define "kong.chart-name" -}}
-{{- .Chart.Name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
 {{- define "kong.metaLabels" -}}
-app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
+app.kubernetes.io/name: {{ template "kong.name" . }}
 helm.sh/chart: {{ template "kong.chart" . }}
 app.kubernetes.io/instance: "{{ .Release.Name }}"
 app.kubernetes.io/managed-by: "{{ .Release.Service }}"
 {{ $version := semver (include "kong.effectiveVersion" .Values.image) }}
 app.kubernetes.io/version: {{ printf "%d.%d" $version.Major $version.Minor | quote }}
-giantswarm.io/service-type: "managed"
-application.giantswarm.io/team: {{ index .Chart.Annotations "application.giantswarm.io/team" | quote }}
-application.giantswarm.io/container-images-hash: {{ include "kong.imagesHash" . | quote }}
 {{- range $key, $value := .Values.extraLabels }}
 {{ $key }}: {{ include "kong.renderTpl" (dict "value" $value "context" $) | quote }}
 {{- end }}
 {{- end -}}
 
 {{- define "kong.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
+app.kubernetes.io/name: {{ template "kong.name" . }}
 app.kubernetes.io/component: app
 app.kubernetes.io/instance: "{{ .Release.Name }}"
-{{- end -}}
-
-{{- define "kong.imagesHash" -}}
-{{- printf "%s-%s" (include "kong.getRepoTag" .Values.image) (include "kong.getRepoTag" .Values.ingressController.image) | sha256sum | trunc 63 -}}
 {{- end -}}
 
 {{- define "kong.postgresql.fullname" -}}
@@ -222,6 +207,15 @@ spec:
   {{- range $ip := .externalIPs }}
   - {{ $ip }}
   {{- end -}}
+  {{- end }}
+  {{- if .ipFamilyPolicy }}
+  ipFamilyPolicy: {{ .ipFamilyPolicy }}
+  {{- end }}
+  {{- if .ipFamilies }}
+  ipFamilies:
+  {{- range $family := .ipFamilies }}
+  - {{ $family }}
+  {{- end }}
   {{- end }}
   ports:
   {{- if .http }}
@@ -658,6 +652,11 @@ The name of the Service which will be used by the controller to update the Ingre
     secretName: {{ include "kong.fullname" . }}-admin-cert
 {{- end }}
 {{- if .Values.enterprise.enabled }}
+{{- if .Values.certificates.manager.enabled }}
+- name: {{ include "kong.fullname" . }}-manager-cert
+  secret:
+    secretName: {{ include "kong.fullname" . }}-manager-cert
+{{- end }}
 {{- if .Values.certificates.portal.enabled }}
 - name: {{ include "kong.fullname" . }}-portal-cert
   secret:
@@ -780,6 +779,10 @@ The name of the Service which will be used by the controller to update the Ingre
   mountPath: /etc/cert-manager/admin/
 {{- end }}
 {{- if .Values.enterprise.enabled }}
+{{- if .Values.certificates.manager.enabled }}
+- name: {{ include "kong.fullname" . }}-manager-cert
+  mountPath: /etc/cert-manager/manager/
+{{- end }}
 {{- if .Values.certificates.portal.enabled }}
 - name: {{ include "kong.fullname" . }}-portal-cert
   mountPath: /etc/cert-manager/portal/
@@ -865,8 +868,10 @@ The name of the Service which will be used by the controller to update the Ingre
 - name: wait-for-db
   image: {{ include "kong.getRepoTag" .Values.image }}
   imagePullPolicy: {{ .Values.image.pullPolicy }}
+  {{- if .Values.containerSecurityContext.enabled }}
   securityContext:
-  {{ toYaml .Values.containerSecurityContext | nindent 4 }}
+  {{ toYaml (omit .Values.containerSecurityContext "enabled") | nindent 4 }}
+  {{- end }}
   env:
   {{- include "kong.env" . | nindent 2 }}
   {{- include "kong.envFrom" .Values.envFrom | nindent 2 }}
@@ -903,8 +908,10 @@ The name of the Service which will be used by the controller to update the Ingre
 
 {{- define "kong.controller-container" -}}
 - name: ingress-controller
+  {{- if .Values.containerSecurityContext.enabled }}
   securityContext:
-{{ toYaml .Values.containerSecurityContext | nindent 4 }}
+{{ toYaml (omit .Values.containerSecurityContext "enabled") | nindent 4 }}
+  {{- end }}
   args:
   {{ if .Values.ingressController.args}}
   {{- range $val := .Values.ingressController.args }}
@@ -1045,7 +1052,13 @@ the template that it itself is using form the above sections.
   {{- if .Values.certificates.admin.enabled -}}
     {{- $_ := set $autoEnv "KONG_ADMIN_SSL_CERT" "/etc/cert-manager/admin/tls.crt" -}}
     {{- $_ := set $autoEnv "KONG_ADMIN_SSL_CERT_KEY" "/etc/cert-manager/admin/tls.key" -}}
-    {{- if .Values.enterprise.enabled }}
+  {{- end -}}
+
+  {{- if .Values.enterprise.enabled -}}
+    {{- if .Values.certificates.manager.enabled -}}
+      {{- $_ := set $autoEnv "KONG_ADMIN_GUI_SSL_CERT" "/etc/cert-manager/manager/tls.crt" -}}
+      {{- $_ := set $autoEnv "KONG_ADMIN_GUI_SSL_CERT_KEY" "/etc/cert-manager/manager/tls.key" -}}
+    {{- else if .Values.certificates.admin.enabled -}}
       {{- $_ := set $autoEnv "KONG_ADMIN_GUI_SSL_CERT" "/etc/cert-manager/admin/tls.crt" -}}
       {{- $_ := set $autoEnv "KONG_ADMIN_GUI_SSL_CERT_KEY" "/etc/cert-manager/admin/tls.key" -}}
     {{- end -}}
@@ -1276,6 +1289,12 @@ Environment variables are sorted alphabetically
   image: {{ include "kong.getRepoTag" .Values.image }}
 {{- end }}
   imagePullPolicy: {{ .Values.waitImage.pullPolicy }}
+  {{- with .Values.migrations.waitContainer }}
+    {{- if .securityContext }}
+  securityContext:
+    {{- toYaml .securityContext | nindent 6 }}
+    {{- end }}
+  {{- end }}
   env:
   {{- include "kong.no_daemon_env" . | nindent 2 }}
   {{- include "kong.envFrom" .Values.envFrom | nindent 2 }}
@@ -1301,11 +1320,7 @@ Environment variables are sorted alphabetically
 {{- if .unifiedRepoTag }}
 {{- .unifiedRepoTag }}
 {{- else if .repository }}
-{{- if .registry }}
-{{- .registry }}/{{ .repository }}:{{ .tag }}
-{{- else }}
 {{- .repository }}:{{ .tag }}
-{{- end -}}
 {{- end -}}
 {{- end -}}
 
@@ -1917,5 +1932,20 @@ envFrom:
 {{- else -}}
 {{- fail "At least one of konnect.controlPlaneID or konnect.runtimeGroupID must be set." -}}
 {{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Render the konnect exclusion expression and user-provided matchExpressions
+from admissionWebhook.objectSelector. These always appear together at the
+end of the matchExpressions list for secrets webhooks.
+*/}}
+{{- define "kong.admissionWebhook.objectSelector.konnectExclusionAndUserExpressions" -}}
+- key: "konghq.com/credential"
+  operator: "NotIn"
+  values:
+  - "konnect"
+{{- with .Values.ingressController.admissionWebhook.objectSelector.matchExpressions }}
+{{ toYaml . }}
 {{- end -}}
 {{- end -}}

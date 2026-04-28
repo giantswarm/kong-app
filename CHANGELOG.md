@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Align with upstream chart version [3.2.0](https://github.com/Kong/charts/releases/tag/kong-3.2.0) ([Changes in upstream repository](https://github.com/Kong/charts/compare/kong-2.51.0...kong-3.2.0))
+
 ## [5.2.2] - 2026-03-24
 
 ### Changed

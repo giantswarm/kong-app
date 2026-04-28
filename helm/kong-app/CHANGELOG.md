@@ -1,5 +1,59 @@
 # Changelog
 
+## 3.2.0
+
+### Changes
+
+* Added `ipFamilyPolicy` and `ipFamilies` settings for Kong Services to support
+  IPv6 single-stack and dual-stack Service configuration.
+  [#1508](https://github.com/Kong/charts/pull/1508)
+
+## 3.1.0
+
+### Changes
+
+* Applied `objectSelector` to all admission webhook configurations, not just
+  the `validations.kong.konghq.com` webhook. This ensures consistent filtering
+  across all webhook entries.
+  [#1497](https://github.com/Kong/charts/pull/1497)
+
+## 3.0.2
+
+### Added
+
+* Added `containerSecurityContext.enabled` option to allow disabling the
+  container security context for OpenShift compatibility.
+  [#1456](https://github.com/Kong/charts/pull/1456)
+
+## 3.0.1
+
+### Changes
+
+* Fail chart rendering when `postgresql.enabled` is `true` but
+  `postgresql.image.repository` or `postgresql.image.tag` or
+  `postgresql.image.registry` are not set.
+  [#1444](https://github.com/Kong/charts/pull/1444)
+
+## 3.0.0
+
+### Changes
+
+* Default Postgres repository, image name and tag are set to `""`.
+  This requires users that use the db backed installations to specify these.
+  The default Bitnami Postgres image is not available anymore, for more details
+  please see: <https://github.com/bitnami/containers/issues/83267>.
+  [#1373](https://github.com/Kong/charts/pull/1373)
+
+## 2.52.0
+
+### Changes
+
+* Added `migrations.waitContainer.securityContext` to allow setting a security context on the migrations wait-for-postgres init container.
+* Added `certificates.manager` configuration to enable separate cert-manager certificate generation for Kong Manager (admin GUI).
+  This allows Kong Manager to use a dedicated certificate instead of sharing the admin API certificate,
+  improving security and flexibility for Enterprise deployments.
+  [#1373](https://github.com/Kong/charts/pull/1373)
+
 ## 2.51.0
 
 ### Changes

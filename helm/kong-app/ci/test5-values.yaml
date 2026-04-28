@@ -11,6 +11,10 @@ ingressController:
   env:
     anonymous_reports: "false"
 postgresql:
+  image:
+    registry: "docker.io"
+    repository: "bitnamilegacy/postgresql"
+    tag: "13.11.0-debian-11-r20"
   enabled: true
   auth:
     username: kong
