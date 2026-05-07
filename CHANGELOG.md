@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix VPA updateMode to allow `off`, which is considered a boolean in yaml.
+
 ## [5.2.2] - 2026-03-24
 
 ### Changed
