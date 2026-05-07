@@ -50,6 +50,6 @@ spec:
     kind: {{ ternary "DaemonSet" "Deployment" .Values.deployment.daemonset }}
     name: {{ template "kong.fullname" . }}
   updatePolicy:
-    updateMode: {{ .Values.verticalPodAutoscaler.updateMode }}
+    updateMode: {{ .Values.verticalPodAutoscaler.updateMode | quote }}
 {{- end }}
 {{- end }}
