@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [5.2.3] - 2026-05-07
+
 ### Fixed
 
 - Fix VPA updateMode to allow `off`, which is considered a boolean in yaml.
@@ -783,7 +785,8 @@ From upstream CHANGELOG:
 - Use service of type Load Balancer for the Kong proxy service.
 - Disable using Postgres and use Kubernetes resources for storing state.
 
-[Unreleased]: https://github.com/giantswarm/kong-app/compare/v5.2.2...HEAD
+[Unreleased]: https://github.com/giantswarm/kong-app/compare/v5.2.3...HEAD
+[5.2.3]: https://github.com/giantswarm/kong-app/compare/v5.2.2...v5.2.3
 [5.2.2]: https://github.com/giantswarm/kong-app/compare/v5.2.1...v5.2.2
 [5.2.1]: https://github.com/giantswarm/kong-app/compare/v5.2.0...v5.2.1
 [5.2.0]: https://github.com/giantswarm/kong-app/compare/v5.1.1...v5.2.0
