@@ -11,6 +11,7 @@ workflows:
         context: architect
         app_catalog: giantswarm-catalog
         app_catalog_test: giantswarm-test-catalog
+        override_app_version: false
         chart: kong-app
         executor: app-build-suite
         persist_chart_archive: true
