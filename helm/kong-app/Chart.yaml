@@ -22,5 +22,5 @@ dependencies:
     condition: postgresql.enabled
   - name: kubectl-apply-job
     version: "0.11.0"
-    repository: oci://giantswarmpublic.azurecr.io/giantswarm-playground-catalog
+    repository: oci://gsoci.azurecr.io/charts/giantswarm
     condition: ingressController.enabled
