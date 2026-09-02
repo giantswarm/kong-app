@@ -7,6 +7,12 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Declare the `io.giantswarm.application.managed` (`true`) annotation and chart `keywords`,
+  the fields this chart was missing from the
+  [chart metadata standard](https://docs.giantswarm.io/reference/platform-api/chart-metadata/).
+
 ## [5.2.3] - 2026-05-07
 
 ### Fixed

@@ -2,6 +2,9 @@ apiVersion: v2
 description: The Cloud-Native Ingress and API-management
 home: https://github.com/giantswarm/kong-app
 icon: https://s.giantswarm.io/app-icons/kong/1/light.svg
+keywords:
+  - networking
+  - gateway
 maintainers:
   - name: team-k8s-bot
     email: team-k8s@konghq.com
@@ -14,6 +17,7 @@ appVersion: "3.8.0"
 annotations:
   io.giantswarm.application.team: cabbage
   io.giantswarm.application.audience: "all"
+  io.giantswarm.application.managed: "true"
 kubeVersion: ">=1.26.0-0"
 dependencies:
   - name: postgresql
