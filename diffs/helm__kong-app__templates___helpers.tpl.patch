@@ -1,19 +1,23 @@
 diff --git a/vendor/kong/charts/kong/templates/_helpers.tpl b/helm/kong-app/templates/_helpers.tpl
-index 797ad18..42e3a6c 100644
+index 797ad18..966b832 100644
 --- a/vendor/kong/charts/kong/templates/_helpers.tpl
 +++ b/helm/kong-app/templates/_helpers.tpl
-@@ -25,24 +25,39 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this
- {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
+@@ -22,27 +22,42 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this
  {{- end -}}
  
+ {{- define "kong.chart" -}}
+-{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
++{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimAll "-._" -}}
++{{- end -}}
++
 +{{/*
 +Value used for app.kubernetes.io/name label on resources.
 +Needs to be stable as Giant Swarm is using it for monitoring.
 +*/}}
 +{{- define "kong.chart-name" -}}
 +{{- .Chart.Name | trunc 63 | trimSuffix "-" -}}
-+{{- end -}}
-+
+ {{- end -}}
+ 
  {{- define "kong.metaLabels" -}}
 -app.kubernetes.io/name: {{ template "kong.name" . }}
 +app.kubernetes.io/name: {{ include "kong.chart-name" . | quote }}
