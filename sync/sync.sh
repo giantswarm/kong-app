@@ -19,6 +19,7 @@ vendir sync
 ./sync/patches/gs-helpers/patch.sh
 ./sync/patches/vpa/patch.sh
 ./sync/patches/helmignore/patch.sh
+./sync/patches/chart-label/patch.sh
 
 # Store diffs
 rm -f ./diffs/*
