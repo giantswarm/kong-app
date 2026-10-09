@@ -161,10 +161,10 @@ It is possible to change the version of the CRD to match the kong ingress contro
 ```yaml
 kubectlApplyJob:
   files:
-  - crds/custom-resource-definitions-v3.2.4.yaml
+  - files/custom-resource-definitions-v3.2.4.yaml
 ```
 
-Please check file [`helm/kong-app/crds`](https://github.com/giantswarm/kong-app/tree/main/helm/kong-app/crds) of the chart version you're using, to see available CRD files.
+Please check file [`helm/kong-app/files`](https://github.com/giantswarm/kong-app/tree/main/helm/kong-app/files) of the chart version you're using, to see available CRD files.
 
 ## Development
 
